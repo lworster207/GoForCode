@@ -32,9 +32,9 @@ public class SummativeSums {
         int arraySum = 0;
 
         // iterate through the array
-        for (int loopCounter = 0; loopCounter < numbersToSum.length; loopCounter++) {
+        for (int currentVal : numbersToSum) {
             // add the next integer to the sum
-            arraySum += numbersToSum[loopCounter];
+            arraySum += currentVal;
         }
 
         // return the final sum

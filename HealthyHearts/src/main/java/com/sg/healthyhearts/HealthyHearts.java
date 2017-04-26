@@ -20,8 +20,8 @@ public class HealthyHearts {
         int userAge;
         int maxHeartRate;
 
-        Scanner userInput = new Scanner(System.in);
         Random getRangePercentage = new Random();
+        Scanner userInput = new Scanner(System.in);
         /*
         Their maximum heart rate should be 220 - their age.
         The target heart rate zone is the 50 - 85% of the maximum.

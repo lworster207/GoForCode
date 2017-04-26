@@ -17,8 +17,8 @@ public class DogGenetics {
     public static void main(String[] args) {
 
         // declarations
-        Scanner userInput = new Scanner(System.in);
         Random getBreedPercentage = new Random();
+        Scanner userInput = new Scanner(System.in);
 
         int totalBreedPercentage = 0;
         int currentBreedPercentage = 0;

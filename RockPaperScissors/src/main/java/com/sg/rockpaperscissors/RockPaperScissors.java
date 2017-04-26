@@ -19,12 +19,12 @@ public class RockPaperScissors {
     public static final int PAPER = 2;
     public static final int SCISSORS = 3;
 
-    public static void main(String[] args) {
+    public void playRockPaperScissors() {
         // This program supports "happy path" inputs only.
 
         // declarations
-        Random randomPick = new Random();
         Scanner userInput = new Scanner(System.in);
+        Random randomPick = new Random();
 
         int userPick = 0;         // store the user's pick
         int computerPick = 0;     // store the computer's pick
