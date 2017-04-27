@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.studentquizgrades;
+package com.sg.addressbook.ui;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author apprentice
  */
-public class MyUserIO implements UserIO {
+public class UserIOConsoleImpl implements UserIO {
 
     Scanner userInput = new Scanner(System.in);
 
