@@ -7,6 +7,7 @@ package com.sg.statecapitals2;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -16,6 +17,10 @@ import java.util.Set;
 public class StateCapitals2 {
 
     public static void main(String[] args) {
+
+        int lowerPopulationLimit;
+        Scanner userInput = new Scanner(System.in);
+
         HashMap<String, Capital> stateCapitals = new HashMap<>();
 
         // initialize our hash
@@ -79,6 +84,18 @@ public class StateCapitals2 {
         for (String k : keys) {
             System.out.println(k + " - " + stateCapitals.get(k).getName() + " | Pop: " + stateCapitals.get(k).getPopulation() + " | Area: " + stateCapitals.get(k).getSquareMiles() + " sq mi");
         }
+
+        System.out.println("Please enter the lower limit for capital city population: ");
+        lowerPopulationLimit = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("LIST CAPITALS WITH POPULATIONS GREATER THAN " + lowerPopulationLimit);
+        for (String k : keys) {
+            if (stateCapitals.get(k).getPopulation() >= lowerPopulationLimit) {
+                System.out.println(k + " - " + stateCapitals.get(k).getName() + " | Pop: " + stateCapitals.get(k).getPopulation() + " | Area: " + stateCapitals.get(k).getSquareMiles() + " sq mi");
+            }
+
+        }
+
     }
 
 }
