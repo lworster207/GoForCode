@@ -50,7 +50,7 @@ public class AddressBookView {
 
     }
 
-    public String Confirm(String prompt) {
+    public String prompt(String prompt) {
         return io.readString(prompt);
     }
 

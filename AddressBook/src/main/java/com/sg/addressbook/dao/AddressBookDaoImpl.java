@@ -44,7 +44,11 @@ public class AddressBookDaoImpl implements AddressBookDao {
 
     @Override
     public Address getAddressByLastName(String lastName) {
-        return addresses.get(lastName);
+        if (addresses.containsKey(lastName)) {
+            return addresses.get(lastName);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -63,15 +67,10 @@ public class AddressBookDaoImpl implements AddressBookDao {
         try {
             loadAddresses();
         } catch (AddressBookDaoException e) {
-            // file may not exist..
+            // file will not exist until the first execution of addUser()
         }
     }
 
-    /*        } catch (IOException e) {
-            throw new ClassRosterDaoException(
-                    "Could not save student data.", e);
-        }
-     */
     private void loadAddresses() throws AddressBookDaoException {
         Scanner scanner;
 

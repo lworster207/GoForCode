@@ -22,7 +22,7 @@ public class App {
         UserIO myIo = new UserIOConsoleImpl();
         AddressBookView myView = new AddressBookView(myIo);
         AddressBookDao myDao = new AddressBookDaoImpl();
-        myDao.initAddresses();
+
         AddressBookController controller
                 = new AddressBookController(myDao, myView);
         controller.run();

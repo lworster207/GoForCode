@@ -32,6 +32,8 @@ public class AddressBookController {
         boolean keepGoing = true;
         int menuSelection;
 
+        dao.initAddresses();
+
         try {
             while (keepGoing) {
 
@@ -80,38 +82,46 @@ public class AddressBookController {
     }
 
     public void removeAddress() throws AddressBookDaoException {
+        view.displayBanner("Delete Address");
         String lastName = view.getLastName();
         Address addressToRemove = dao.getAddressByLastName(lastName);
         view.displayAddressSingleLine(addressToRemove);
 
-        String confirmDelete = view.Confirm("Delete this address?");
+        String confirmDelete = view.prompt("Delete this address?");
         if (confirmDelete.toLowerCase().equals("y")) {
             dao.deleteAddress(addressToRemove);
             view.displayBanner("The address has been deleted.");
+            view.prompt("Press enter to continue");
+
         }
 
     }
 
     public void showAddressCount() {
+        view.displayBanner("Show Address Count");
         int addressCount = dao.getAddressCount();
         view.displayAddressCount(addressCount);
+        view.prompt("Press enter to continue");
+
     }
 
     public Address findAddress() {
+        view.displayBanner("Find Address");
         String lastName = view.getLastName();
         Address address = dao.getAddressByLastName(lastName);
 
-        if (!address.equals(null)) {
+        if (!(address == null)) {
+
             view.displayAddress(address);
         } else {
-
+            view.prompt("No addresses found for " + lastName + "\nPress Enter to continue");
         }
 
         return address;
 
     }
 
-    public void editAddress() {
+    public void editAddress() throws AddressBookDaoException {
         Address address = findAddress();
         view.displayBanner("EDIT Address");
         view.displayAddress(address);
@@ -121,6 +131,7 @@ public class AddressBookController {
         if (newAddress != null) {
             dao.deleteAddress(address);
             dao.addAddress(newAddress);
+            view.prompt("The new information has been saved.\nPress Enter to continue.");
         }
     }
 
