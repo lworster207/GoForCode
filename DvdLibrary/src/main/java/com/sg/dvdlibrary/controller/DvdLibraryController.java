@@ -39,10 +39,6 @@ public class DvdLibraryController {
         boolean keepGoing = true;
         int menuSelection;
 
-        // initialize the dvdVault on startup
-        // doing this here, avoids having to load the dvds with every option.
-        dao.initDvds();
-
         try {
             while (keepGoing) {
 
@@ -144,15 +140,20 @@ public class DvdLibraryController {
     }
 
     public Dvd findDvd(String bannerString) {
+
+        Dvd dvd;
         // display a message
         view.displayBanner(bannerString);
 
         // get the title to look for
         String title = view.getTitle();
 
-        // get the Dvd if found, returns null if not
-        Dvd dvd = dao.getDvdByTitle(title);
-
+        try {
+            // get the Dvd if found, returns null if not
+            dvd = dao.getDvdByTitle(title);
+        } catch (DvdLibraryDaoException e) {
+            dvd = null;
+        }
         if (dvd == null) {
             // did not find that title
             view.prompt("No DVD found with Title: " + title + "\nPress Enter to continue");
@@ -200,7 +201,7 @@ public class DvdLibraryController {
 
     }
 
-    public void showDvdList() {
+    public void showDvdList() throws DvdLibraryDaoException {
         // diplay the entire list in the DvdLibrary
 
         // get the List

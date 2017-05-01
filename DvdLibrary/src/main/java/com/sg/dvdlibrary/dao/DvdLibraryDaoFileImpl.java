@@ -31,6 +31,7 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     @Override
     public Dvd addDvd(Dvd dvd) throws DvdLibraryDaoException {
+        loadDvds();
         // add a Dvd to the dvdVault
         dvdVault.put(dvd.getTitle(), dvd);
         saveDvds();
@@ -39,6 +40,7 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     @Override
     public Dvd deleteDvd(Dvd dvd) throws DvdLibraryDaoException {
+        loadDvds();
         // remove a Dvd from the dvdVault.
         Dvd deletedDvd = dvdVault.remove(dvd.getTitle());
         saveDvds();
@@ -46,7 +48,8 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
     }
 
     @Override
-    public Dvd getDvdByTitle(String title) {
+    public Dvd getDvdByTitle(String title) throws DvdLibraryDaoException {
+        loadDvds();
         // returns the Dvd with title or null, if it does not exist.
         if (dvdVault.containsKey(title)) {
             return dvdVault.get(title);
@@ -56,12 +59,12 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
     }
 
     @Override
-    public List<Dvd> getAllDvds() {
+    public List<Dvd> getAllDvds() throws DvdLibraryDaoException {
         // return a List of all the Dvds in the dvdVault
+        loadDvds();
         return (new ArrayList<>(dvdVault.values()));
     }
 
-    @Override
     public void loadDvds() throws DvdLibraryDaoException {
         // read the DVD_FILE and store in dvdVault.
 
@@ -106,7 +109,6 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     }
 
-    @Override
     public void saveDvds() throws DvdLibraryDaoException {
 
         // save the dvdVault list to file.
@@ -138,18 +140,9 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
     }
 
     @Override
-    public int getCount() {
+    public int getCount() throws DvdLibraryDaoException {
+        loadDvds();
         return dvdVault.size();
     }
 
-    @Override
-    public void initDvds() {
-
-        // used to initialize dvdVault prior to handling any user options.
-        try {
-            loadDvds();
-        } catch (DvdLibraryDaoException e) {
-            // no records will exist until the first execution of addDvd()
-        }
-    }
 }

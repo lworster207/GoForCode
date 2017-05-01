@@ -50,7 +50,7 @@ public class ClassRosterView {
 
     public void displayStudentList(List<Student> studentList) {
         for (Student currentStudent : studentList) {
-            io.print(currentStudent.getStudentId() + ": "
+            io.print(currentStudent.getStudentID() + ": "
                     + currentStudent.getFirstName() + " "
                     + currentStudent.getLastName());
         }
@@ -65,13 +65,13 @@ public class ClassRosterView {
         io.print("=== Display Student ===");
     }
 
-    public String getStudentIdChoice() {
+    public String getStudentIDChoice() {
         return io.readString("Please enter the Student ID.");
     }
 
     public void displayStudent(Student student) {
         if (student != null) {
-            io.print(student.getStudentId());
+            io.print(student.getStudentID());
             io.print(student.getFirstName() + " " + student.getLastName());
             io.print(student.getCohort());
             io.print("");

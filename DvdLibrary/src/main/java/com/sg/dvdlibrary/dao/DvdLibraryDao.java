@@ -18,15 +18,10 @@ public interface DvdLibraryDao {
 
     public Dvd deleteDvd(Dvd dvd) throws DvdLibraryDaoException;
 
-    public Dvd getDvdByTitle(String title);
+    public Dvd getDvdByTitle(String title) throws DvdLibraryDaoException;
 
-    public List<Dvd> getAllDvds();
+    public List<Dvd> getAllDvds() throws DvdLibraryDaoException;
 
-    public int getCount();
+    public int getCount() throws DvdLibraryDaoException;
 
-    public void loadDvds() throws DvdLibraryDaoException;
-
-    public void saveDvds() throws DvdLibraryDaoException;
-
-    public void initDvds();
 }

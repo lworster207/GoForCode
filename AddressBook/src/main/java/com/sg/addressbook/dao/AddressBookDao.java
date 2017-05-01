@@ -19,12 +19,9 @@ public interface AddressBookDao {
 
     public Address deleteAddress(Address address) throws AddressBookDaoException;
 
-    public Address getAddressByLastName(String lastName);
+    public Address getAddressByLastName(String lastName) throws AddressBookDaoException;
 
-    public int getAddressCount();
+    public int getAddressCount() throws AddressBookDaoException;
 
-    public List<Address> getAddresses();
-
-    public void initAddresses();
-
+    public List<Address> getAddresses() throws AddressBookDaoException;
 }

@@ -5,9 +5,11 @@
  */
 package com.sg.classroster.controller;
 
-import com.sg.classroster.dao.ClassRosterDao;
-import com.sg.classroster.dao.ClassRosterDaoException;
+import com.sg.classroster.dao.ClassRosterPersistenceException;
 import com.sg.classroster.dto.Student;
+import com.sg.classroster.service.ClassRosterDataValidationException;
+import com.sg.classroster.service.ClassRosterDuplicateIdException;
+import com.sg.classroster.service.ClassRosterServiceLayer;
 import com.sg.classroster.ui.ClassRosterView;
 import java.util.List;
 
@@ -17,8 +19,15 @@ import java.util.List;
  */
 public class ClassRosterController {
 
-    ClassRosterView view;
-    ClassRosterDao dao;
+    private ClassRosterView view;
+    //private ClassRosterDao dao;
+    private ClassRosterServiceLayer service;
+
+    public ClassRosterController(ClassRosterServiceLayer service, ClassRosterView view) {
+        //this.dao = dao;
+        this.service = service;
+        this.view = view;
+    }
 
     //private UserIO io = new UserIOConsoleImpl();
     public void run() {
@@ -52,7 +61,7 @@ public class ClassRosterController {
 
             }
             exitMessage();
-        } catch (ClassRosterDaoException e) {
+        } catch (ClassRosterPersistenceException e) {
             view.displayErrorMessage(e.getMessage());
         }
     }
@@ -61,51 +70,38 @@ public class ClassRosterController {
         return view.printMenuAndGetSelection();
     }
 
-    private void createStudent() throws ClassRosterDaoException {
-        // display banner
+    private void createStudent() throws ClassRosterPersistenceException {
         view.displayCreateStudentBanner();
-
-        // create the student object
-        Student newStudent = view.getNewStudentInfo();
-
-        // store the new student
-        dao.addStudent(newStudent.getStudentId(), newStudent);
-
-        // show user the results
-        view.displayCreateSuccessBanner();
+        boolean hasErrors = false;
+        do {
+            Student currentStudent = view.getNewStudentInfo();
+            try {
+                service.createStudent(currentStudent);
+                view.displayCreateSuccessBanner();
+                hasErrors = false;
+            } catch (ClassRosterDuplicateIdException | ClassRosterDataValidationException e) {
+                hasErrors = true;
+                view.displayErrorMessage(e.getMessage());
+            }
+        } while (hasErrors);
     }
 
-    private void listStudents() throws ClassRosterDaoException {
-        view.displayDisplayAllBanner();
-        List<Student> studentList = dao.getAllStudents();
+    private void listStudents() throws ClassRosterPersistenceException {
+        List<Student> studentList = service.getAllStudents();
+
         view.displayStudentList(studentList);
     }
 
-    private void viewStudent() throws ClassRosterDaoException {
-        // show the banner
-        view.displayDisplayStudentBanner();
-
-        // get the studenty id
-        String studentId = view.getStudentIdChoice();
-
-        // get the student object for that id
-        Student student = dao.getStudent(studentId);
-
-        // diplay the student info
+    private void viewStudent() throws ClassRosterPersistenceException {
+        String studentId = view.getStudentIDChoice();
+        Student student = service.getStudent(studentId);
         view.displayStudent(student);
     }
 
-    private void removeStudent() throws ClassRosterDaoException {
-        // display banner
+    private void removeStudent() throws ClassRosterPersistenceException {
         view.displayRemoveStudentBanner();
-
-        // get the student id to remove
-        String studentId = view.getStudentIdChoice();
-
-        // remove the student
-        dao.removeStudent(studentId);
-
-        // display a banner
+        String studentId = view.getStudentIDChoice();
+        service.removeStudent(studentId);
         view.displayRemoveSuccessBanner();
     }
 
@@ -115,11 +111,6 @@ public class ClassRosterController {
 
     private void exitMessage() {
         view.displayExitBanner();
-    }
-
-    public ClassRosterController(ClassRosterDao dao, ClassRosterView view) {
-        this.dao = dao;
-        this.view = view;
     }
 
 }

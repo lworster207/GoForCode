@@ -78,7 +78,7 @@ public class DvdLibraryView {
 
     public void displayDvdSingleLine(Dvd dvd) {
         // display the Dvd fields on a single line
-        io.println(dvd.getTitle() + " " + dvd.getReleaseDate()
+        io.println(dvd.getTitle() + " | " + dvd.getReleaseDate()
                 + " | " + dvd.getMpaaRating() + " | " + dvd.getDirector()
                 + " | " + dvd.getStudio() + " | " + dvd.getUserNote());
     }

@@ -32,8 +32,6 @@ public class AddressBookController {
         boolean keepGoing = true;
         int menuSelection;
 
-        dao.initAddresses();
-
         try {
             while (keepGoing) {
 
@@ -85,19 +83,21 @@ public class AddressBookController {
         view.displayBanner("Delete Address");
         String lastName = view.getLastName();
         Address addressToRemove = dao.getAddressByLastName(lastName);
-        view.displayAddressSingleLine(addressToRemove);
+        if (addressToRemove != null) {
+            view.displayAddressSingleLine(addressToRemove);
 
-        String confirmDelete = view.prompt("Delete this address?");
-        if (confirmDelete.toLowerCase().equals("y")) {
-            dao.deleteAddress(addressToRemove);
-            view.displayBanner("The address has been deleted.");
-            view.prompt("Press enter to continue");
+            String confirmDelete = view.prompt("Delete this address?");
+            if (confirmDelete.toLowerCase().equals("y")) {
+                dao.deleteAddress(addressToRemove);
+                view.displayBanner("The address has been deleted.");
+                view.prompt("Press enter to continue");
 
+            }
         }
 
     }
 
-    public void showAddressCount() {
+    public void showAddressCount() throws AddressBookDaoException {
         view.displayBanner("Show Address Count");
         int addressCount = dao.getAddressCount();
         view.displayAddressCount(addressCount);
@@ -105,7 +105,7 @@ public class AddressBookController {
 
     }
 
-    public Address findAddress() {
+    public Address findAddress() throws AddressBookDaoException {
         view.displayBanner("Find Address");
         String lastName = view.getLastName();
         Address address = dao.getAddressByLastName(lastName);
@@ -123,19 +123,22 @@ public class AddressBookController {
 
     public void editAddress() throws AddressBookDaoException {
         Address address = findAddress();
-        view.displayBanner("EDIT Address");
-        view.displayAddress(address);
-        view.println("Please enter new information for this address");
-        Address newAddress = view.getAddressInfo();
 
-        if (newAddress != null) {
-            dao.deleteAddress(address);
-            dao.addAddress(newAddress);
-            view.prompt("The new information has been saved.\nPress Enter to continue.");
+        if (address != null) {
+            view.displayBanner("EDIT Address");
+            view.displayAddress(address);
+            view.println("Please enter new information for this address");
+            Address newAddress = view.getAddressInfo();
+
+            if (newAddress != null) {
+                dao.deleteAddress(address);
+                dao.addAddress(newAddress);
+                view.prompt("The new information has been saved.\nPress Enter to continue.");
+            }
         }
     }
 
-    public void showAddressList() {
+    public void showAddressList() throws AddressBookDaoException {
         List<Address> addressList = dao.getAddresses();
         view.displayAddressList(addressList);
     }

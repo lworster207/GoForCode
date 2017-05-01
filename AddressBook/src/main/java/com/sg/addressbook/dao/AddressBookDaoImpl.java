@@ -30,6 +30,7 @@ public class AddressBookDaoImpl implements AddressBookDao {
 
     @Override
     public Address addAddress(Address address) throws AddressBookDaoException {
+        loadAddresses();
         addresses.put(address.getLastName(), address);
         writeAddresses();
         return (address);
@@ -37,13 +38,15 @@ public class AddressBookDaoImpl implements AddressBookDao {
 
     @Override
     public Address deleteAddress(Address address) throws AddressBookDaoException {
+        loadAddresses();
         Address deletedAddress = addresses.remove(address.getLastName());
         writeAddresses();
         return deletedAddress;
     }
 
     @Override
-    public Address getAddressByLastName(String lastName) {
+    public Address getAddressByLastName(String lastName) throws AddressBookDaoException {
+        loadAddresses();
         if (addresses.containsKey(lastName)) {
             return addresses.get(lastName);
         } else {
@@ -52,23 +55,20 @@ public class AddressBookDaoImpl implements AddressBookDao {
     }
 
     @Override
-    public int getAddressCount() {
-        return addresses.size();
+    public int getAddressCount() throws AddressBookDaoException {
+        try {
+            loadAddresses();
+            return addresses.size();
+        } catch (Exception e) {
+            throw new AddressBookDaoException("-_- Could not get Address Count");
+        }
     }
 
     @Override
-    public List<Address> getAddresses() {
+    public List<Address> getAddresses() throws AddressBookDaoException {
+        loadAddresses();
         return (new ArrayList<>(addresses.values()));
         // return ( ( List<address> ) addresses) );
-    }
-
-    public void initAddresses() {
-
-        try {
-            loadAddresses();
-        } catch (AddressBookDaoException e) {
-            // file will not exist until the first execution of addUser()
-        }
     }
 
     private void loadAddresses() throws AddressBookDaoException {
