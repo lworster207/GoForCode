@@ -5,6 +5,7 @@
  */
 package com.sg.dvdlibrary.dto;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -15,14 +16,14 @@ public class Dvd {
 
     // properties
     public String title;
-    public String releaseDate;
+    public LocalDate releaseDate;
     public String mpaaRating;
     public String director;
     public String studio;
     public String userNote;
 
     // contructors
-    public Dvd(String title, String releaseDate, String mpaaRating, String director, String studio, String userNote) {
+    public Dvd(String title, LocalDate releaseDate, String mpaaRating, String director, String studio, String userNote) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.mpaaRating = mpaaRating;
@@ -38,7 +39,7 @@ public class Dvd {
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        return releaseDate.toString();
     }
 
     public String getMpaaRating() {

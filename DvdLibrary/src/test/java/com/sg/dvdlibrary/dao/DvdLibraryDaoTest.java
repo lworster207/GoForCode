@@ -6,6 +6,7 @@
 package com.sg.dvdlibrary.dao;
 
 import com.sg.dvdlibrary.dto.Dvd;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -52,7 +53,8 @@ public class DvdLibraryDaoTest {
     @Test
     public void testAddDvd() throws Exception {
 
-        Dvd newDvd = new Dvd("title", "releaseDate", "mpaa", "director", "Studio", "note");
+        LocalDate ld = LocalDate.now();
+        Dvd newDvd = new Dvd("title", ld, "mpaa", "director", "Studio", "note");
 
         Dvd expResult = dao.addDvd(newDvd);
         assertEquals(newDvd, expResult);
@@ -64,7 +66,8 @@ public class DvdLibraryDaoTest {
     @Test
     public void testDeleteDvd() throws Exception {
         Dvd expResult = null;
-        Dvd newDvd = new Dvd("title", "releaseDate", "mpaa", "director", "Studio", "note");
+        LocalDate ld = LocalDate.now();
+        Dvd newDvd = new Dvd("title", ld, "mpaa", "director", "Studio", "note");
 
         Dvd result = dao.addDvd(newDvd);
 
@@ -81,7 +84,8 @@ public class DvdLibraryDaoTest {
     @Test
     public void testGetDvdByTitle() throws Exception {
         Dvd expResult = null;
-        Dvd newDvd = new Dvd("title", "releaseDate", "mpaa", "director", "Studio", "note");
+        LocalDate ld = LocalDate.now();
+        Dvd newDvd = new Dvd("title", ld, "mpaa", "director", "Studio", "note");
 
         Dvd result = dao.addDvd(newDvd);
         expResult = dao.getDvdByTitle(newDvd.getTitle());
@@ -93,8 +97,8 @@ public class DvdLibraryDaoTest {
      */
     @Test
     public void testGetAllDvds() throws Exception {
-
-        Dvd newDvd = new Dvd("title", "releaseDate", "mpaa", "director", "Studio", "note");
+        LocalDate ld = LocalDate.now();
+        Dvd newDvd = new Dvd("title", ld, "mpaa", "director", "Studio", "note");
         newDvd = dao.addDvd(newDvd);
         assertEquals(1, dao.getCount());
     }
@@ -104,7 +108,8 @@ public class DvdLibraryDaoTest {
      */
     @Test
     public void testGetCount() throws Exception {
-        Dvd newDvd = new Dvd("title", "releaseDate", "mpaa", "director", "Studio", "note");
+        LocalDate ld = LocalDate.now();
+        Dvd newDvd = new Dvd("title", ld, "mpaa", "director", "Studio", "note");
         newDvd = dao.addDvd(newDvd);
         assertEquals(1, dao.getCount());
 

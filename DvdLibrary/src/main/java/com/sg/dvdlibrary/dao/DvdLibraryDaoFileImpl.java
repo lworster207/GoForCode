@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,12 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     @Override
     public Dvd addDvd(Dvd dvd) throws DvdLibraryDaoException {
-        loadDvds();
+        // file may not exist.
+        try {
+            loadDvds();
+        } catch (DvdLibraryDaoException e) {
+
+        }
         // add a Dvd to the dvdVault
         dvdVault.put(dvd.getTitle(), dvd);
         saveDvds();
@@ -95,7 +101,7 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
             // Create a new Dvd object and put it into the map of dvds
             // The Dvd title is used as the map key, which is currentTokens[0]
 
-            currentDvd = new Dvd(currentTokens[0], currentTokens[1], currentTokens[2], currentTokens[3], currentTokens[4], currentTokens[5]);
+            currentDvd = new Dvd(currentTokens[0], LocalDate.parse(currentTokens[1]), currentTokens[2], currentTokens[3], currentTokens[4], currentTokens[5]);
 
             // Put currentDvd into the map using title as the key
             /*

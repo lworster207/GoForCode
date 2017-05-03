@@ -6,6 +6,7 @@
 package com.sg.dvdlibrary.ui;
 
 import com.sg.dvdlibrary.dto.Dvd;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -43,15 +44,63 @@ public class DvdLibraryView {
 
     public Dvd getDvdInfo() {
         // get the Dvd information for all fields and return a new Dvd
+
+        Boolean needValidDate = true;
+        String releaseDate;
+        LocalDate localDate;
+
+        localDate = null;
+
         displayBanner("Enter the Dvd information");
         String title = io.readString("Title: ");
-        String releaseDate = io.readString("Release Date: ");
+
+        localDate = getReleaseDate();
+
         String mpaaRating = io.readString("MPAA Rating: ");
         String director = io.readString("Director: ");
         String studio = io.readString("Studio: ");
         String userNote = io.readString("Notes: ");
 
-        return (new Dvd(title, releaseDate, mpaaRating, director, studio, userNote));
+        return (new Dvd(title, localDate, mpaaRating, director, studio, userNote));
+    }
+
+    public LocalDate getReleaseDate() {
+        LocalDate ld = null;
+        Boolean invalidDate = true;
+
+        while (invalidDate) {
+            invalidDate = false;
+            ld = io.readLocalDate("Release Date:", 1, 12, 1, 31, 1889, LocalDate.now().getYear());
+
+            switch (ld.getMonthValue()) {
+                case 2:  // Feb
+                    if (ld.isLeapYear()) {
+                        if (ld.getDayOfMonth() > 29) {
+                            invalidDate = true;
+                        } else if (ld.getDayOfMonth() > 28) {
+                            invalidDate = true;
+                        }
+                    }
+                    break;
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if (ld.getDayOfMonth() > 31) {
+                        invalidDate = true;
+                    }
+                    break;
+                default:
+                    if (ld.getDayOfMonth() > 30) {
+                        invalidDate = true;
+                    }
+                    break;
+            }
+        }
+        return ld;
     }
 
     public String getTitle() {

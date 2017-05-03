@@ -5,6 +5,8 @@
  */
 package com.sg.dvdlibrary.ui;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author apprentice
@@ -32,5 +34,7 @@ public interface UserIO {
     long readLong(String prompt, long min, long max);
 
     String readString(String prompt);
+
+    LocalDate readLocalDate(String prompt, int minMonth, int maxMonth, int minDay, int maxDay, int minYear, int maxYear);
 
 }
