@@ -24,4 +24,12 @@ public interface DvdLibraryDao {
 
     public int getCount() throws DvdLibraryDaoException;
 
+    public List<Dvd> getMoviesForThePastNumberOfYears(int numberOfYears) throws DvdLibraryDaoException;
+
+    public List<Dvd> getMoviesByMaaRating(String mpaaRating) throws DvdLibraryDaoException;
+
+    public List<Dvd> getMoviesByDirector(String director) throws DvdLibraryDaoException;
+
+    public List<Dvd> getMoviesByStudio(String studio) throws DvdLibraryDaoException;
+
 }

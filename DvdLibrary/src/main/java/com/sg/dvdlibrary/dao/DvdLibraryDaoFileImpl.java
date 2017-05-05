@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -149,6 +150,31 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
     public int getCount() throws DvdLibraryDaoException {
         loadDvds();
         return dvdVault.size();
+    }
+
+    @Override
+    public List<Dvd> getMoviesForThePastNumberOfYears(int numberOfYears) throws DvdLibraryDaoException {
+        loadDvds();
+        return dvdVault.values().stream().filter(s -> LocalDate.now().getYear() - s.getReleaseDateByDate().getYear() <= numberOfYears).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Dvd> getMoviesByMaaRating(String mpaaRating) throws DvdLibraryDaoException {
+        loadDvds();
+        return dvdVault.values().stream().filter(s -> s.getMpaaRating().equalsIgnoreCase(mpaaRating)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Dvd> getMoviesByDirector(String director) throws DvdLibraryDaoException {
+        loadDvds();
+        return dvdVault.values().stream().filter(s -> s.getDirector().equalsIgnoreCase(director)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Dvd> getMoviesByStudio(String studio) throws DvdLibraryDaoException {
+        loadDvds();
+        return dvdVault.values().stream().filter(s -> s.getStudio().equalsIgnoreCase(studio)).collect(Collectors.toList());
     }
 
 }

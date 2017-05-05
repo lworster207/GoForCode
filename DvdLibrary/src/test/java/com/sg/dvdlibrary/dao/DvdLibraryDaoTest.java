@@ -115,4 +115,59 @@ public class DvdLibraryDaoTest {
 
     }
 
+    @Test
+    public void testGetMoviesForThePastNumberOfYears() throws Exception {
+
+        Dvd newDvd = new Dvd("title", LocalDate.parse("2016-01-01"), "mpaa", "director", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+
+        assertEquals(1, dao.getMoviesForThePastNumberOfYears(1).size());
+    }
+
+    @Test
+    public void getMoviesByMaaRating() throws Exception {
+
+        Dvd newDvd = new Dvd("title", LocalDate.parse("2016-01-01"), "mpaa", "director", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+
+        assertEquals(1, dao.getMoviesByMaaRating("mpaa").size());
+    }
+
+    @Test
+    public void getMoviesByDirector() throws Exception {
+        // ensure to use unique titles!
+        Dvd newDvd = new Dvd("title", LocalDate.parse("2016-01-01"), "mpaa", "director", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+
+        assertEquals(1, dao.getMoviesByDirector("director").size());
+
+        newDvd = new Dvd("title2", LocalDate.parse("2016-01-01"), "mpaa", "director", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+        assertEquals(2, dao.getMoviesByDirector("director").size());
+
+        // ensure returning only the correct amount
+        newDvd = new Dvd("title3", LocalDate.parse("2016-01-01"), "mpaa", "director2", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+        assertEquals(2, dao.getMoviesByDirector("director").size());
+
+    }
+
+    @Test
+    public void getMoviesByStudio() throws Exception {
+        Dvd newDvd = new Dvd("title", LocalDate.parse("2016-01-01"), "mpaa", "director", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+
+        assertEquals(1, dao.getMoviesByStudio("Studio").size());
+
+        newDvd = new Dvd("title2", LocalDate.parse("2016-01-01"), "mpaa", "director", "Studio", "note");
+        newDvd = dao.addDvd(newDvd);
+        assertEquals(2, dao.getMoviesByStudio("Studio").size());
+
+        // ensure returning only the correct amount
+        newDvd = new Dvd("title3", LocalDate.parse("2016-01-01"), "mpaa", "director2", "Studio2", "note");
+        newDvd = dao.addDvd(newDvd);
+        assertEquals(2, dao.getMoviesByStudio("Studio").size());
+
+    }
+
 }

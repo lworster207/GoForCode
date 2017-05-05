@@ -42,6 +42,10 @@ public class Dvd {
         return releaseDate.toString();
     }
 
+    public LocalDate getReleaseDateByDate() {
+        return releaseDate;
+    }
+
     public String getMpaaRating() {
         return mpaaRating;
     }
