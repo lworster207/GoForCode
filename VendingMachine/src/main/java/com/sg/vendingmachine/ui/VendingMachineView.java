@@ -11,6 +11,7 @@ import static com.sg.vendingmachine.VendingMachineMenu.CANCEL;
 import static com.sg.vendingmachine.VendingMachineMenu.EXIT;
 import static com.sg.vendingmachine.VendingMachineMenu.PURCHASEITEM;
 import com.sg.vendingmachine.dto.Item;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,12 +28,13 @@ public class VendingMachineView {
     }
 
 ///////////        METHODS        \\\\\\\\\\
-    public VendingMachineMenu displayMenuAndGetOption() {
+    public VendingMachineMenu displayMenuAndGetOption(BigDecimal currentBalance) {
         int choice;
         VendingMachineMenu menuPick;
 
         // list Available Items...
         // List<Item> itemsToDisplay =
+        io.println("Current Balance: " + currentBalance);
         io.println("\n\n");
         displayBanner("Main Menu");
         io.println("1. Purchase Product");
@@ -41,7 +43,7 @@ public class VendingMachineView {
         io.println("4. Exit");
 
         try {
-            choice = io.readInt("Please select from the above choices.", 1, 5);
+            choice = io.readInt("Main Menu Option? :", 1, 4);
             switch (choice) {
                 case 1:
                     return (PURCHASEITEM);
@@ -59,11 +61,61 @@ public class VendingMachineView {
 
     }
 
-    public void displayAvailableProducts(List<Item> availableProducts) {
-        System.out.println("Product Id         Name         Price");
-        for (Item product : availableProducts) {
-            System.out.println(product.getProductId() + " " + product.getName() + " " + product.getPrice());
+    public void displayAvailableProducts(List<Item> availableItems) {
+        //System.out.println("Product Id         Name         Price");
+        System.out.printf("%10s  %10s  %10s\n", "Product ID", "   Name   ", "  Price  ");
+        for (Item product : availableItems) {
+            //System.out.println(product.getItemId() + " " + product.getName() + " " + product.getPrice());
+            System.out.printf("%10s  %10s  %10s\n", product.getItemId(), product.getName(), product.getPrice());
         }
+    }
+
+    public BigDecimal displayInsertCash(BigDecimal currentBalance) {
+        int choice = 4;
+        BigDecimal returnValue;
+
+        // list Available Items...
+        // List<Item> itemsToDisplay =
+        io.println("\nCurrent Balance: " + currentBalance);
+        io.println("\n");
+        displayBanner("Insert Cash Menu");
+        io.println("1. Insert a Dollar");
+        io.println("2. Insert a 50 cent piece");
+        io.println("3. Insert a Quarter");
+        io.println("4. Insert a Dime");
+        io.println("5. Insert a Nickel");
+        io.println("6. Exit");
+
+        try {
+            choice = io.readInt("Insert Cash Option? :.", 1, 6);
+            switch (choice) {
+                case 1:
+                    returnValue = new BigDecimal("1.00");
+                    break;
+                case 2:
+                    returnValue = new BigDecimal("0.50");
+                    break;
+                case 3:
+                    returnValue = new BigDecimal("0.25");
+                    break;
+                case 4:
+                    returnValue = new BigDecimal("0.10");
+                    break;
+                case 5:
+                    returnValue = new BigDecimal("0.05");
+                    break;
+                case 6:
+                    returnValue = new BigDecimal("0.00");
+                    break;
+                default:
+                    returnValue = new BigDecimal("0.00");
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            returnValue = new BigDecimal("0.00");
+        }
+
+        return returnValue;
     }
 
     public void displayBanner(String banner) {

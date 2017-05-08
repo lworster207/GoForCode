@@ -6,6 +6,7 @@
 package com.sg.vendingmachine.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  *
@@ -13,24 +14,24 @@ import java.math.BigDecimal;
  */
 public class Item {
 
-    public String productId;
+    public String itemId;
     public String name;
     public BigDecimal price;
     public int quantity;
 
-    public Item(String productId, String name, BigDecimal price, int quantity) {
-        this.productId = productId;
+    public Item(String itemId, String name, BigDecimal price, int quantity) {
+        this.itemId = itemId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getItemId() {
+        return itemId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {
@@ -55,6 +56,43 @@ public class Item {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.itemId);
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.price);
+        hash = 97 * hash + this.quantity;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (this.quantity != other.quantity) {
+            return false;
+        }
+        if (!Objects.equals(this.itemId, other.itemId)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.price, other.price)) {
+            return false;
+        }
+        return true;
     }
 
 }

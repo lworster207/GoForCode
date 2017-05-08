@@ -15,16 +15,26 @@ import java.util.List;
  */
 public interface VendingMachineDao {
 
-    public String getName(Item item);
+    public String getName(Item item) throws VendingMachinePersistenceException;
 
-    public int getQuantity(Item item);
+    public List<Item> getAllItems() throws VendingMachinePersistenceException;
 
-    public BigDecimal getPrice(Item item);
+    public List<Item> getAllAvailableItems() throws VendingMachinePersistenceException;
 
-    public List<Item> getAllItems();
+    public Item getItem(String itemId) throws VendingMachinePersistenceException;
 
-    public Item getItem(String itemId);
+    public void setQuantity(Item item, int quantity) throws VendingMachinePersistenceException;
 
-    public void setQuantity(Item item, int quantity);
+    public int getQuantity(Item item) throws VendingMachinePersistenceException;
+
+    public BigDecimal getPrice(Item item) throws VendingMachinePersistenceException;
+
+    public Item addItem(String itemId, Item item) throws VendingMachinePersistenceException;
+
+    public Item removeItem(String itemId) throws VendingMachinePersistenceException;
+
+    public void loadItems() throws VendingMachinePersistenceException;
+
+    public void writeItems() throws VendingMachinePersistenceException;
 
 }

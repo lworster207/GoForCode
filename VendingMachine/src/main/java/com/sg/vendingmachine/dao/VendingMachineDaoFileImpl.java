@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -25,16 +26,16 @@ import java.util.Scanner;
  */
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
-    private Map<String, Item> products = new HashMap<>();
-    public static final String ITEMS_FILE = "items.txt";
+    public Map<String, Item> items = new HashMap<>();
+    public String itemsFile;
     public static final String DELIMITER = "::";
 
-    public VendingMachineDaoFileImpl() {
-        try {
+    public VendingMachineDaoFileImpl(String itemsFileName) {
+        this.itemsFile = itemsFileName;
+        /*try {
             loadItems();
         } catch (VendingMachinePersistenceException e) {
-
-        }
+         */
     }
 
     @Override
@@ -53,18 +54,21 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAllItems() throws VendingMachinePersistenceException {
         try {
             loadItems();
         } catch (VendingMachinePersistenceException e) {
 
         }
-        return (new ArrayList<>(products.values()));
+
+        return (new ArrayList<>(items.values()));
     }
 
     @Override
-    public Item getItem(String itemId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Item getItem(String itemId)
+            throws VendingMachinePersistenceException {
+        //loadItems();
+        return items.get(itemId);
     }
 
     @Override
@@ -72,14 +76,46 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void loadItems() throws VendingMachinePersistenceException {
+    @Override
+    public List<Item> getAllAvailableItems() {
+
+        try {
+            loadItems();
+        } catch (VendingMachinePersistenceException e) {
+
+        }
+
+        return (items.values().stream().filter(item -> item.getQuantity() > 0).collect(Collectors.toList()));
+    }
+
+    @Override
+    public Item addItem(String itemId, Item item)
+            throws VendingMachinePersistenceException {
+        Item existingItem = items.get(itemId);
+        if (existingItem == null) {
+            Item newItem = items.put(itemId, item);
+            //writeItems();
+        }
+        return items.get(itemId);
+    }
+
+    @Override
+    public Item removeItem(String itemId)
+            throws VendingMachinePersistenceException {
+        Item removedItem = items.remove(itemId);
+        //writeItems();
+        return removedItem;
+    }
+
+    @Override
+    public void loadItems() throws VendingMachinePersistenceException {
         Scanner scanner;
 
         try {
             // Create Scanner for reading the file
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader(ITEMS_FILE)));
+                            new FileReader(itemsFile)));
         } catch (FileNotFoundException e) {
             throw new VendingMachinePersistenceException(
                     "-_- Could not load item data from file.", e);
@@ -117,7 +153,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
             Item currentItem = new Item(currentTokens[0], currentTokens[1], new BigDecimal(currentTokens[2]), Integer.parseInt(currentTokens[3]));
 
             // Put currentItem into the map using name as the key
-            products.put(currentItem.getName(), currentItem);
+            items.put(currentItem.getItemId(), currentItem);
         }
         // close scanner
         scanner.close();
@@ -130,7 +166,8 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
      * @throws VendingMachinePersistenceException if an error occurs writing to
      * the file
      */
-    private void writeItems() throws VendingMachinePersistenceException {
+    @Override
+    public void writeItems() throws VendingMachinePersistenceException {
         // NOTE FOR APPRENTICES: We are not handling the IOException - but
         // we are translating it to an application specific exception and
         // then simple throwing it (i.e. 'reporting' it) to the code that
@@ -139,7 +176,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         PrintWriter out;
 
         try {
-            out = new PrintWriter(new FileWriter(ITEMS_FILE));
+            out = new PrintWriter(new FileWriter(itemsFile));
         } catch (IOException e) {
             throw new VendingMachinePersistenceException(
                     "Could not save item data.", e);
@@ -153,7 +190,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         List<Item> itemList = this.getAllItems();
         for (Item currentItem : itemList) {
             // write the item object to the file
-            out.println(currentItem.getProductId() + DELIMITER
+            out.println(currentItem.getItemId() + DELIMITER
                     + currentItem.getName() + DELIMITER
                     + currentItem.getPrice() + DELIMITER
                     + currentItem.getQuantity());

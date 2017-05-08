@@ -24,7 +24,7 @@ public class App {
         UserIO myIo = new UserIOConsoleImpl();
         VendingMachineView myView = new VendingMachineView(myIo);
 
-        VendingMachineDao myDao = new VendingMachineDaoFileImpl();
+        VendingMachineDao myDao = new VendingMachineDaoFileImpl("productionProducts.txt");
         // Instantiate the Audit DAO
 //        VendingMachineAuditDao myAuditDao = new VendingMachineAuditDaoFileImpl();
         // Instantiate the Service Layer and wire the DAO and Audit DAO into it
