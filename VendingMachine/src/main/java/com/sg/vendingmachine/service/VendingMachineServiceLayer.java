@@ -5,6 +5,8 @@
  */
 package com.sg.vendingmachine.service;
 
+import com.sg.vendingmachine.ChangeNoChangeDueException;
+import com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Item;
 import java.math.BigDecimal;
@@ -16,31 +18,35 @@ import java.util.List;
  */
 public interface VendingMachineServiceLayer {
 
-    public String getName(Item item);
+    public String getName(Item item) throws VendingMachinePersistenceException;
 
-    public int getQuantity(Item item);
+    public int getQuantity(Item item) throws VendingMachinePersistenceException;
 
-    public void setQuantity(Item item, int quantity);
+    public void setQuantity(Item item, int quantity) throws VendingMachinePersistenceException;
 
-    public BigDecimal getBalance();
+    public BigDecimal getPrice(Item item) throws VendingMachinePersistenceException;
 
-    public void setBalance(BigDecimal balance);
+    public Item getItem(String itemId) throws VendingMachinePersistenceException;
 
-    public BigDecimal getPrice(Item item);
-
-    public Item getItem(String itemId);
-
-    public List<Item> getAllItems();
+    public List<Item> getAllItems() throws VendingMachinePersistenceException;
 
     public List<Item> getAllAvailableItems() throws VendingMachinePersistenceException;
 
-    public void makeChange(BigDecimal balance);
-
-    public void dispenseChange();
-
     public void dispenseItem(Item item) throws VendingMachinePersistenceException;
 
-    public void dispenseItemInLine(Item item);
+    public void validateFunds(Item item) throws VendingMachineInsufficientFundsException, VendingMachinePersistenceException;
+
+    public Item addItem(Item item) throws VendingMachinePersistenceException;
+
+    public Item removeItem(Item item) throws VendingMachinePersistenceException;
+
+    public BigDecimal getBalance() throws VendingMachinePersistenceException;
+
+    public void setBalance(BigDecimal balance) throws VendingMachinePersistenceException;
+
+    public void makeChange(BigDecimal balance) throws ChangeNoChangeDueException, VendingMachinePersistenceException;
+
+    public void dispenseChange() throws VendingMachinePersistenceException;
 
     public Boolean changeIsDue();
 

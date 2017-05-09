@@ -5,7 +5,11 @@
  */
 package com.sg.vendingmachine.controller;
 
+// enums
+import com.sg.vendingmachine.ChangeNoChangeDueException;
 import com.sg.vendingmachine.VendingMachineMenu;
+import com.sg.vendingmachine.dao.VendingMachineExitGetCashMenuException;
+import com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Item;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
@@ -31,52 +35,42 @@ public class VendingMachineController {
 
     public void run() {
         boolean keepGoing = true;
-        int menuSelection;
 
         List<Item> availableProducts;
 
-        availableProducts = getAllAvailableItems();
-
-        if (availableProducts.size() <= 0) {
-            view.displayErrorMessage("The vending machine is Sold Out!. Sorry for the inconvenience.");
-            keepGoing = false;
-        } else {
-            view.displayAvailableProducts(availableProducts);
-        }
-        //try {
-
         while (keepGoing) {
+            try {
+                availableProducts = getAllAvailableItems();
 
-            switch (getMainMenuSelection()) {
-                case EXIT:
-                    // returnChange();
-                    exitMessage();
+                if (availableProducts.size() <= 0) {
+                    view.displayBanner("The vending machine is Sold Out!. Sorry for the inconvenience.");
                     keepGoing = false;
-                    break;
-                case PURCHASEITEM:
-                    purchaseProduct(availableProducts);
-                    break;
-                case ADDCASH:
-                    addCash();
-                    break;
-                case CANCEL:
-                    cancelPurchase();
-                    break;
-            }
+                } else {
+                    view.displayAvailableProducts(availableProducts);
 
-            availableProducts = getAllAvailableItems();
-
-            if (availableProducts.size() <= 0) {
-                view.displayErrorMessage("The vending machine is Sold Out!. Sorry for the inconvenience.");
+                    switch (getMainMenuSelection()) {
+                        case EXIT:
+                            // returnChange();
+                            cancelPurchase();
+                            exitMessage();
+                            keepGoing = false;
+                            break;
+                        case PURCHASEITEM:
+                            purchaseProduct(availableProducts);
+                            break;
+                        case ADDCASH:
+                            addCash();
+                            break;
+                        case CANCEL:
+                            cancelPurchase();
+                            break;
+                    }
+                }
+            } catch (VendingMachinePersistenceException e) {
+                view.displayErrorMessage(e.getMessage());
                 keepGoing = false;
-            } else {
-                view.displayAvailableProducts(availableProducts);
             }
         }
-        //exitMessage();
-        // } catch (VendingMachineDaoException e) {
-        //    view.displayErrorMessage(e.getMessage());
-        //  }
     }
 
     public List<Item> getAllAvailableItems() {
@@ -84,43 +78,44 @@ public class VendingMachineController {
         try {
             availableItems = service.getAllAvailableItems();
         } catch (VendingMachinePersistenceException e) {
-
+            view.println(e.getMessage());
         }
         return availableItems;
 
     }
 
-    public void addCash() {
-        // add some cash to the user account
-        BigDecimal addedCash = new BigDecimal("0.00");
-        do {
-            addedCash = view.displayInsertCash(service.getBalance());
-            service.setBalance(service.getBalance().add(addedCash));
-        } while (addedCash.compareTo(new BigDecimal("0.00")) == 1);
+    public void addCash() throws VendingMachinePersistenceException {
+        // add cash to the user account
+
+        BigDecimal cashToAdd;
+        Boolean addMoreCash = true;
+
+        while (addMoreCash) {
+            try {
+                cashToAdd = view.displayInsertCash(service.getBalance());
+                service.setBalance(service.getBalance().add(cashToAdd));
+            } catch (VendingMachineExitGetCashMenuException e) {
+                addMoreCash = false;
+            }
+        }
     }
 
-    private void cancelPurchase() {
+    private void cancelPurchase() throws VendingMachinePersistenceException {
         // calculate change
-        service.makeChange(service.getBalance());
-
-        // display the users change
-//            if (service.changeIsDue()) {
-        view.displayBanner("Please Take Your Change");
-        view.println("Quarters: " + service.getQuarters());
-        view.println("Dimes: " + service.getDimes());
-        view.println("Nickels: " + service.getNickels());
-        service.dispenseChange();
+        try {
+            service.makeChange(service.getBalance());
+            view.displayChange(service.getQuarters(), service.getDimes(), service.getNickels());
+            service.dispenseChange();
+        } catch (ChangeNoChangeDueException e) {
+            view.displayNoChangeDue();
+        }
 
     }
 
-    private VendingMachineMenu getMainMenuSelection() {
+    private VendingMachineMenu getMainMenuSelection() throws VendingMachinePersistenceException {
         // display the options menu and return the user selection
 
         return view.displayMenuAndGetOption(service.getBalance());
-    }
-
-    private void purchaseItem() {
-
     }
 
     private void unknownCommand() {
@@ -141,41 +136,39 @@ public class VendingMachineController {
     private void purchaseProduct(List<Item> availableProducts) {
         // see if any money has been entered.
         String itemId;
+        Item selectedItem = null;
 
         view.displayAvailableProducts(availableProducts);
         itemId = view.prompt("Enter Product ID");
 
         // validate the product id
-        Item selectedItem = service.getItem(itemId);
+        try {
+            selectedItem = service.getItem(itemId);
 
-        if (service.getBalance().compareTo(selectedItem.getPrice()) >= 0) {
+            // validate sufficient funds available
+            service.validateFunds(selectedItem);
+
             // there are enough funds to purchase the product.
-
             // item is being dispensed
             view.println("\nDispensing Item : " + selectedItem.getName() + "...");
-            service.dispenseItemInLine(selectedItem);
+            service.dispenseItem(selectedItem);
 
             // adjust the users cash balance
             service.setBalance(service.getBalance().subtract(selectedItem.getPrice()));
 
             // calculate change
-            service.makeChange(service.getBalance());
+            try {
+                service.makeChange(service.getBalance());
+                view.displayChange(service.getQuarters(), service.getDimes(), service.getNickels());
+                // dispense the change ( reset the change coin counters to zero
+                service.dispenseChange();
+            } catch (ChangeNoChangeDueException e) {
+                view.displayNoChangeDue();
+            }
 
-            // display the users change
-            view.println("");
-            view.displayBanner("Your Change");
-            view.println("Quarters: " + service.getQuarters());
-            view.println("Dimes: " + service.getDimes());
-            view.println("Nickels: " + service.getNickels());
-            view.println("");
-
-            // dispense the change ( reset the change coin counters to zero
-            service.dispenseChange();
-        } else {
-            // insufficient funds
-            view.displayErrorMessage("Insufficient Funds for this purchase");
-            view.println("Please add more money to purchase this item");
-
+        } catch (VendingMachinePersistenceException | VendingMachineInsufficientFundsException e) {
+            view.displayErrorMessage(e.getMessage());
+            return;
         }
     }
 }

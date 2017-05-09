@@ -33,8 +33,4 @@ public interface VendingMachineDao {
 
     public Item removeItem(String itemId) throws VendingMachinePersistenceException;
 
-    public void loadItems() throws VendingMachinePersistenceException;
-
-    public void writeItems() throws VendingMachinePersistenceException;
-
 }

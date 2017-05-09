@@ -6,6 +6,8 @@
 package com.sg.vendingmachine;
 
 import com.sg.vendingmachine.controller.VendingMachineController;
+import com.sg.vendingmachine.dao.VendingMachineAuditDao;
+import com.sg.vendingmachine.dao.VendingMachineAuditDaoFileImpl;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoFileImpl;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
@@ -26,10 +28,10 @@ public class App {
 
         VendingMachineDao myDao = new VendingMachineDaoFileImpl("productionProducts.txt");
         // Instantiate the Audit DAO
-//        VendingMachineAuditDao myAuditDao = new VendingMachineAuditDaoFileImpl();
+        VendingMachineAuditDao myAuditDao = new VendingMachineAuditDaoFileImpl();
         // Instantiate the Service Layer and wire the DAO and Audit DAO into it
-//        VendingMachineServiceLayer myService = new VendingMachineServiceLayerImpl(myDao, myAuditDao);
-        VendingMachineServiceLayer myService = new VendingMachineServiceLayerImpl(myDao);
+        VendingMachineServiceLayer myService = new VendingMachineServiceLayerImpl(myDao, myAuditDao);
+        // VendingMachineServiceLayer myService = new VendingMachineServiceLayerImpl(myDao);
         // Instantiate the Controller and wire the Service Layer into it
         VendingMachineController controller = new VendingMachineController(myService, myView);
 

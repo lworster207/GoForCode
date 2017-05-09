@@ -10,6 +10,7 @@ import static com.sg.vendingmachine.VendingMachineMenu.ADDCASH;
 import static com.sg.vendingmachine.VendingMachineMenu.CANCEL;
 import static com.sg.vendingmachine.VendingMachineMenu.EXIT;
 import static com.sg.vendingmachine.VendingMachineMenu.PURCHASEITEM;
+import com.sg.vendingmachine.dao.VendingMachineExitGetCashMenuException;
 import com.sg.vendingmachine.dto.Item;
 import java.math.BigDecimal;
 import java.util.List;
@@ -70,7 +71,7 @@ public class VendingMachineView {
         }
     }
 
-    public BigDecimal displayInsertCash(BigDecimal currentBalance) {
+    public BigDecimal displayInsertCash(BigDecimal currentBalance) throws VendingMachineExitGetCashMenuException {
         int choice = 4;
         BigDecimal returnValue;
 
@@ -105,17 +106,28 @@ public class VendingMachineView {
                     returnValue = new BigDecimal("0.05");
                     break;
                 case 6:
-                    returnValue = new BigDecimal("0.00");
-                    break;
+                    throw new VendingMachineExitGetCashMenuException();
                 default:
                     returnValue = new BigDecimal("0.00");
                     break;
             }
         } catch (NumberFormatException e) {
             returnValue = new BigDecimal("0.00");
+            io.println("Please enter a value between 1 - 6");
         }
 
         return returnValue;
+    }
+
+    public void displayChange(int quarters, int dimes, int nickels) {
+        displayBanner("Please Take Your Change");
+        println("Quarters: " + quarters);
+        println("Dimes: " + dimes);
+        println("Nickels: " + nickels);
+    }
+
+    public void displayNoChangeDue() {
+        displayBanner("No change due");
     }
 
     public void displayBanner(String banner) {
@@ -132,7 +144,7 @@ public class VendingMachineView {
 
     public void displayErrorMessage(String errorMsg) {
         io.println("=== ERROR ===");
-        io.print(errorMsg);
+        io.println(errorMsg);
     }
 
     public String prompt(String prompt) {
