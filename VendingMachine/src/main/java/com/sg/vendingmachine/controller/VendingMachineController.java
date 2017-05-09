@@ -9,6 +9,7 @@ package com.sg.vendingmachine.controller;
 import com.sg.vendingmachine.Change;
 import com.sg.vendingmachine.VendingMachineMenu;
 import com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException;
+import com.sg.vendingmachine.dao.VendingMachineNoItemInventoryException;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Item;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
@@ -39,7 +40,7 @@ public class VendingMachineController {
 
         while (keepGoing) {
             //try {
-            availableProducts = getAllAvailableItems();
+            availableProducts = getAllItems();
 
             if (availableProducts.size() <= 0) {
                 soldOutMessage();
@@ -83,6 +84,17 @@ public class VendingMachineController {
 
     }
 
+    public List<Item> getAllItems() {
+        List<Item> allItems = null;
+        try {
+            allItems = service.getAllItems();
+        } catch (VendingMachinePersistenceException e) {
+            view.println(e.getMessage());
+        }
+        return allItems;
+
+    }
+
     public void addCash() {
         // add cash to the user account
 
@@ -123,15 +135,18 @@ public class VendingMachineController {
         try {
             selectedItem = service.getItem(itemId);
 
+            // make sure the item is available
+            service.validateAvailability(selectedItem);
+
             // validate sufficient funds available
             service.validateFunds(selectedItem);
 
-            // there are enough funds to purchase the product.
+            // item is available and there are enough funds to purchase the product.
             // item is being dispensed
             view.displayDispenseItem(selectedItem);
             service.dispenseItem(selectedItem);
 
-            // adjust the users cash balance
+            // adjust cash in the vending machine
             service.setBalance(service.getBalance().subtract(selectedItem.getPrice()));
 
             // calculate change
@@ -142,7 +157,7 @@ public class VendingMachineController {
             // reset the balance to zero
             service.setBalance(BigDecimal.ZERO);
 
-        } catch (VendingMachinePersistenceException | VendingMachineInsufficientFundsException e) {
+        } catch (VendingMachinePersistenceException | VendingMachineInsufficientFundsException | VendingMachineNoItemInventoryException e) {
             view.displayErrorMessage(e.getMessage());
         }
     }

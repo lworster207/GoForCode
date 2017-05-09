@@ -64,10 +64,10 @@ public class VendingMachineView {
 
     public void displayAvailableProducts(List<Item> availableItems) {
         //System.out.println("Product Id         Name         Price");
-        System.out.printf("%10s  %10s  %10s\n", "Product ID", "   Name   ", "  Price  ");
+        System.out.printf("%10s  %10s  %10s %10s\n", "Product ID", "   Name   ", "  Price  ", "  Inventory  ");
         for (Item product : availableItems) {
             //System.out.println(product.getItemId() + " " + product.getName() + " " + product.getPrice());
-            System.out.printf("%10s  %10s  %10s\n", product.getItemId(), product.getName(), product.getPrice());
+            System.out.printf("%10s  %10s  %10s %10d\n", product.getItemId(), product.getName(), product.getPrice(), product.getQuantity());
         }
     }
 

@@ -29,11 +29,31 @@
    
     <bean id="auditDaoStub" 
        class="com.sg.classroster.dao.ClassRosterAuditDaoStubImpl"/>
-   
+    
+    <bean id="auditDao" 
+       class="com.sg.classroster.dao.ClassRosterAuditDaoFileImpl"/>
+       
     <bean id="serviceLayer" 
        class="com.sg.classroster.service.ClassRosterServiceLayerImpl">
         <constructor-arg ref="classRosterDaoStub"/>
         <constructor-arg ref="auditDaoStub"/>           
     </bean>
-   
+    
+    <bean id="loggingAdvice" class="com.sg.classroster.advice.LoggingAdvice">
+        <constructor-arg ref="auditDao"/>
+    </bean>
+   <aop:config>
+    <aop:aspect ref="loggingAdvice">
+        <aop:after-returning
+            method="createAuditEntry"
+            pointcut="execution(* com.sg.classroster.service.ClassRosterServiceLayer.createStudent(..))"
+         />
+
+        <aop:after-returning
+            method="createAuditEntry"
+            pointcut="execution(* com.sg.classroster.service.ClassRosterServiceLayer.removeStudent(..))"
+        />
+
+      </aop:aspect>
+  </aop:config>
 </beans>

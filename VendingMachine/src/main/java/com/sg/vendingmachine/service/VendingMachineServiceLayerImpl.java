@@ -8,6 +8,7 @@ package com.sg.vendingmachine.service;
 import com.sg.vendingmachine.dao.VendingMachineAuditDao;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException;
+import com.sg.vendingmachine.dao.VendingMachineNoItemInventoryException;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Item;
 import java.math.BigDecimal;
@@ -64,9 +65,16 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     }
 
     @Override
+    public void validateAvailability(Item item) throws VendingMachineNoItemInventoryException {
+        if (item.getQuantity() < 1) {
+            throw new VendingMachineNoItemInventoryException("Item is not available");
+        }
+    }
+
+    @Override
     public void validateFunds(Item item) throws VendingMachineInsufficientFundsException, VendingMachinePersistenceException {
         // see if there are enough funds to make the purchase
-        auditDao.writeAuditEntry("validateFunds against  " + item.getPrice().toString());
+        //auditDao.writeAuditEntry("validateFunds against  " + item.getPrice().toString());
         if (this.userBalance.compareTo(item.getPrice()) < 0) {
             throw new VendingMachineInsufficientFundsException("Insufficient Funds for this purchase.");
         }

@@ -262,3 +262,30 @@
 2017-05-09T10:47:26.781 : validateFunds against  1.50
 2017-05-09T10:47:26.781 : dispenseItem Coke
 2017-05-09T10:47:26.799 : getAllAvailableItems 
+2017-05-09T11:42:53.476 : getAllAvailableItems 
+2017-05-09T11:43:06.327 : getAllAvailableItems 
+2017-05-09T11:43:20.508 : getItem id:B2
+2017-05-09T11:43:20.508 : validateFunds against  1.25
+2017-05-09T11:43:20.508 : dispenseItem Sprite
+2017-05-09T11:43:20.508 : getAllAvailableItems 
+2017-05-09T15:24:16.162 : getAllItems 
+2017-05-09T15:25:07.927 : getItem id:A1
+2017-05-09T15:25:07.927 : validateFunds against  1.50
+2017-05-09T15:25:07.927 : getAllItems 
+2017-05-09T15:49:54.979 : getAllItems 
+2017-05-09T15:51:23.327 : getAllItems 
+2017-05-09T15:52:14.422 : getAllItems 
+2017-05-09T15:52:25.679 : getAllItems 
+2017-05-09T15:52:32.008 : getItem id:A1
+2017-05-09T15:52:32.008 : validateFunds against  1.50
+2017-05-09T15:52:32.008 : dispenseItem Coke
+2017-05-09T15:52:32.009 : getAllItems 
+2017-05-09T15:52:39.843 : getAllItems 
+2017-05-09T15:52:45.167 : getItem id:A1
+2017-05-09T15:52:45.168 : getAllItems 
+2017-05-09T15:58:04.302 : getAllItems 
+2017-05-09T15:58:13.583 : getAllItems 
+2017-05-09T15:59:22.230 : getAllItems 
+2017-05-09T15:59:31.360 : getAllItems 
+2017-05-09T15:59:35.289 : getItem id:A1
+2017-05-09T15:59:35.290 : getAllItems 
