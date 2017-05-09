@@ -17,13 +17,7 @@ public class Change {
     public int dimes;
     public int nickels;
 
-    public Change() {
-        this.dimes = 0;
-        this.nickels = 0;
-        this.quarters = 0;
-    }
-
-    public void makeChange(BigDecimal amount) {
+    public Change(BigDecimal amount) {
 
         BigDecimal oneHundred = new BigDecimal("100");
 
@@ -51,30 +45,21 @@ public class Change {
         }
     }
 
-    public void dispenseChange() {
-
-        // change was made ( and dispensed ) - reset change coin counters to zeros.
-        this.quarters = 0;
-        this.nickels = 0;
-        this.dimes = 0;
-
-    }
-
-    public Boolean changeIsDue() {
+    public boolean changeIsDue() {
         // return true if any of the counts are not zero
         return (this.quarters != 0 || this.dimes != 0 || this.nickels != 0);
     }
 
     public int getQuarters() {
-        return this.quarters;
+        return quarters;
     }
 
     public int getDimes() {
-        return this.dimes;
+        return dimes;
     }
 
     public int getNickels() {
-        return this.nickels;
+        return nickels;
     }
 
 }

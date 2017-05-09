@@ -5,7 +5,6 @@
  */
 package com.sg.vendingmachine.service;
 
-import com.sg.vendingmachine.ChangeNoChangeDueException;
 import com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Item;
@@ -17,14 +16,6 @@ import java.util.List;
  * @author apprentice
  */
 public interface VendingMachineServiceLayer {
-
-    public String getName(Item item) throws VendingMachinePersistenceException;
-
-    public int getQuantity(Item item) throws VendingMachinePersistenceException;
-
-    public void setQuantity(Item item, int quantity) throws VendingMachinePersistenceException;
-
-    public BigDecimal getPrice(Item item) throws VendingMachinePersistenceException;
 
     public Item getItem(String itemId) throws VendingMachinePersistenceException;
 
@@ -40,19 +31,8 @@ public interface VendingMachineServiceLayer {
 
     public Item removeItem(Item item) throws VendingMachinePersistenceException;
 
-    public BigDecimal getBalance() throws VendingMachinePersistenceException;
+    public BigDecimal getBalance();
 
-    public void setBalance(BigDecimal balance) throws VendingMachinePersistenceException;
+    public void setBalance(BigDecimal balance);
 
-    public void makeChange(BigDecimal balance) throws ChangeNoChangeDueException, VendingMachinePersistenceException;
-
-    public void dispenseChange() throws VendingMachinePersistenceException;
-
-    public Boolean changeIsDue();
-
-    public int getQuarters();
-
-    public int getNickels();
-
-    public int getDimes();
 }

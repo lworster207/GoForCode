@@ -21,7 +21,7 @@ import org.junit.Test;
  */
 public class ClassRosterDaoTest {
 
-    private ClassRosterDao dao = new ClassRosterAuditDaoFileImpl();
+    private ClassRosterDao dao = new ClassRosterDaoFileImpl();
 
     public ClassRosterDaoTest() {
     }

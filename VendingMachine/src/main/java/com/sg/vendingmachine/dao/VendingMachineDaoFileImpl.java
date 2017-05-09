@@ -32,25 +32,21 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     public VendingMachineDaoFileImpl(String itemsFileName) {
         this.itemsFile = itemsFileName;
-        /*try {
-            loadItems();
-        } catch (VendingMachinePersistenceException e) {
-         */
     }
 
     @Override
     public String getName(Item item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return item.getName();
     }
 
     @Override
     public int getQuantity(Item item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return item.getQuantity();
     }
 
     @Override
     public BigDecimal getPrice(Item item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return item.getPrice();
     }
 
     @Override

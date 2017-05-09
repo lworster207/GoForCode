@@ -5,12 +5,12 @@
  */
 package com.sg.vendingmachine.ui;
 
+import com.sg.vendingmachine.Change;
 import com.sg.vendingmachine.VendingMachineMenu;
 import static com.sg.vendingmachine.VendingMachineMenu.ADDCASH;
 import static com.sg.vendingmachine.VendingMachineMenu.CANCEL;
 import static com.sg.vendingmachine.VendingMachineMenu.EXIT;
 import static com.sg.vendingmachine.VendingMachineMenu.PURCHASEITEM;
-import com.sg.vendingmachine.dao.VendingMachineExitGetCashMenuException;
 import com.sg.vendingmachine.dto.Item;
 import java.math.BigDecimal;
 import java.util.List;
@@ -71,63 +71,105 @@ public class VendingMachineView {
         }
     }
 
-    public BigDecimal displayInsertCash(BigDecimal currentBalance) throws VendingMachineExitGetCashMenuException {
+    public String displayAvailableProductsAndGetItemId(List<Item> availableItems) {
+        //System.out.println("Product Id         Name         Price");
+        List<Item> selectedItem;
+        String choice;
+        boolean keepGoing = true;
+        String retVal = null;
+
+        while (keepGoing) {
+            displayAvailableProducts(availableItems);
+            choice = io.readString("Enter product ID: ");
+            /* availableItems
+                    .stream()
+                    .filter(selectedItem->selectedItem.getItemId().equals(choice))
+                    .collect(Collectors.toList());
+             */
+
+            for (Item item : availableItems) {
+                if (item.getItemId().toUpperCase().equals(choice.toUpperCase())) {
+                    keepGoing = false;
+                    retVal = item.getItemId();
+                }
+            }
+            if (keepGoing) {
+                displayErrorMessage(choice + " is not a valid product Id.");
+            }
+        }
+        return retVal;
+
+    }
+
+    public BigDecimal displayInsertCash(BigDecimal currentBalance) {
         int choice = 4;
-        BigDecimal returnValue;
+
+        boolean keepEnteringCash = true;
+        BigDecimal runningBalance = currentBalance;
 
         // list Available Items...
         // List<Item> itemsToDisplay =
-        io.println("\nCurrent Balance: " + currentBalance);
-        io.println("\n");
-        displayBanner("Insert Cash Menu");
-        io.println("1. Insert a Dollar");
-        io.println("2. Insert a 50 cent piece");
-        io.println("3. Insert a Quarter");
-        io.println("4. Insert a Dime");
-        io.println("5. Insert a Nickel");
-        io.println("6. Exit");
+        do {
+            io.println("\nCurrent Balance: " + runningBalance.toString());
+            io.println("\n");
+            displayBanner("Insert Cash Menu");
+            io.println("1. Insert a Dollar");
+            io.println("2. Insert a 50 cent piece");
+            io.println("3. Insert a Quarter");
+            io.println("4. Insert a Dime");
+            io.println("5. Insert a Nickel");
+            io.println("6. Exit");
 
-        try {
             choice = io.readInt("Insert Cash Option? :.", 1, 6);
             switch (choice) {
                 case 1:
-                    returnValue = new BigDecimal("1.00");
+                    runningBalance = runningBalance.add(new BigDecimal("1.00"));
                     break;
                 case 2:
-                    returnValue = new BigDecimal("0.50");
+                    runningBalance = runningBalance.add(new BigDecimal("0.50"));
                     break;
                 case 3:
-                    returnValue = new BigDecimal("0.25");
+                    runningBalance = runningBalance.add(new BigDecimal("0.25"));
                     break;
                 case 4:
-                    returnValue = new BigDecimal("0.10");
+                    runningBalance = runningBalance.add(new BigDecimal("0.10"));
                     break;
                 case 5:
-                    returnValue = new BigDecimal("0.05");
+                    runningBalance = runningBalance.add(new BigDecimal("0.05"));
                     break;
                 case 6:
-                    throw new VendingMachineExitGetCashMenuException();
+                    keepEnteringCash = false;
                 default:
-                    returnValue = new BigDecimal("0.00");
                     break;
             }
-        } catch (NumberFormatException e) {
-            returnValue = new BigDecimal("0.00");
-            io.println("Please enter a value between 1 - 6");
+        } while (keepEnteringCash);
+
+        return runningBalance;
+    }
+
+    public void displayDispenseItem(Item item) {
+
+        io.println("Dispensing " + item.getName() + "...");
+
+    }
+
+    public void displayChange(Change change) {
+        if (change.changeIsDue()) {
+            displayBanner("Please Take Your Change");
+            println("Quarters: " + change.quarters);
+            println("Dimes: " + change.dimes);
+            println("Nickels: " + change.nickels);
+        } else {
+            displayBanner("No change due.");
         }
-
-        return returnValue;
     }
 
-    public void displayChange(int quarters, int dimes, int nickels) {
-        displayBanner("Please Take Your Change");
-        println("Quarters: " + quarters);
-        println("Dimes: " + dimes);
-        println("Nickels: " + nickels);
+    public void displaySoldOutMessage() {
+        io.println("The vending machine is Sold Out!. Sorry for the inconvenience.");
     }
 
-    public void displayNoChangeDue() {
-        displayBanner("No change due");
+    public void displayExitMessage() {
+        io.println("=====  Exiting  =====");
     }
 
     public void displayBanner(String banner) {

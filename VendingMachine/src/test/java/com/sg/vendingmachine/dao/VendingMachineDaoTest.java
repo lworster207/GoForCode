@@ -65,10 +65,10 @@ public class VendingMachineDaoTest {
         int itemCount;
         BigDecimal itemPrice;
 
-        Item item1 = new Item("1", "Item1", new BigDecimal("1.50"), 1);
-        Item item2 = new Item("2", "Item2", new BigDecimal("1.50"), 1);
-        Item item3 = new Item("3", "Item3", new BigDecimal("1.50"), 1);
-        Item item4 = new Item("4", "Item4", new BigDecimal("1.50"), 1);
+        Item item1 = new Item("A1", "Item1", new BigDecimal("1.50"), 1);
+        Item item2 = new Item("B2", "Item2", new BigDecimal("1.50"), 1);
+        Item item3 = new Item("C3", "Item3", new BigDecimal("1.50"), 1);
+        Item item4 = new Item("D4", "Item4", new BigDecimal("1.50"), 1);
 
         dao.addItem(item1.getItemId(), item1);
         dao.addItem(item2.getItemId(), item2);
@@ -118,10 +118,10 @@ public class VendingMachineDaoTest {
     public void testGetAllAvailableItems() throws Exception {
         // set one of the item quantities to zero.
 
-        Item item1 = new Item("1", "Item1", new BigDecimal("1.50"), 1);
-        Item item2 = new Item("2", "Item2", new BigDecimal("1.50"), 1);
-        Item item3 = new Item("3", "Item3", new BigDecimal("1.50"), 0);
-        Item item4 = new Item("4", "Item4", new BigDecimal("1.50"), 1);
+        Item item1 = new Item("A1", "Item1", new BigDecimal("1.50"), 1);
+        Item item2 = new Item("B2", "Item2", new BigDecimal("1.50"), 1);
+        Item item3 = new Item("C3", "Item3", new BigDecimal("1.50"), 0);
+        Item item4 = new Item("D4", "Item4", new BigDecimal("1.50"), 1);
 
         List<Item> allItemsList;
 
@@ -138,10 +138,10 @@ public class VendingMachineDaoTest {
     public void testGetAllAvailableItemsNoItemsAvailable() throws Exception {
         // set all of the item quantities to zero. simulates machine is sold out
 
-        Item item1 = new Item("1", "Item1", new BigDecimal("1.50"), 0);
-        Item item2 = new Item("2", "Item2", new BigDecimal("1.50"), 0);
-        Item item3 = new Item("3", "Item3", new BigDecimal("1.50"), 0);
-        Item item4 = new Item("4", "Item4", new BigDecimal("1.50"), 0);
+        Item item1 = new Item("A1", "Item1", new BigDecimal("1.50"), 0);
+        Item item2 = new Item("B2", "Item2", new BigDecimal("1.50"), 0);
+        Item item3 = new Item("C3", "Item3", new BigDecimal("1.50"), 0);
+        Item item4 = new Item("D4", "Item4", new BigDecimal("1.50"), 0);
 
         List<Item> allItemsList;
 
@@ -159,10 +159,10 @@ public class VendingMachineDaoTest {
      */
     @Test
     public void testGetAllItems() throws Exception {
-        Item item1 = new Item("1", "Item1", new BigDecimal("1.50"), 1);
-        Item item2 = new Item("2", "Item2", new BigDecimal("1.50"), 1);
-        Item item3 = new Item("3", "Item3", new BigDecimal("1.50"), 1);
-        Item item4 = new Item("4", "Item4", new BigDecimal("1.50"), 1);
+        Item item1 = new Item("A1", "Item1", new BigDecimal("1.50"), 1);
+        Item item2 = new Item("B2", "Item2", new BigDecimal("1.50"), 1);
+        Item item3 = new Item("C3", "Item3", new BigDecimal("1.50"), 1);
+        Item item4 = new Item("D4", "Item4", new BigDecimal("1.50"), 1);
 
         List<Item> allItemsList = dao.getAllItems();
 
@@ -184,7 +184,7 @@ public class VendingMachineDaoTest {
      */
     @Test
     public void testAddGetItem() throws Exception {
-        Item item = new Item("1", "Item1", new BigDecimal("1.50"), 1);
+        Item item = new Item("A1", "Item1", new BigDecimal("1.50"), 1);
 
         dao.addItem(item.getItemId(), item);
 
@@ -195,10 +195,10 @@ public class VendingMachineDaoTest {
 
     @Test
     public void testRemoveItem() throws Exception {
-        Item item1 = new Item("1", "Item1", new BigDecimal("1.50"), 1);
-        Item item2 = new Item("2", "Item2", new BigDecimal("1.50"), 1);
-        Item item3 = new Item("3", "Item3", new BigDecimal("1.50"), 1);
-        Item item4 = new Item("4", "Item4", new BigDecimal("1.50"), 1);
+        Item item1 = new Item("A1", "Item1", new BigDecimal("1.50"), 1);
+        Item item2 = new Item("B2", "Item2", new BigDecimal("1.50"), 1);
+        Item item3 = new Item("C3", "Item3", new BigDecimal("1.50"), 1);
+        Item item4 = new Item("D4", "Item4", new BigDecimal("1.50"), 1);
 
         Item removedItem;
 
@@ -211,7 +211,7 @@ public class VendingMachineDaoTest {
         List<Item> allItemsList = dao.getAllItems();
 
         assertEquals(4, allItemsList.size());
-        removedItem = dao.removeItem("1");
+        removedItem = dao.removeItem(item1.getItemId());
         assertEquals(item1, removedItem);
 
         allItemsList = dao.getAllItems();

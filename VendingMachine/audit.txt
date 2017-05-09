@@ -130,3 +130,135 @@
 2017-05-08T22:11:29.494 : getBalance
 2017-05-08T22:11:37.338 : getBalance
 2017-05-08T22:11:37.338 : makeChange for0.00
+2017-05-08T22:28:43.683 : getAllAvailableItems 
+2017-05-08T22:28:43.888 : getBalance
+2017-05-08T22:28:59.668 : getBalance
+2017-05-08T22:29:00.672 : getBalance
+2017-05-08T22:29:00.672 : setBalance 1.00
+2017-05-08T22:29:00.672 : getBalance
+2017-05-08T22:29:00.974 : getBalance
+2017-05-08T22:29:00.974 : setBalance 1.50
+2017-05-08T22:29:00.974 : getBalance
+2017-05-08T22:29:01.481 : getBalance
+2017-05-08T22:29:01.481 : setBalance 1.75
+2017-05-08T22:29:01.481 : getBalance
+2017-05-08T22:29:03.695 : getBalance
+2017-05-08T22:29:03.695 : setBalance 1.85
+2017-05-08T22:29:03.696 : getBalance
+2017-05-08T22:29:07.735 : getAllAvailableItems 
+2017-05-08T22:29:07.736 : getBalance
+2017-05-08T22:29:14.871 : getItem id:2
+2017-05-08T22:29:14.871 : validateFunds against  1.25
+2017-05-08T22:29:14.871 : dispenseItem Sprite
+2017-05-08T22:29:14.872 : getBalance
+2017-05-08T22:29:14.873 : setBalance 0.60
+2017-05-08T22:29:14.873 : getBalance
+2017-05-08T22:29:14.873 : makeChange for0.60
+2017-05-08T22:29:14.873 : dispenseChange for  0.60
+2017-05-08T22:29:14.873 : getAllAvailableItems 
+2017-05-08T22:29:14.874 : getBalance
+2017-05-08T22:29:22.842 : getBalance
+2017-05-08T22:29:22.842 : makeChange for0.00
+2017-05-09T07:06:02.419 : getAllAvailableItems 
+2017-05-09T07:06:11.294 : getAllAvailableItems 
+2017-05-09T07:06:23.879 : getItem id:4
+2017-05-09T07:06:23.880 : validateFunds against  1.95
+2017-05-09T07:06:23.880 : dispenseItem Water
+2017-05-09T07:06:23.883 : makeChange for0.05
+2017-05-09T07:06:23.898 : dispenseChange for  0.05
+2017-05-09T07:06:23.898 : getAllAvailableItems 
+2017-05-09T07:06:29.330 : makeChange for0.00
+2017-05-09T07:07:15.083 : getAllAvailableItems 
+2017-05-09T07:08:05.862 : getAllAvailableItems 
+2017-05-09T07:08:08.774 : getItem id:1
+2017-05-09T07:08:08.775 : validateFunds against  1.50
+2017-05-09T07:08:08.775 : dispenseItem Coke
+2017-05-09T07:08:08.776 : makeChange for0.35
+2017-05-09T07:08:08.777 : dispenseChange for  0.35
+2017-05-09T07:08:08.777 : getAllAvailableItems 
+2017-05-09T07:08:15.828 : makeChange for0.00
+2017-05-09T07:13:45.603 : getAllAvailableItems 
+2017-05-09T07:13:53.261 : getAllAvailableItems 
+2017-05-09T07:13:56.171 : getItem id:1
+2017-05-09T07:13:56.171 : validateFunds against  1.50
+2017-05-09T07:13:56.171 : dispenseItem Coke
+2017-05-09T07:13:56.172 : makeChange for0.50
+2017-05-09T07:13:56.173 : dispenseChange for  0.50
+2017-05-09T07:13:56.173 : getAllAvailableItems 
+2017-05-09T07:14:00.083 : makeChange for0.00
+2017-05-09T08:41:35.164 : getAllAvailableItems 
+2017-05-09T08:41:45.013 : getAllAvailableItems 
+2017-05-09T08:41:50.536 : getItem id:5
+2017-05-09T08:44:44.948 : getAllAvailableItems 
+2017-05-09T08:44:52.398 : getAllAvailableItems 
+2017-05-09T08:44:57.463 : getItem id:A1
+2017-05-09T08:44:57.463 : validateFunds against  1.50
+2017-05-09T08:44:57.463 : dispenseItem Coke
+2017-05-09T08:44:57.464 : makeChange for0.50
+2017-05-09T08:44:57.464 : dispenseChange for  0.50
+2017-05-09T08:44:57.464 : getAllAvailableItems 
+2017-05-09T08:45:05.605 : getAllAvailableItems 
+2017-05-09T08:45:10.955 : getItem id:E1
+2017-05-09T08:47:40.121 : getAllAvailableItems 
+2017-05-09T08:49:00.260 : getAllAvailableItems 
+2017-05-09T08:49:08.318 : getAllAvailableItems 
+2017-05-09T08:49:27.557 : getItem id:D4
+2017-05-09T08:49:27.558 : validateFunds against  1.95
+2017-05-09T08:49:27.558 : dispenseItem Water
+2017-05-09T08:49:27.560 : makeChange for0.05
+2017-05-09T08:49:27.563 : dispenseChange for  0.05
+2017-05-09T08:49:27.565 : getAllAvailableItems 
+2017-05-09T08:50:40.424 : getAllAvailableItems 
+2017-05-09T08:50:49.519 : getAllAvailableItems 
+2017-05-09T08:51:04.439 : getItem id:A1
+2017-05-09T08:51:04.440 : validateFunds against  1.50
+2017-05-09T08:51:04.440 : dispenseItem Coke
+2017-05-09T08:51:04.441 : makeChange for0.75
+2017-05-09T08:51:04.442 : dispenseChange for  0.75
+2017-05-09T08:51:04.442 : getAllAvailableItems 
+2017-05-09T08:51:07.087 : makeChange for0.00
+2017-05-09T09:19:10.836 : getAllAvailableItems 
+2017-05-09T09:19:20.215 : getAllAvailableItems 
+2017-05-09T09:19:26.445 : getItem id:C3
+2017-05-09T09:19:26.445 : validateFunds against  1.70
+2017-05-09T09:19:26.445 : dispenseItem Pepsi
+2017-05-09T09:19:26.446 : makeChange for0.15
+2017-05-09T09:19:26.446 : getAllAvailableItems 
+2017-05-09T09:19:36.078 : makeChange for0.15
+2017-05-09T09:21:24.866 : getAllAvailableItems 
+2017-05-09T09:21:35.060 : getAllAvailableItems 
+2017-05-09T09:21:44.025 : getItem id:B2
+2017-05-09T09:21:44.025 : validateFunds against  1.25
+2017-05-09T09:21:44.025 : dispenseItem Sprite
+2017-05-09T09:21:44.026 : makeChange for0.75
+2017-05-09T09:21:44.026 : getAllAvailableItems 
+2017-05-09T09:21:49.952 : makeChange for0
+2017-05-09T09:21:49.953 : getAllAvailableItems 
+2017-05-09T09:21:54.680 : makeChange for0
+2017-05-09T09:37:35.529 : getAllAvailableItems 
+2017-05-09T09:37:43.112 : getAllAvailableItems 
+2017-05-09T09:37:47.040 : getItem id:D4
+2017-05-09T09:37:47.041 : validateFunds against  1.95
+2017-05-09T09:37:47.042 : dispenseItem Water
+2017-05-09T09:37:47.048 : getAllAvailableItems 
+2017-05-09T10:35:49.755 : getAllAvailableItems 
+2017-05-09T10:35:58.197 : getAllAvailableItems 
+2017-05-09T10:36:13.092 : getAllAvailableItems 
+2017-05-09T10:38:14.755 : getAllAvailableItems 
+2017-05-09T10:40:28.715 : getAllAvailableItems 
+2017-05-09T10:41:15.701 : getAllAvailableItems 
+2017-05-09T10:41:26.135 : getAllAvailableItems 
+2017-05-09T10:42:31.033 : getAllAvailableItems 
+2017-05-09T10:44:01.376 : getAllAvailableItems 
+2017-05-09T10:44:13.485 : getAllAvailableItems 
+2017-05-09T10:46:05.142 : getAllAvailableItems 
+2017-05-09T10:46:15.205 : getAllAvailableItems 
+2017-05-09T10:46:55.498 : getAllAvailableItems 
+2017-05-09T10:47:09.290 : getAllAvailableItems 
+2017-05-09T10:47:18.236 : getItem id:D4
+2017-05-09T10:47:18.236 : validateFunds against  1.95
+2017-05-09T10:47:18.236 : getAllAvailableItems 
+2017-05-09T10:47:26.781 : getItem id:A1
+2017-05-09T10:47:26.781 : validateFunds against  1.50
+2017-05-09T10:47:26.781 : dispenseItem Coke
+2017-05-09T10:47:26.799 : getAllAvailableItems 

@@ -6,25 +6,23 @@
 package com.sg.addressbook;
 
 import com.sg.addressbook.controller.AddressBookController;
-import com.sg.addressbook.dao.AddressBookDao;
-import com.sg.addressbook.dao.AddressBookDaoImpl;
-import com.sg.addressbook.ui.AddressBookView;
-import com.sg.addressbook.ui.UserIO;
-import com.sg.addressbook.ui.UserIOConsoleImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- *
- * @author apprentice
- */
 public class App {
 
     public static void main(String[] args) {
-        UserIO myIo = new UserIOConsoleImpl();
+
+        /* UserIO myIo = new UserIOConsoleImpl();
         AddressBookView myView = new AddressBookView(myIo);
         AddressBookDao myDao = new AddressBookDaoImpl();
 
         AddressBookController controller
                 = new AddressBookController(myDao, myView);
+
+         */
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        AddressBookController controller = ctx.getBean("controller", AddressBookController.class);
         controller.run();
     }
 }
