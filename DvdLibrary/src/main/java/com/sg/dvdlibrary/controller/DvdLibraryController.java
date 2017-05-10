@@ -5,6 +5,7 @@
  */
 package com.sg.dvdlibrary.controller;
 
+import com.sg.dvdlibrary.dao.DvdLibraryAuditDao;
 import com.sg.dvdlibrary.dao.DvdLibraryDao;
 import com.sg.dvdlibrary.dao.DvdLibraryDaoException;
 import com.sg.dvdlibrary.dto.Dvd;
@@ -20,6 +21,7 @@ public class DvdLibraryController {
 // properties
     DvdLibraryDao dao;
     DvdLibraryView view;
+    DvdLibraryAuditDao auditDao;
 
     public final int DISPLAY_ALL = 1;
     public final int FIND_DVD = 2;
