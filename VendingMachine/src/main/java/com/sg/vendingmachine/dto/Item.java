@@ -59,6 +59,11 @@ public class Item {
     }
 
     @Override
+    public String toString() {
+        return "ID: " + itemId + " |Name: " + name + " |Price: " + price.toString() + " |Quantity: " + quantity;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 97 * hash + Objects.hashCode(this.itemId);

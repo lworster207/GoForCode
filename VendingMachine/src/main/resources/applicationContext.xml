@@ -34,5 +34,13 @@
             <constructor-arg ref="service"/>
             <constructor-arg ref="myView"/>
         </bean>
-       
-    </beans>
+        <bean id="loggingAdvice" class="com.sg.vendingmachine.advice.LoggingAdvice">
+            <constructor-arg ref="auditDao"/>
+        </bean>
+        <aop:config>
+          <aop:aspect ref="loggingAdvice">
+            <aop:pointcut id="pointCutAfterThrowing"    expression="execution(* com.sg.vendingmachine.service.VendingMachineServiceLayer.validate*(..))" />  
+            <aop:after-throwing method="createAuditExceptionEntry" throwing="error" pointcut-ref="pointCutAfterThrowing" />         
+            </aop:aspect>
+        </aop:config>
+        </beans>

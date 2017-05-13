@@ -1,0 +1,24 @@
+2017-05-12T13:10:19.804 : getAllItems 
+2017-05-12T13:10:28.289 : getItem id:A1
+2017-05-12T13:10:28.335 : validateAvailability: ID: A1 |Name: Coke |Price: 1.50 |Quantity: 0class com.sg.vendingmachine.dao.VendingMachineNoItemInventoryException
+2017-05-12T13:10:28.340 : getAllItems 
+2017-05-12T13:10:35.729 : getAllItems 
+2017-05-12T13:10:40.771 : getItem id:B2
+2017-05-12T13:10:40.771 : validateFunds: ID: B2 |Name: Sprite |Price: 1.25 |Quantity: 8class com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException
+2017-05-12T13:10:40.772 : getAllItems 
+2017-05-12T16:09:45.981 : getAllItems 
+2017-05-12T16:10:00.948 : getAllItems 
+2017-05-12T16:10:06.491 : getItem id:A1
+2017-05-12T16:10:06.515 : validateAvailability: ID: A1 |Name: Coke |Price: 1.50 |Quantity: 0 Exception: class com.sg.vendingmachine.dao.VendingMachineNoItemInventoryException
+2017-05-12T16:10:06.524 : getAllItems 
+2017-05-12T16:10:20.601 : getItem id:C3
+2017-05-12T16:10:20.601 : validateFunds: ID: C3 |Name: Pepsi |Price: 1.70 |Quantity: 9 Exception: class com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException
+2017-05-12T16:10:20.601 : getAllItems 
+2017-05-12T22:14:01.414 : getAllItems 
+2017-05-12T22:14:13.152 : getAllItems 
+2017-05-12T22:14:18.078 : getItem id:A1
+2017-05-12T22:14:18.097 : validateAvailability: ID: A1 |Name: Coke |Price: 1.50 |Quantity: 0 Exception: class com.sg.vendingmachine.dao.VendingMachineNoItemInventoryException
+2017-05-12T22:14:18.102 : getAllItems 
+2017-05-12T22:14:28.150 : getItem id:B2
+2017-05-12T22:14:28.150 : validateFunds: ID: B2 |Name: Sprite |Price: 1.25 |Quantity: 8 Exception: class com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException
+2017-05-12T22:14:28.150 : getAllItems 
