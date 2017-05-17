@@ -5,6 +5,9 @@
  */
 package com.sg.flooringmaster.ui;
 
+import com.sg.flooringmaster.dto.Order;
+import java.util.List;
+
 /**
  *
  * @author apprentice
@@ -62,4 +65,32 @@ public class FlooringMasterView {
         io.println(errorMsg);
     }
 
+    public String getDate() {
+        return io.readString("Order Date?");
+
+    }
+
+    public void displayOrders(List<Order> orderList) {
+        String delimiter = " | ";
+        for (Order order : orderList) {
+            io.println(order.getOrderNumber() + delimiter
+                    + order.getCustomerName() + delimiter
+                    + order.getStateTaxRate().getState() + delimiter
+                    + order.getStateTaxRate().getTaxRate() + delimiter
+                    + order.getProduct().getProductType() + delimiter
+                    + order.getArea() + delimiter
+                    + order.getMaterialCost() + delimiter
+                    + order.getLaborCost() + delimiter
+                    + order.getTax() + delimiter
+                    + order.getTotalCost());
+
+        }
+    }
+
+    public Order getNewOrder() {
+        Product product;
+
+        String customer = io.readString("Customer Name?");
+
+    }
 }

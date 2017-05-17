@@ -6,6 +6,7 @@
 package com.sg.flooringmaster.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  *
@@ -70,4 +71,99 @@ public class Order {
     public BigDecimal getTotalCost() {
         return totalCost;
     }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setStateTaxRate(TaxRate stateTaxRate) {
+        this.stateTaxRate = stateTaxRate;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
+
+    public void setMaterialCost(BigDecimal materialCost) {
+        this.materialCost = materialCost;
+    }
+
+    public void setLaborCost(BigDecimal laborCost) {
+        this.laborCost = laborCost;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + this.orderNumber;
+        hash = 47 * hash + Objects.hashCode(this.customerName);
+        hash = 47 * hash + Objects.hashCode(this.stateTaxRate);
+        hash = 47 * hash + Objects.hashCode(this.product);
+        hash = 47 * hash + Objects.hashCode(this.area);
+        hash = 47 * hash + Objects.hashCode(this.materialCost);
+        hash = 47 * hash + Objects.hashCode(this.laborCost);
+        hash = 47 * hash + Objects.hashCode(this.tax);
+        hash = 47 * hash + Objects.hashCode(this.totalCost);
+        return hash;
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Order other = (Order) obj;
+        if (this.orderNumber != other.orderNumber) {
+            return false;
+        }
+        if (!Objects.equals(this.customerName, other.customerName)) {
+            return false;
+        }
+        if (!Objects.equals(this.stateTaxRate, other.stateTaxRate)) {
+            return false;
+        }
+        if (!Objects.equals(this.product, other.product)) {
+            return false;
+        }
+        if (!Objects.equals(this.area, other.area)) {
+            return false;
+        }
+        if (!Objects.equals(this.materialCost, other.materialCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCost, other.laborCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.tax, other.tax)) {
+            return false;
+        }
+        if (!Objects.equals(this.totalCost, other.totalCost)) {
+            return false;
+        }
+        return true;
+    }
+
 }

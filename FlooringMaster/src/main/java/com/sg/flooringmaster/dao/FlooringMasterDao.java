@@ -6,7 +6,7 @@
 package com.sg.flooringmaster.dao;
 
 import com.sg.flooringmaster.dto.Order;
-import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -14,13 +14,15 @@ import java.time.LocalDate;
  */
 public interface FlooringMasterDao {
 
-    public Order getOrder(LocalDate orderDate, int orderNumber);
+    public Order getOrder(String orderDate, String orderNumber);
 
-    public Order addOrder(LocalDate orderDate, Order newOrder);
+    public Order addOrder(String orderDate, Order newOrder);
 
-    public Order removeOrder(LocalDate orderDate, int orderNumber);
+    public Order removeOrder(String orderDate, String orderNumber);
 
-    public boolean getOrdersByDate(String date);
+    public OrderDay getOrderDayByDate(String date);
+
+    public List<Order> getOrdersByDate(String date);
 
     public void saveAllOrders();
 

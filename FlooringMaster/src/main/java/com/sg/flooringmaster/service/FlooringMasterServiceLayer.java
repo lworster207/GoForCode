@@ -5,8 +5,9 @@
  */
 package com.sg.flooringmaster.service;
 
+import com.sg.flooringmaster.dao.OrderDay;
 import com.sg.flooringmaster.dto.Order;
-import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -14,13 +15,15 @@ import java.time.LocalDate;
  */
 public interface FlooringMasterServiceLayer {
 
-    public Order getOrder(LocalDate ld, int orderNumber);
+    public Order getOrder(String ld, String orderNumber);
 
-    public Order addOrder(Order order);
+    public Order addOrder(String ld, Order order);
 
-    public Order removeOrder(LocalDate ld, int orderNumber);
+    public Order removeOrder(String ld, String orderNumber);
 
-    public void getOrdersByDate(String date);
+    public OrderDay getOrderDayByDate(String date);
+
+    public List<Order> getOrdersByDate(String date);
 
     public void saveAllOrders();
 }
