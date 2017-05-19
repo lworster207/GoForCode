@@ -36,6 +36,37 @@ public class Order {
         this.totalCost = totalCost;
     }
 
+    //Order(orderNumber,customerName,area,product,taxrate);
+    public Order(int orderNumber, String customerName, TaxRate stateTaxRate, Product product, BigDecimal area) {
+        this.orderNumber = orderNumber;
+        this.customerName = customerName;
+        this.stateTaxRate = stateTaxRate;
+        this.product = product;
+        this.area = area;
+        this.materialCost = area.multiply(this.product.getCostPerSquareFoot()).setScale(2, BigDecimal.ROUND_HALF_UP);
+        this.laborCost = area.multiply(this.product.getLaborCostPerSquareFoot()).setScale(2, BigDecimal.ROUND_HALF_UP);
+        this.tax = calculateTax();
+        this.totalCost = (this.tax.add(this.laborCost).add(this.materialCost)).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+    }
+
+    public Order() {
+        this.orderNumber = 0;
+        this.customerName = null;
+        this.stateTaxRate = null;
+        this.product = null;
+        this.area = null;
+        this.materialCost = null;
+        this.laborCost = null;
+        this.tax = null;
+        this.totalCost = null;
+    }
+
+    private BigDecimal calculateTax() {
+        // tax = ( stateTaxRate/100 ) * (laborCost + MaterialCost)
+        return ((stateTaxRate.getTaxRate().divide(new BigDecimal("100.00"))).multiply(this.laborCost.add(this.materialCost))).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
     public int getOrderNumber() {
         return orderNumber;
     }
@@ -106,6 +137,14 @@ public class Order {
 
     public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
+    }
+
+    @Override
+    public String toString() {
+        return orderNumber + " | " + customerName + " | " + stateTaxRate.getState() + " | " + stateTaxRate.getTaxRate().toString() + " | "
+                + product.getProductType() + " | " + area.toString() + " | " + product.getCostPerSquareFoot().toString() + " | "
+                + product.getLaborCostPerSquareFoot().toString() + " | " + materialCost.toString() + " | "
+                + laborCost.toString() + " | " + tax.toString() + " | " + totalCost.toString();
     }
 
     @Override

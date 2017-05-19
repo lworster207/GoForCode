@@ -8,6 +8,7 @@ package com.sg.flooringmaster.ui;
 import com.sg.flooringmaster.dto.Order;
 import com.sg.flooringmaster.dto.Product;
 import com.sg.flooringmaster.dto.TaxRate;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -72,6 +73,10 @@ public class FlooringMasterView {
 
     }
 
+    public String getCustomerName() {
+        return io.readString("Customer Name?");
+    }
+
     public void displayOrders(List<Order> orderList) {
         String delimiter = " | ";
         for (Order order : orderList) {
@@ -89,9 +94,40 @@ public class FlooringMasterView {
         }
     }
 
-    public Order getNewOrder(List<TaxRate> taxes, List<Product> products) {
+    public int getOrderNumber(List<Order> orders) {
+        int orderNumber = io.readInt("Enter the order number");
+        return orderNumber;
+    }
 
-        String customer = io.readString("Customer Name?");
+    public void displayProductTypeMenu(List<Product> products) {
+        // display the list of available product types
+        io.println("Available Product Types");
+        for (Product cp : products) {
+            System.out.println(cp.getProductType());
+        }
+    }
 
+    public String getProductTypeOption(List<Product> products) {
+        // return the product type as entered by the user
+        displayProductTypeMenu(products);
+        return io.readString("Enter the product type: ");
+    }
+
+    public void displayTaxRateMenu(List<TaxRate> taxrates) {
+        // display the list of TaxRates
+        io.println("Available States:");
+        for (TaxRate tr : taxrates) {
+            io.println(tr.getState());
+        }
+    }
+
+    public String getStateOption(List<TaxRate> taxrates) {
+        // return the state as entered by the user
+        displayTaxRateMenu(taxrates);
+        return io.readString("Enter the state: ");
+    }
+
+    public BigDecimal getArea() {
+        return io.readBigDecimal("Area");
     }
 }

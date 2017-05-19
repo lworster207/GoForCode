@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface TaxRateDao {
 
-    public TaxRate getTaxRate(String state);
+    public TaxRate getTaxRate(String state) throws TaxRateNotFoundException;
 
     public List<TaxRate> getAllTaxRates();
 

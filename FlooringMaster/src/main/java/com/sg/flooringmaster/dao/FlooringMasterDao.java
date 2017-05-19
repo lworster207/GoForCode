@@ -22,7 +22,7 @@ public interface FlooringMasterDao {
 
     public OrderDay getOrderDayByDate(String date);
 
-    public List<Order> getOrdersByDate(String date);
+    public List<Order> getOrdersByDate(String date) throws FlooringMasterNoOrdersForDateException;
 
     public void saveAllOrders();
 

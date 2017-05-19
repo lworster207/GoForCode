@@ -5,6 +5,7 @@
  */
 package com.sg.flooringmaster.ui;
 
+import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -99,6 +100,11 @@ public class UserIOConsoleImpl implements UserIO {
     @Override
     public String readString(String prompt) {
         System.out.println(prompt);
+        return (readString());
+    }
+
+    @Override
+    public String readString() {
         return (userInput.nextLine());
     }
 
@@ -132,4 +138,28 @@ public class UserIOConsoleImpl implements UserIO {
 
     }
 
+    @Override
+    public BigDecimal readBigDecimal(String prompt) {
+        Boolean invalidEntry = true;
+        BigDecimal bd = null;
+
+        while (invalidEntry) {
+            //System.out.println(prompt);
+            /*
+            int month = readInt("Month: ", minMonth, maxMonth);
+            int day = readInt("Day: ", minDay, maxDay);
+            int year = readInt("Year: ", minYear, maxYear);
+             */
+
+            try {
+                bd = new BigDecimal(readDouble(prompt));
+
+                invalidEntry = false;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid value entered.");
+            }
+            //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        return bd;
+    }
 }

@@ -32,9 +32,13 @@ public class TaxRateDaoFileImpl implements TaxRateDao {
     }
 
     @Override
-    public TaxRate getTaxRate(String state) {
-        return taxrates.get(state);
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public TaxRate getTaxRate(String state) throws TaxRateNotFoundException {
+        TaxRate taxrate = taxrates.get(state);
+        if (taxrate == null) {
+            throw new TaxRateNotFoundException(state + " is an invalid state option");
+        }
+
+        return taxrate;
     }
 
     @Override

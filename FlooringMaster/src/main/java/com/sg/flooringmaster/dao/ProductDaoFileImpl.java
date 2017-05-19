@@ -7,6 +7,7 @@ package com.sg.flooringmaster.dao;
 
 import static com.sg.flooringmaster.dao.TaxRateDaoFileImpl.DELIMITER;
 import com.sg.flooringmaster.dto.Product;
+import com.sg.flooringmaster.dto.ProductNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -30,8 +31,13 @@ public class ProductDaoFileImpl implements ProductDao {
     }
 
     @Override
-    public Product getProduct(String name) {
+    public Product getProduct(String name) throws ProductNotFoundException {
+        Product retProduct = products.get(name);
+        if (retProduct == null) {
+            throw new ProductNotFoundException(name + " is not a valid Product.");
+        }
         return products.get(name);
+
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -78,7 +84,7 @@ public class ProductDaoFileImpl implements ProductDao {
                     Product product = new Product(
                             currentTokens[0], // product type
                             new BigDecimal(currentTokens[1]),
-                            new BigDecimal(currentTokens[1]));
+                            new BigDecimal(currentTokens[2]));
                     products.put(product.getProductType(), product);
                 }
 

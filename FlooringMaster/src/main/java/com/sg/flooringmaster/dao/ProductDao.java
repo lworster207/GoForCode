@@ -6,6 +6,7 @@
 package com.sg.flooringmaster.dao;
 
 import com.sg.flooringmaster.dto.Product;
+import com.sg.flooringmaster.dto.ProductNotFoundException;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface ProductDao {
 
-    public Product getProduct(String name);
+    public Product getProduct(String name) throws ProductNotFoundException;
 
     public List<Product> getAllProducts();
 }

@@ -73,7 +73,6 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
     @Override
     public Order removeOrder(String orderDate, String orderNumber) {
         return orders.get(orderDate).removeOrder(orderNumber);
-        //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -144,7 +143,7 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
     }
 
     @Override
-    public List<Order> getOrdersByDate(String date) {
+    public List<Order> getOrdersByDate(String date) throws FlooringMasterNoOrdersForDateException {
         OrderDay orderday = orders.get(date);
 
         if (orderday == null) {
@@ -153,7 +152,7 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
             orderday = orders.get(date);
 
             if (orderday == null) {
-                return null;
+                throw new FlooringMasterNoOrdersForDateException("No orders found for date: " + date);
             }
         }
 
