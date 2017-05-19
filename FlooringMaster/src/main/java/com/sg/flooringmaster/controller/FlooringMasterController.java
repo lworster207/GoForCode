@@ -5,7 +5,13 @@
  */
 package com.sg.flooringmaster.controller;
 
+import com.sg.flooringmaster.dao.ProductDao;
+import com.sg.flooringmaster.dao.ProductDaoFileImpl;
+import com.sg.flooringmaster.dao.TaxRateDao;
+import com.sg.flooringmaster.dao.TaxRateDaoFileImpl;
 import com.sg.flooringmaster.dto.Order;
+import com.sg.flooringmaster.dto.Product;
+import com.sg.flooringmaster.dto.TaxRate;
 import com.sg.flooringmaster.service.FlooringMasterServiceLayer;
 import com.sg.flooringmaster.ui.FlooringMasterView;
 import java.util.List;
@@ -18,6 +24,8 @@ public class FlooringMasterController {
 
     private FlooringMasterView view;
     private FlooringMasterServiceLayer service;
+    public TaxRateDao stateTaxes = new TaxRateDaoFileImpl();
+    public ProductDao products = new ProductDaoFileImpl();
 
     public FlooringMasterController(FlooringMasterServiceLayer service, FlooringMasterView view) {
         this.view = view;
@@ -59,13 +67,16 @@ public class FlooringMasterController {
             }
 
         }
-
     }
 
     public void addOrder() {
-        List<Product> products
-                = Order newOrder = view.getNewOrder();
 
+        List<TaxRate> taxRates = stateTaxes.getAllTaxRates();
+        List<Product> allProducts = products.getAllProducts();
+
+        view.displayBanner("taxRate cout is " + taxRates.size());
+        view.displayBanner("Products: " + allProducts.size());
+        // List<Product> products                = Order newOrder = view.getNewOrder();
     }
 
     public void displayOrders() {

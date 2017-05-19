@@ -5,10 +5,16 @@
  */
 package com.sg.flooringmaster.dao;
 
+import com.sg.flooringmaster.dto.Product;
+import java.util.List;
+
 /**
  *
  * @author apprentice
  */
-public class ProductDao {
+public interface ProductDao {
 
+    public Product getProduct(String name);
+
+    public List<Product> getAllProducts();
 }

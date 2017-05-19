@@ -6,7 +6,7 @@
 package com.sg.flooringmaster.dao;
 
 import static com.sg.flooringmaster.dao.TaxRateDaoFileImpl.DELIMITER;
-import com.sg.flooringmaster.dto.TaxRate;
+import com.sg.flooringmaster.dto.Product;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,48 +21,36 @@ import java.util.stream.Collectors;
  *
  * @author apprentice
  */
-public class TaxRateDaoFileImpl implements TaxRateDao {
+public class ProductDaoFileImpl implements ProductDao {
 
-    public static final String DELIMITER = ",";
+    Map<String, Product> products = new HashMap<>();
 
-    public Map<String, TaxRate> taxrates = new HashMap<>();
-
-    public TaxRateDaoFileImpl() {
-        loadTaxRates();
+    public ProductDaoFileImpl() {
+        loadProducts();
     }
 
     @Override
-    public TaxRate getTaxRate(String state) {
-        return taxrates.get(state);
+    public Product getProduct(String name) {
+        return products.get(name);
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<TaxRate> getAllTaxRates() {
-        String taxFile = "taxes.txt";
-        Scanner scanner = null;
-        List<TaxRate> retList = null;
-
-        if (taxrates.size() == 0) {
-            // load the tax file - check for exception
-            //  loadTaxRates();
-
-        }
-
-        return taxrates.values().stream().collect(Collectors.toList());
-
+    public List<Product> getAllProducts() {
+        return products.values().stream().collect(Collectors.toList());
+        //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void loadTaxRates() {
-        String taxFile = "taxes.txt";
+    private void loadProducts() {
+        String productFile = "products.txt";
         Scanner scanner = null;
-        List<TaxRate> retList = null;
+        List<Product> retList = null;
 
         try {
             // Create Scanner for reading the file
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader(taxFile)));
+                            new FileReader(productFile)));
         } catch (FileNotFoundException e) {
             //            throw new VendingMachinePersistenceException(
             //                    "-_- Could not load item data from file: " + orderFile, e);
@@ -83,14 +71,15 @@ public class TaxRateDaoFileImpl implements TaxRateDao {
                 // System.out.println("current data line: " + currentLine);
                 // break up the line into tokens
                 currentTokens = currentLine.split(DELIMITER);
-                if (currentTokens[0].equals("State")) {
+                if (currentTokens[0].equals("ProductType")) {
                     // need to skip
                 } else {
 
-                    TaxRate taxrate = new TaxRate(
+                    Product product = new Product(
                             currentTokens[0], // product type
+                            new BigDecimal(currentTokens[1]),
                             new BigDecimal(currentTokens[1]));
-                    taxrates.put(taxrate.getState(), taxrate);
+                    products.put(product.getProductType(), product);
                 }
 
             }
@@ -98,4 +87,5 @@ public class TaxRateDaoFileImpl implements TaxRateDao {
         }
 
     }
+
 }

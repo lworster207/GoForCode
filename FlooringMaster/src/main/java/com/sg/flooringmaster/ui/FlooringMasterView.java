@@ -6,6 +6,8 @@
 package com.sg.flooringmaster.ui;
 
 import com.sg.flooringmaster.dto.Order;
+import com.sg.flooringmaster.dto.Product;
+import com.sg.flooringmaster.dto.TaxRate;
 import java.util.List;
 
 /**
@@ -87,8 +89,7 @@ public class FlooringMasterView {
         }
     }
 
-    public Order getNewOrder() {
-        Product product;
+    public Order getNewOrder(List<TaxRate> taxes, List<Product> products) {
 
         String customer = io.readString("Customer Name?");
 
