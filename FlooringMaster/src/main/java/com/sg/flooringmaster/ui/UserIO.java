@@ -42,4 +42,6 @@ public interface UserIO {
 
     LocalDate readLocalDate(String prompt, int minMonth, int maxMonth, int minDay, int maxDay, int minYear, int maxYear);
 
+    String getNextLine(String prompt) throws UserIONoValueException;
+
 }

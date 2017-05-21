@@ -9,6 +9,8 @@ import com.sg.flooringmaster.dto.Order;
 import com.sg.flooringmaster.dto.Product;
 import com.sg.flooringmaster.dto.TaxRate;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -68,30 +70,38 @@ public class FlooringMasterView {
         io.println(errorMsg);
     }
 
-    public String getDate() {
-        return io.readString("Order Date?");
+    public String getDate() throws UserIONoValueException {
+        LocalDate ld = io.readLocalDate("Order Date? ", 1, 12, 1, 31, 2016, 2017);
+        String formatted = ld.format(DateTimeFormatter.ofPattern("MMddyy"));
+        return formatted;
+        //return io.getNextLine("Order Date?");
 
     }
 
-    public String getCustomerName() {
-        return io.readString("Customer Name?");
+    public String getCustomerName() throws UserIONoValueException {
+        return io.getNextLine("Customer Name?");
     }
 
     public void displayOrders(List<Order> orderList) {
-        String delimiter = " | ";
-        for (Order order : orderList) {
-            io.println(order.getOrderNumber() + delimiter
-                    + order.getCustomerName() + delimiter
-                    + order.getStateTaxRate().getState() + delimiter
-                    + order.getStateTaxRate().getTaxRate() + delimiter
-                    + order.getProduct().getProductType() + delimiter
-                    + order.getArea() + delimiter
-                    + order.getMaterialCost() + delimiter
-                    + order.getLaborCost() + delimiter
-                    + order.getTax() + delimiter
-                    + order.getTotalCost());
 
+        for (Order order : orderList) {
+            displayOrder(order);
         }
+    }
+
+    public void displayOrder(Order order) {
+        String delimiter = " | ";
+        io.println(order.getOrderNumber() + delimiter
+                + order.getCustomerName() + delimiter
+                + order.getStateTaxRate().getState() + delimiter
+                + order.getStateTaxRate().getTaxRate() + delimiter
+                + order.getProduct().getProductType() + delimiter
+                + order.getArea() + delimiter
+                + order.getMaterialCost() + delimiter
+                + order.getLaborCost() + delimiter
+                + order.getTax() + delimiter
+                + order.getTotalCost());
+
     }
 
     public int getOrderNumber(List<Order> orders) {
@@ -121,13 +131,82 @@ public class FlooringMasterView {
         }
     }
 
+    public BigDecimal getArea() {
+        return io.readBigDecimal("Area");
+    }
+
     public String getStateOption(List<TaxRate> taxrates) {
         // return the state as entered by the user
         displayTaxRateMenu(taxrates);
         return io.readString("Enter the state: ");
     }
 
-    public BigDecimal getArea() {
-        return io.readBigDecimal("Area");
+    public BigDecimal getEditArea(Order order) {
+        BigDecimal area;
+        try {
+            area = new BigDecimal(io.getNextLine("Area (" + order.getArea() + ")"));
+            return area;
+        } catch (UserIONoValueException e) {
+            return order.getArea();
+        }
     }
+
+    public String getEditDate(String curDate) {
+        try {
+            return io.getNextLine("Date? (" + curDate + ")");
+        } catch (UserIONoValueException e) {
+            return curDate;
+        }
+
+    }
+
+    public String getEditCustomerName(Order order) {
+        try {
+            return io.getNextLine("Customer Name? (" + order.getCustomerName() + ")");
+        } catch (UserIONoValueException e) {
+            return order.getCustomerName();
+        }
+    }
+
+    public String getEditProductTypeOption(Order order, List<Product> products) {
+        // return the product type as entered by the user
+        displayProductTypeMenu(products);
+        try {
+            return io.getNextLine("Enter the product type: (" + order.getProduct().getProductType() + ")");
+        } catch (UserIONoValueException e) {
+            return order.getProduct().getProductType();
+        }
+    }
+
+    public String getEditStateOption(Order order, List<TaxRate> taxrates) {
+        // return the state as entered by the user
+        displayTaxRateMenu(taxrates);
+        try {
+            return io.getNextLine("Enter the state: (" + order.getStateTaxRate().getState() + ")");
+        } catch (UserIONoValueException e) {
+            return order.getStateTaxRate().getState();
+        }
+
+    }
+
+    public String getConfirmation(String prompt) {
+        String retVal = null;
+        boolean invalidData = true;
+
+        while (invalidData) {
+            try {
+                retVal = io.getNextLine(prompt);
+                if (retVal.toUpperCase().equals("Y") || retVal.toUpperCase().equals("N")) {
+                    invalidData = false;
+                } else {
+                    displayErrorMessage("Invalid entry - Please enter Y or N.");
+                }
+
+            } catch (UserIONoValueException e) {
+                displayErrorMessage("Please enter Y or N.");
+            }
+        }
+        return retVal.toUpperCase();
+    }
+
 }

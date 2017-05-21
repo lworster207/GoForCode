@@ -105,7 +105,8 @@ public class UserIOConsoleImpl implements UserIO {
 
     @Override
     public String readString() {
-        return (userInput.nextLine());
+        String retString = userInput.nextLine();
+        return retString;
     }
 
     @Override
@@ -156,10 +157,20 @@ public class UserIOConsoleImpl implements UserIO {
 
                 invalidEntry = false;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid value entered.");
+                System.out.println(e.getMessage());
             }
             //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
         return bd;
+    }
+
+    @Override
+    public String getNextLine(String prompt) throws UserIONoValueException {
+        System.out.println(prompt);
+        String retVal = userInput.nextLine();
+        if (retVal.equals("")) {
+            throw new UserIONoValueException();
+        }
+        return retVal;
     }
 }
