@@ -77,7 +77,7 @@ public class FlooringMasterView {
 
         while (invalidData) {
             try {
-                ld = io.readLocalDate("Order Date? ", 1, 12, 1, 31, 2016, 2017);
+                ld = io.readLocalDate("Order Date? ", 1, 12, 1, 31, 2000, 2050);
                 formatted = ld.format(DateTimeFormatter.ofPattern("MMddyy"));
                 invalidData = false;
             } catch (NumberFormatException e) {
@@ -180,7 +180,8 @@ public class FlooringMasterView {
 
     public String getEditDate(String curDate) {
         try {
-            return io.getNextLine("Date? (" + curDate + ")");
+            println("Date? (" + curDate + ")");
+            return getDate();
         } catch (UserIONoValueException e) {
             return curDate;
         }

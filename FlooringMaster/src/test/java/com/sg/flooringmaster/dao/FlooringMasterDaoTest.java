@@ -86,7 +86,7 @@ public class FlooringMasterDaoTest {
      * Test of getOrdersByDate method, of class FlooringMasterDao.
      */
     @Test
-    public void testGetOrdersByDate() {
+    public void testGetOrdersByDate() throws Exception {
 
         Product product = new Product("Steel", new BigDecimal("5.95"), new BigDecimal("8.95"));
         TaxRate taxrate = new TaxRate("Maine", new BigDecimal("7.5"));

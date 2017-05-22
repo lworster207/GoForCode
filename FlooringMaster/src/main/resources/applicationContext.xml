@@ -32,9 +32,8 @@
                 <constructor-arg ref="flooringMasterDao"/>          
             </bean>            
             <bean id="controller" class="com.sg.flooringmaster.controller.FlooringMasterController">
-                 <constructor-arg ref="serviceLayer"/>
-                 <constructor-arg ref="view"/>   
-                 <constructor-arg ref="serviceLayerStub"/>
-                 <constructor-arg value="test"/>        
+                <constructor-arg ref="serviceLayer"/> 
+                <!-- use serviceLayerStub for training -->
+                <constructor-arg ref="view"/>         
             </bean>    
 </beans>

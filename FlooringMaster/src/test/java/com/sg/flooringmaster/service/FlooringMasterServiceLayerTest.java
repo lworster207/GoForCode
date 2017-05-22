@@ -7,7 +7,6 @@ package com.sg.flooringmaster.service;
 
 import com.sg.flooringmaster.dao.FlooringMasterDao;
 import com.sg.flooringmaster.dao.FlooringMasterDaoFileImpl;
-import com.sg.flooringmaster.dao.OrderDay;
 import com.sg.flooringmaster.dto.Order;
 import com.sg.flooringmaster.dto.Product;
 import com.sg.flooringmaster.dto.TaxRate;
@@ -31,7 +30,7 @@ public class FlooringMasterServiceLayerTest {
     public FlooringMasterServiceLayerTest() {
         FlooringMasterDao dao = new FlooringMasterDaoFileImpl();
 
-        service = new FlooringMasterServiceLayerImpl();
+        service = new FlooringMasterServiceLayerImpl(dao);
     }
 
     @BeforeClass
@@ -73,53 +72,44 @@ public class FlooringMasterServiceLayerTest {
     }
 
     /**
-     * Test of addOrder method, of class FlooringMasterServiceLayer.
-     */
-    @Test
-    public void testAddOrder() {
-    }
-
-    /**
      * Test of removeOrder method, of class FlooringMasterServiceLayer.
      */
     @Test
-    public void testRemoveOrder() {
+    public void testRemoveOrder() throws Exception {
+        Product product = new Product("Steel", new BigDecimal("5.95"), new BigDecimal("8.95"));
+        TaxRate taxrate = new TaxRate("Maine", new BigDecimal("7.5"));
+
+        Order newOrder = new Order(10, "custName", taxrate, product, new BigDecimal("100"), new BigDecimal("495.75"), new BigDecimal("1495.75"), new BigDecimal("295.00"), new BigDecimal("1895.00"));
+        Order newOrder2 = new Order(11, "custName", taxrate, product, new BigDecimal("100"), new BigDecimal("495.75"), new BigDecimal("1495.75"), new BigDecimal("295.00"), new BigDecimal("1895.00"));
+        Order newOrder3 = new Order(12, "custName", taxrate, product, new BigDecimal("100"), new BigDecimal("495.75"), new BigDecimal("1495.75"), new BigDecimal("295.00"), new BigDecimal("1895.00"));
+
+        Order expOrder;
+
+        List<Order> testOrders;
+
+        expOrder = service.addOrder("testservicedate", newOrder);
+        expOrder = service.addOrder("testservicedate", newOrder2);
+        expOrder = service.addOrder("testservicedate", newOrder3);
+
+        testOrders = service.getOrdersByDate("testservicedate");
+
+        assertEquals(3, testOrders.size());
+        Integer orderNumber = newOrder.getOrderNumber();
+        service.removeOrder("testservicedate", orderNumber.toString());
+
+        testOrders = service.getOrdersByDate("testservicedate");
+        assertEquals(2, testOrders.size());
+
     }
 
     /**
      * Test of getOrderDayByDate method, of class FlooringMasterServiceLayer.
      */
-    @Test
-    public void testGetOrderDayByDate() {
-    }
-
     /**
      * Test of saveAllOrders method, of class FlooringMasterServiceLayer.
      */
     @Test
     public void testSaveAllOrders() {
-    }
-
-    public class FlooringMasterServiceLayerImpl implements FlooringMasterServiceLayer {
-
-        public Order getOrder(String ld, String orderNumber) {
-            return null;
-        }
-
-        public Order addOrder(String ld, Order order) {
-            return null;
-        }
-
-        public Order removeOrder(String ld, String orderNumber) {
-            return null;
-        }
-
-        public OrderDay getOrderDayByDate(String date) {
-            return null;
-        }
-
-        public void saveAllOrders() {
-        }
     }
 
 }
