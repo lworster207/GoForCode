@@ -108,7 +108,6 @@ public class VendingMachineController {
         // calculate change
         Change change = new Change(service.getBalance());
         view.displayChange(change);
-        service.setBalance(BigDecimal.ZERO);
     }
 
     private VendingMachineMenu getMainMenuSelection() {

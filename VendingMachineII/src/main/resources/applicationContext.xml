@@ -28,6 +28,7 @@
         <bean id="auditDao" class="com.sg.vendingmachine.dao.VendingMachineAuditDaoFileImpl"/>
         <bean id="service" class="com.sg.vendingmachine.service.VendingMachineServiceLayerImpl">
             <constructor-arg ref="myDao"/>
+            <constructor-arg ref="auditDao"/>
         </bean>        
         <bean id="controller" class="com.sg.vendingmachine.controller.VendingMachineController">
             <constructor-arg ref="service"/>
@@ -38,12 +39,8 @@
         </bean>
         <aop:config>
           <aop:aspect ref="loggingAdvice">
-            <aop:pointcut id="pointCutAfterThrowing"    expression="execution(* com.sg.vendingmachine.service.VendingMachineServiceLayer.validateAvailability(..))" />  
+            <aop:pointcut id="pointCutAfterThrowing"    expression="execution(* com.sg.vendingmachine.service.VendingMachineServiceLayer.validate*(..))" />  
             <aop:after-throwing method="createAuditExceptionEntry" throwing="error" pointcut-ref="pointCutAfterThrowing" />         
-          </aop:aspect>
-          <aop:aspect ref="loggingAdvice">
-            <aop:pointcut id="pointCutAfterThrowing"    expression="execution(* com.sg.vendingmachine.service.VendingMachineServiceLayer.validateFunds(..))" />  
-            <aop:after-throwing method="createAuditExceptionEntryII" throwing="error" pointcut-ref="pointCutAfterThrowing" />         
-          </aop:aspect>
+            </aop:aspect>
         </aop:config>
         </beans>

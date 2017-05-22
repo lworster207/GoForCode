@@ -22,19 +22,3 @@
 2017-05-12T22:14:28.150 : getItem id:B2
 2017-05-12T22:14:28.150 : validateFunds: ID: B2 |Name: Sprite |Price: 1.25 |Quantity: 8 Exception: class com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException
 2017-05-12T22:14:28.150 : getAllItems 
-2017-05-22T16:22:15.531 : getAllItems 
-2017-05-22T16:22:40.734 : getItem id:A1
-2017-05-22T16:22:40.734 : getAllItems 
-2017-05-22T16:22:50.407 : getAllItems 
-2017-05-22T16:23:03.779 : getAllItems 
-2017-05-22T16:23:11.317 : getAllItems 
-2017-05-22T16:23:14.935 : getAllItems 
-2017-05-22T16:23:28.071 : getAllItems 
-2017-05-22T16:23:37.512 : getItem id:D4
-2017-05-22T16:23:37.519 : dispenseItem Water
-2017-05-22T16:23:37.550 : getAllItems 
-2017-05-22T16:23:48.453 : getAllItems 
-2017-05-22T16:23:56.447 : getItem id:C3
-2017-05-22T16:23:56.452 : validateFunds: ID: C3 |Name: Pepsi |Price: 1.70 |Quantity: 9 Exception: class com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException
-2017-05-22T16:23:56.457 : getAllItems 
-2017-05-22T16:24:06.194 : getAllItems 

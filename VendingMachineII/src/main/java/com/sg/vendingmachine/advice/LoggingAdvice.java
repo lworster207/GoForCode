@@ -11,8 +11,6 @@ package com.sg.vendingmachine.advice;
  * and open the template in the editor.
  */
 import com.sg.vendingmachine.dao.VendingMachineAuditDao;
-import com.sg.vendingmachine.dao.VendingMachineInsufficientFundsException;
-import com.sg.vendingmachine.dao.VendingMachineNoItemInventoryException;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import org.aspectj.lang.JoinPoint;
 
@@ -42,22 +40,7 @@ public class LoggingAdvice {
         }
     }
 
-    public void createAuditExceptionEntry(JoinPoint jp, VendingMachineNoItemInventoryException error) {
-        Object[] args = jp.getArgs();
-        String auditEntry = jp.getSignature().getName() + ": ";
-        String exceptionInfo = " Exception: " + error.getClass().toString();
-        for (Object currentArg : args) {
-            auditEntry += currentArg;
-        }
-        try {
-            auditDao.writeAuditEntry(auditEntry + exceptionInfo);
-        } catch (VendingMachinePersistenceException e) {
-            System.err.println(
-                    "ERROR: Could not create audit entry in LoggingAdvice.");
-        }
-    }
-
-    public void createAuditExceptionEntryII(JoinPoint jp, VendingMachineInsufficientFundsException error) {
+    public void createAuditExceptionEntry(JoinPoint jp, Throwable error) {
         Object[] args = jp.getArgs();
         String auditEntry = jp.getSignature().getName() + ": ";
         String exceptionInfo = " Exception: " + error.getClass().toString();
