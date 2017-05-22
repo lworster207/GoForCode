@@ -222,10 +222,10 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
             }
             // close scanner
             scanner.close();
-            System.out.println("ordersRead: " + dayOrders.getSize());
+            //System.out.println("ordersRead: " + dayOrders.getSize());
             // now store the days orders in the global orders Map.
             orders.put(date, dayOrders);
-            System.out.println("ordersDays: " + orders.size());
+            // System.out.println("ordersDays: " + orders.size());
         }
     }
 

@@ -71,8 +71,20 @@ public class FlooringMasterView {
     }
 
     public String getDate() throws UserIONoValueException {
-        LocalDate ld = io.readLocalDate("Order Date? ", 1, 12, 1, 31, 2016, 2017);
-        String formatted = ld.format(DateTimeFormatter.ofPattern("MMddyy"));
+        LocalDate ld = null;
+        String formatted = null;
+        boolean invalidData = true;
+
+        while (invalidData) {
+            try {
+                ld = io.readLocalDate("Order Date? ", 1, 12, 1, 31, 2016, 2017);
+                formatted = ld.format(DateTimeFormatter.ofPattern("MMddyy"));
+                invalidData = false;
+            } catch (NumberFormatException e) {
+                displayErrorMessage("Invalid entry for date.");
+            }
+        }
+
         return formatted;
         //return io.getNextLine("Order Date?");
 
@@ -132,7 +144,22 @@ public class FlooringMasterView {
     }
 
     public BigDecimal getArea() {
-        return io.readBigDecimal("Area");
+        boolean invalidData = true;
+        BigDecimal retVal = null;
+
+        while (invalidData) {
+            try {
+                retVal = io.readBigDecimal("Area");
+                if (retVal != null) {
+                    invalidData = false;
+                } else {
+                    displayErrorMessage("Invalid entry for area value.");
+                }
+            } catch (NumberFormatException e) {
+                displayErrorMessage("Invalid entry for area value.");
+            }
+        }
+        return retVal;
     }
 
     public String getStateOption(List<TaxRate> taxrates) {

@@ -26,19 +26,22 @@ public class FlooringMasterController {
     private FlooringMasterView view;
     private FlooringMasterServiceLayer service;
 
+    private boolean changesToSave;
+
     public FlooringMasterController(FlooringMasterServiceLayer service, FlooringMasterView view, FlooringMasterServiceLayer stubService, String env) {
+        // allow the service to be determined at runtime - based on the env argument value.
         this.view = view;
         if (env.toLowerCase().equals("production")) {
             this.service = service;
         } else {
             this.service = stubService;
         }
+        changesToSave = false;
 
     }
 
     public void run() {
-        Order order;
-        Order order2;
+        // run until exit is chosen
 
         boolean keepGoing = true;
         int option = 0;
@@ -68,6 +71,7 @@ public class FlooringMasterController {
                     break;
                 case 6:
                     // quit
+                    exitApp();
                     keepGoing = false;
                     break;
             }
@@ -75,26 +79,43 @@ public class FlooringMasterController {
         }
     }
 
+    public void exitApp() {
+        if (changesToSave) {
+            String confirmation = view.getConfirmation("You have unsaved changes, do you want to save them?");
+            if (confirmation.toLowerCase().equals("y")) {
+                saveChanges();
+            }
+        }
+    }
+
     public void saveChanges() {
+        // save All the Orders at their current state.
         service.saveAllOrders();
+        changesToSave = false;
     }
 
     public void editOrder() {
+        // allow changes to an existing order.
         String date = null;
         List<Order> orderList = null;
         Order orderToEdit = null;
         Integer orderNumber;
 
         try {
+            // get the Order date
             date = view.getDate();
 
+            // get and display orders for that date
             orderList = service.getOrdersByDate(date);
             view.displayOrders(orderList);
 
+            // get the order number to edit,  from those orders
             orderNumber = view.getOrderNumber(orderList);
             orderToEdit = service.getOrder(date, orderNumber.toString());
 
+            // edit the Order.
             editTheOrder(date, orderToEdit);
+            displayOrdersForDate(date);
 
         } catch (FlooringMasterNoOrdersForDateException | UserIONoValueException e) {
             System.out.println(e.getClass().getName());
@@ -106,6 +127,7 @@ public class FlooringMasterController {
     }
 
     public void removeOrder() {
+        // remove an order from the runtime order list
         String date = null;
         List<Order> orderList = null;
         Order orderToRemove = null;
@@ -113,19 +135,28 @@ public class FlooringMasterController {
         Integer orderNumber;
 
         try {
+            // get the order date and display orders
             date = view.getDate();
             orderList = service.getOrdersByDate(date);
             view.displayOrders(orderList);
 
+            // get the order number to remove
             orderNumber = view.getOrderNumber(orderList);
             orderToRemove = service.getOrder(date, orderNumber.toString());
+
+            // display the order
             view.displayOrder(orderToRemove);
+
+            // confirm the removal
             String confirmation = view.getConfirmation("Remove this order?");
             if (confirmation.toLowerCase().equals("y")) {
+                // remove the order from the runtime orders
                 orderToRemove = service.removeOrder(date, orderNumber.toString());
+                changesToSave = true;
             }
+            displayOrdersForDate(date);
         } catch (FlooringMasterNoOrdersForDateException | UserIONoValueException e) {
-            System.out.println(e.getClass().getName());
+            //System.out.println(e.getClass().getName());
             if (e.getClass().getName().contains("FlooringMasterNoOrdersForDateException")) {
                 view.displayErrorMessage("No orders found for date: " + date);
             }
@@ -135,9 +166,12 @@ public class FlooringMasterController {
 
     public void createOrder() {
 
+        // create a new order
         Order order = new Order();
         Boolean invalidData = true;
+        List<Order> orderList = null;
 
+        // get the next order number.
         int orderNumber = service.getNextOrderNumber();
 
         Product product = null;
@@ -148,7 +182,7 @@ public class FlooringMasterController {
         String customerName = null;
         String prodType = null;
         String state = null;
-        String date = "testAdddate";
+        String date = "";
 
         List<TaxRate> taxRates = service.getAllTaxRates();
         List<Product> allProducts = service.getAllProducts();
@@ -156,8 +190,9 @@ public class FlooringMasterController {
         invalidData = true;
         while (invalidData) {
             try {
+                // get the Order date
                 date = view.getDate();
-                System.out.println("date: " + date);
+                // System.out.println("date: " + date);
                 invalidData = false;
             } catch (UserIONoValueException e) {
                 view.displayErrorMessage("You must enter a value for date.");
@@ -167,6 +202,7 @@ public class FlooringMasterController {
         invalidData = true;
         while (invalidData) {
             try {
+                // get the customer name
                 customerName = view.getCustomerName();
                 invalidData = false;
             } catch (UserIONoValueException e) {
@@ -200,24 +236,38 @@ public class FlooringMasterController {
 
         invalidData = true;
         while (invalidData) {
+
             area = view.getArea();
-            invalidData = false;
+            if (area != null) {
+                invalidData = false;
+            } else {
+                view.displayErrorMessage("Invalid value for Area. Please re-enter.");
+            }
+
         }
 
         Order newOrder = new Order(orderNumber, customerName, taxrate, product, area);
 
         view.displayOrder(newOrder);
 
-        String confirmation = view.getConfirmation("Save this order?");
+        String confirmation = view.getConfirmation("Add this order?");
         if (confirmation.toLowerCase().equals("y")) {
 
+            try {
+                service.getOrdersByDate(date);
+            } catch (FlooringMasterNoOrdersForDateException e) {
+                //  its really not an issue if there are no orders for this date.
+            }
+
             newOrder = service.addOrder(date, newOrder);
+            changesToSave = true;
 
-            view.displayBanner("NewOrder:" + newOrder.toString());
-
+            // view.displayBanner("NewOrder:" + newOrder.toString());
             //order = view.createNewOrder(taxRates, allProducts);
             // List<Product> products                = Order newOrder = view.getNewOrder();
         }
+
+        displayOrdersForDate(date);
 
     }
 
@@ -277,6 +327,7 @@ public class FlooringMasterController {
         if (confirmation.toLowerCase().equals("y")) {
             service.removeOrder(orderDate, orderNumber.toString());
             newOrder = service.addOrder(editDate, newOrder);
+            changesToSave = true;
             // saveChanges();
         }
 //        view.displayBanner("NewOrder: " + editDate + " | " + newOrder.toString());
@@ -287,13 +338,22 @@ public class FlooringMasterController {
         String date;
         try {
             date = view.getDate();
-
             List<Order> orderList = service.getOrdersByDate(date);
             view.displayOrders(orderList);
         } catch (FlooringMasterNoOrdersForDateException | UserIONoValueException e) {
             view.displayErrorMessage(e.getMessage());
         }
 
+    }
+
+    public void displayOrdersForDate(String date) {
+
+        try {
+            List<Order> orderList = service.getOrdersByDate(date);
+            view.displayOrders(orderList);
+        } catch (FlooringMasterNoOrdersForDateException e) {
+            view.displayErrorMessage(e.getMessage());
+        }
     }
 
 }

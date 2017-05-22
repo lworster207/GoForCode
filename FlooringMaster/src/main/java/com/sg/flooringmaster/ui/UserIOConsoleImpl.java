@@ -153,11 +153,10 @@ public class UserIOConsoleImpl implements UserIO {
              */
 
             try {
-                bd = new BigDecimal(readDouble(prompt));
-
+                bd = new BigDecimal(readString(prompt));
                 invalidEntry = false;
             } catch (NumberFormatException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Invalid data entered.");
             }
             //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
