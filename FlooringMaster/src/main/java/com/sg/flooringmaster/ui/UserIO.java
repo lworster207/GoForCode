@@ -26,9 +26,9 @@ public interface UserIO {
 
     float readFloat(String prompt, float min, float max);
 
-    int readInt(String prompt);
+    int readInt(String prompt) throws UserIONoValueException;
 
-    int readInt(String prompt, int min, int max);
+    int readInt(String prompt, int min, int max) throws UserIONoValueException;
 
     long readLong(String prompt);
 
@@ -40,7 +40,7 @@ public interface UserIO {
 
     BigDecimal readBigDecimal(String prompt);
 
-    LocalDate readLocalDate(String prompt, int minMonth, int maxMonth, int minDay, int maxDay, int minYear, int maxYear);
+    LocalDate readLocalDate(String prompt, int minMonth, int maxMonth, int minDay, int maxDay, int minYear, int maxYear) throws UserIONoValueException;
 
     String getNextLine(String prompt) throws UserIONoValueException;
 

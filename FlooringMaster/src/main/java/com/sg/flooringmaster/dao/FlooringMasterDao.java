@@ -24,7 +24,7 @@ public interface FlooringMasterDao {
 
     public List<Order> getOrdersByDate(String date) throws FlooringMasterNoOrdersForDateException;
 
-    public void saveAllOrders();
+    public void saveAllOrders() throws FlooringMasterDaoPersistenceException;
 
     public int getNextOrderNumber();
 

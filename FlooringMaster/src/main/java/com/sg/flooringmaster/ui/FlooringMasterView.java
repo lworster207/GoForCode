@@ -44,6 +44,8 @@ public class FlooringMasterView {
             choice = io.readInt("Main Menu Option? :", 1, 6);
         } catch (NumberFormatException e) {
             println("Please enter a number between 1-6");
+        } catch (UserIONoValueException e) {
+            println("Please enter a number between 1-6");
         }
         return choice;
 
@@ -96,8 +98,10 @@ public class FlooringMasterView {
 
     public void displayOrders(List<Order> orderList) {
 
-        for (Order order : orderList) {
-            displayOrder(order);
+        if (orderList != null) {
+            for (Order order : orderList) {
+                displayOrder(order);
+            }
         }
     }
 
@@ -117,7 +121,17 @@ public class FlooringMasterView {
     }
 
     public int getOrderNumber(List<Order> orders) {
-        int orderNumber = io.readInt("Enter the order number");
+        boolean invalidEntry = true;
+        int orderNumber = -1;
+
+        while (invalidEntry) {
+            try {
+                orderNumber = io.readInt("Enter the order number");
+                invalidEntry = false;
+            } catch (UserIONoValueException e) {
+                displayErrorMessage("Please enter a value.");
+            }
+        }
         return orderNumber;
     }
 

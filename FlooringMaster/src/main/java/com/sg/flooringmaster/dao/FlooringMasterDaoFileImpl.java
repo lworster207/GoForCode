@@ -76,9 +76,8 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
     }
 
     @Override
-    public void saveAllOrders() {
+    public void saveAllOrders() throws FlooringMasterDaoPersistenceException {
         writeOrders();
-        //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -145,31 +144,30 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
     @Override
     public List<Order> getOrdersByDate(String date) throws FlooringMasterNoOrdersForDateException {
         OrderDay orderday = orders.get(date);
+        List<Order> dayList = null;
 
         if (orderday == null) {
             // load a date file
             loadOrders(date);
             orderday = orders.get(date);
-
             if (orderday == null) {
                 throw new FlooringMasterNoOrdersForDateException("No orders found for date: " + date);
             }
         }
 
-        return orders.get(date).getAllOrders();
+        // order Day exists - get the list of orders
+        dayList = orderday.getAllOrders();
+        if (dayList.isEmpty()) {
+            throw new FlooringMasterNoOrdersForDateException("No orders found for date: " + date);
+        }
+
+        // return the list
+        return dayList;
     }
 
     private void loadOrders(String date) {
         Scanner scanner = null;
-        Product product;
-        TaxRate taxrate;
-
-        Order innerOrder;
-        // String ordersFile = "Orders_" + orderDate.toString() + ".txt";
         String ordersFile = "Orders_" + date + ".txt";
-
-        // HashMap<String, Order> dayOrders = new HashMap<>();
-        OrderDay dayOrders = new OrderDay();
 
         try {
             // Create Scanner for reading the file
@@ -177,27 +175,31 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
                     new BufferedReader(
                             new FileReader(ordersFile)));
         } catch (FileNotFoundException e) {
-            //scanner.close();
+            // no orders to read
             return;
         }
 
+        Product product;
+        TaxRate taxrate;
+
+        Order innerOrder;
+
+        OrderDay dayOrders = new OrderDay();
         // currentLine holds the most recent line read from the file
         String currentLine;
 
-        // order format:
+        // order file format:
         //OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
         String[] currentTokens;
-        // Go through the orders file line by line, decoding each line into a
-        // Order object.
+        // Go through the orders file line by line, decoding each line into an Order object.
         // Process while we have more lines in the file
         while (scanner.hasNextLine()) {
             // get the next line in the file
             currentLine = scanner.nextLine();
-            // System.out.println("current data line: " + currentLine);
             // break up the line into tokens
             currentTokens = currentLine.split(DELIMITER);
             if (currentTokens[0].equals("OrderNumber")) {
-                // need to skip
+                // heading line - need to skip
             } else {
                 // create the Product Object
                 product = new Product(
@@ -205,35 +207,28 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
                         new BigDecimal(currentTokens[6]), // costPerSF
                         new BigDecimal(currentTokens[7])); // laborCostPerSF
 
+                // create a TaxRate object
                 taxrate = new TaxRate(
                         currentTokens[2], // state
                         new BigDecimal(currentTokens[3]));  // taxrate
 
-                //   public Order(int orderNumber, String customerName, TaxRate stateTaxRate, Product product, BigDecimal area, BigDecimal materialCost, BigDecimal laborCost, BigDecimal tax, BigDecimal totalCost) {
+                // create a new Order object
                 Order currentOrder = new Order(Integer.parseInt(currentTokens[0]), currentTokens[1], taxrate, product, new BigDecimal(currentTokens[5]), new BigDecimal(currentTokens[8]), new BigDecimal(currentTokens[9]), new BigDecimal(currentTokens[10]), new BigDecimal(currentTokens[11]));
 
-                // Put the Order into the day map
-                // create the Order
+                // Add the Order into the day map
                 innerOrder = dayOrders.addOrder(currentTokens[0], currentOrder);
-
-                //   orders.put(LocalDate.now(), <currentOrder.getOrderNumber(), currentOrder>>);
             }
         }
         // close scanner
         scanner.close();
-        //System.out.println("ordersRead: " + dayOrders.getSize());
+
         // now store the days orders in the global orders Map.
         orders.put(date, dayOrders);
-        // System.out.println("ordersDays: " + orders.size());
 
     }
 
-    private void writeOrders() {
-        // NOTE FOR APPRENTICES: We are not handling the IOException - but
-        // we are translating it to an application specific exception and
-        // then simple throwing it (i.e. 'reporting' it) to the code that
-        // called us.  It is the responsibility of the calling code to
-        // handle any errors that occur.
+    private void writeOrders() throws FlooringMasterDaoPersistenceException {
+
         PrintWriter out = null;
         // for each day in orders, write out that days orders to a separate file
         // HashMap<String, HashMap<String, Order>> orderDay;
@@ -251,14 +246,9 @@ public class FlooringMasterDaoFileImpl implements FlooringMasterDao {
             try {
                 out = new PrintWriter(new FileWriter(orderFile));
             } catch (IOException e) {
-                //  throw new VendingMachinePersistenceException("Could not save item data.", e);
+                throw new FlooringMasterDaoPersistenceException("Could not save item data.");
             }
 
-            // Write out the Student objects to the roster file.
-            // NOTE TO THE APPRENTICES: We could just grab the student map,
-            // get the Collection of Students and iterate over them but we've
-            // already created a method that gets a List of Students so
-            // we'll reuse it.
             // order format:
             //OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
             List<Order> orderList = orders.get(date).getAllOrders();

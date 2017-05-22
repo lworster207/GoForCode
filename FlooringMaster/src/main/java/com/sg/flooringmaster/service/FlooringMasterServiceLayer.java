@@ -5,6 +5,7 @@
  */
 package com.sg.flooringmaster.service;
 
+import com.sg.flooringmaster.dao.FlooringMasterDaoPersistenceException;
 import com.sg.flooringmaster.dao.FlooringMasterNoOrdersForDateException;
 import com.sg.flooringmaster.dao.OrderDay;
 import com.sg.flooringmaster.dao.TaxRateNotFoundException;
@@ -38,7 +39,7 @@ public interface FlooringMasterServiceLayer {
 
     public Product getProduct(String productType) throws ProductNotFoundException;
 
-    public void saveAllOrders();
+    public void saveAllOrders() throws FlooringMasterDaoPersistenceException;
 
     public int getNextOrderNumber();
 }

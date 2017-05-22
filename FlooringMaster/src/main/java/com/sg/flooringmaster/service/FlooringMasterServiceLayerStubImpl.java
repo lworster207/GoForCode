@@ -6,6 +6,7 @@
 package com.sg.flooringmaster.service;
 
 import com.sg.flooringmaster.dao.FlooringMasterDao;
+import com.sg.flooringmaster.dao.FlooringMasterDaoPersistenceException;
 import com.sg.flooringmaster.dao.FlooringMasterNoOrdersForDateException;
 import com.sg.flooringmaster.dao.OrderDay;
 import com.sg.flooringmaster.dao.ProductDao;
@@ -64,7 +65,7 @@ public class FlooringMasterServiceLayerStubImpl implements FlooringMasterService
     }
 
     @Override
-    public void saveAllOrders() {
+    public void saveAllOrders() throws FlooringMasterDaoPersistenceException {
         //dao.saveAllOrders();
 
     }

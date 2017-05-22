@@ -5,6 +5,7 @@
  */
 package com.sg.flooringmaster.controller;
 
+import com.sg.flooringmaster.dao.FlooringMasterDaoPersistenceException;
 import com.sg.flooringmaster.dao.FlooringMasterNoOrdersForDateException;
 import com.sg.flooringmaster.dao.TaxRateNotFoundException;
 import com.sg.flooringmaster.dto.Order;
@@ -86,8 +87,12 @@ public class FlooringMasterController {
 
     private void saveChanges() {
         // save All the Orders at their current state.
-        service.saveAllOrders();
-        changesToSave = false;
+        try {
+            service.saveAllOrders();
+            changesToSave = false;
+        } catch (FlooringMasterDaoPersistenceException e) {
+            view.displayErrorMessage("There was an error trying to save the changes. Changes have not been saved.");
+        }
     }
 
     private void editOrder() {
@@ -144,7 +149,7 @@ public class FlooringMasterController {
             // confirm the removal
             String confirmation = view.getConfirmation("Remove this order?");
             if (confirmation.toLowerCase().equals("y")) {
-                // remove the order from the runtime orders
+                // remove the order from runtime orders
                 orderToRemove = service.removeOrder(date, orderNumber.toString());
                 changesToSave = true;
             }
@@ -337,9 +342,8 @@ public class FlooringMasterController {
         } catch (FlooringMasterNoOrdersForDateException e) {
             view.displayErrorMessage(e.getMessage());
         } catch (UserIONoValueException e) {
-            view.displayErrorMessage(e.getMessage());
+            // no date entered.  nothing to do.
         }
-
     }
 
     public void displayOrdersForDate(String date) {

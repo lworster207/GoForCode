@@ -63,19 +63,19 @@ public class UserIOConsoleImpl implements UserIO {
     }
 
     @Override
-    public int readInt(String prompt) {
-        System.out.println(prompt);
-        return (Integer.parseInt(userInput.nextLine()));
+    public int readInt(String prompt) throws UserIONoValueException {
+        //System.out.println(prompt);
+        return (Integer.parseInt(getNextLine(prompt)));
 
     }
 
     @Override
-    public int readInt(String prompt, int min, int max) {
+    public int readInt(String prompt, int min, int max) throws UserIONoValueException {
         int userValue;
 
         do {
-            System.out.println(prompt);
-            userValue = Integer.parseInt(userInput.nextLine());
+            //System.out.println(prompt);
+            userValue = Integer.parseInt(getNextLine(prompt));
         } while (userValue < min || userValue > max);
         return (userValue);
     }
@@ -110,7 +110,7 @@ public class UserIOConsoleImpl implements UserIO {
     }
 
     @Override
-    public LocalDate readLocalDate(String prompt, int minMonth, int maxMonth, int minDay, int maxDay, int minYear, int maxYear) {
+    public LocalDate readLocalDate(String prompt, int minMonth, int maxMonth, int minDay, int maxDay, int minYear, int maxYear) throws UserIONoValueException {
         //int curYear = LocalDate.now().getYear();
         Boolean invalidDate = true;
         LocalDate ld = null;
@@ -122,11 +122,11 @@ public class UserIOConsoleImpl implements UserIO {
             int day = readInt("Day: ", minDay, maxDay);
             int year = readInt("Year: ", minYear, maxYear);
              */
-            int month = readInt("Month(" + minMonth + "-" + maxMonth + "): ", minMonth, maxMonth);
-            int day = readInt("Day(" + minDay + "-" + maxDay + "): ", minDay, maxDay);
-            int year = readInt("Year(" + minYear + "-" + maxYear + "): ", minYear, maxYear);
-
             try {
+                int month = readInt("Month(" + minMonth + "-" + maxMonth + "): ", minMonth, maxMonth);
+                int day = readInt("Day(" + minDay + "-" + maxDay + "): ", minDay, maxDay);
+                int year = readInt("Year(" + minYear + "-" + maxYear + "): ", minYear, maxYear);
+
                 ld = LocalDate.of(year, month, day);
                 invalidDate = false;
             } catch (DateTimeException e) {
