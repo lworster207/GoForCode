@@ -26,9 +26,13 @@ public class FlooringMasterController {
     private FlooringMasterView view;
     private FlooringMasterServiceLayer service;
 
-    public FlooringMasterController(FlooringMasterServiceLayer service, FlooringMasterView view) {
+    public FlooringMasterController(FlooringMasterServiceLayer service, FlooringMasterView view, FlooringMasterServiceLayer stubService, String env) {
         this.view = view;
-        this.service = service;
+        if (env.toLowerCase().equals("production")) {
+            this.service = service;
+        } else {
+            this.service = stubService;
+        }
 
     }
 

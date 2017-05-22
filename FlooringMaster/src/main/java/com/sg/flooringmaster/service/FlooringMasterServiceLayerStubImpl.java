@@ -23,13 +23,13 @@ import java.util.List;
  *
  * @author apprentice
  */
-public class FlooringMasterServiceLayerImpl implements FlooringMasterServiceLayer {
+public class FlooringMasterServiceLayerStubImpl implements FlooringMasterServiceLayer {
 
     FlooringMasterDao dao;
     ProductDao productDao;
     TaxRateDao taxRateDao;
 
-    public FlooringMasterServiceLayerImpl(FlooringMasterDao dao) {
+    public FlooringMasterServiceLayerStubImpl(FlooringMasterDao dao) {
         this.dao = dao;
         this.productDao = new ProductDaoFileImpl();
         this.taxRateDao = new TaxRateDaoFileImpl();
@@ -65,7 +65,7 @@ public class FlooringMasterServiceLayerImpl implements FlooringMasterServiceLaye
 
     @Override
     public void saveAllOrders() {
-        dao.saveAllOrders();
+        //dao.saveAllOrders();
 
     }
 

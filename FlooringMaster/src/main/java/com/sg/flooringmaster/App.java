@@ -6,13 +6,8 @@
 package com.sg.flooringmaster;
 
 import com.sg.flooringmaster.controller.FlooringMasterController;
-import com.sg.flooringmaster.dao.FlooringMasterDao;
-import com.sg.flooringmaster.dao.FlooringMasterDaoFileImpl;
-import com.sg.flooringmaster.service.FlooringMasterServiceLayer;
-import com.sg.flooringmaster.service.FlooringMasterServiceLayerImpl;
-import com.sg.flooringmaster.ui.FlooringMasterView;
-import com.sg.flooringmaster.ui.UserIO;
-import com.sg.flooringmaster.ui.UserIOConsoleImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -21,18 +16,19 @@ import com.sg.flooringmaster.ui.UserIOConsoleImpl;
 public class App {
 
     public static void main(String[] args) {
-        UserIO myIo = new UserIOConsoleImpl();
-        FlooringMasterView myView = new FlooringMasterView(myIo);
+        //    UserIO myIo = new UserIOConsoleImpl();
+        //    FlooringMasterView myView = new FlooringMasterView(myIo);
 
-        FlooringMasterDao myDao = new FlooringMasterDaoFileImpl();
+        //    FlooringMasterDao myDao = new FlooringMasterDaoFileImpl();
         // Instantiate the Audit DAO
         //    FlooringMasterAuditDao myAuditDao = new FlooringMasterAuditDaoFileImpl();
         // Instantiate the Service Layer and wire the DAO and Audit DAO into it
-        FlooringMasterServiceLayer myService = new FlooringMasterServiceLayerImpl();
+        //    FlooringMasterServiceLayer myService = new FlooringMasterServiceLayerImpl(myDao);
         // FlooringMasterServiceLayer myService = new FlooringMasterServiceLayerImpl(myDao);
         // Instantiate the Controller and wire the Service Layer into it
-        FlooringMasterController controller = new FlooringMasterController(myService, myView);
-
+        //    FlooringMasterController controller = new FlooringMasterController(myService, myView);
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        FlooringMasterController controller = ctx.getBean("controller", FlooringMasterController.class);
         controller.run();
     }
 }
