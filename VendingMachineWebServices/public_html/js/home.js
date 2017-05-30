@@ -7,16 +7,10 @@
 var vendingServiceURL = "http://localhost:8080";
 
 $(document).ready(function () {
+    loadItems();
     
-
-
-    //loadItems();
-    
-    
-
     // Add Button onclick handler
     $('#add-dollar-button').click(function (event) {
-       // alert("add dollar");
     
         var balance = $("#money-total");
         
@@ -24,46 +18,33 @@ $(document).ready(function () {
         var balanceValue = parseFloat(balance.text());
         
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
-        
-        
         balance.text(newBalance);
         reSelectItem();
-        
     });
 
     $('#add-quarter-button').click(function (event) {
-      
-    
         var balance = $("#money-total");
     
         var numToAdd = parseFloat("0.25");
         var balanceValue = parseFloat(balance.text());
         
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
-        
-        
         balance.text(newBalance);
         reSelectItem();
     });
 
     $('#add-dime-button').click(function (event) {
-       
-    
         var balance = $("#money-total");
     
         var numToAdd = parseFloat("0.10");
         var balanceValue = parseFloat(balance.text());
         
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
-        
-        
         balance.text(newBalance);
         reSelectItem();
     });
 
     $('#add-nickel-button').click(function (event) {
-     
-    
         var balance = $("#money-total");
     
         var numToAdd = parseFloat("0.05");
@@ -71,36 +52,43 @@ $(document).ready(function () {
         
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
         
-        
         balance.text(newBalance);
         reSelectItem();
     });
     
     $('#change-return-button').click(function (event) {
-       // return change
-    
+        
         var balance = $("#money-total");
         var change = $("#change");
     
         var balanceValue = parseFloat(balance.text()) * 100;
         
         var changeString = "";
-       // alert(balanceValue);
+ 
         var numQuarters = parseInt(balanceValue / 25);
         if ( numQuarters > 0 ) {
-            changeString += numQuarters + " Quarters";
-            balanceValue -= numQuarters * 25;
+            changeString += numQuarters + " Quarter";
+            if ( numQuarters > 1 ) {
+                 changeString += "s";
+            }
+            balanceValue -= (numQuarters * 25);
         }
-        // alert(balanceValue);      
+     
         var numDimes = parseInt(balanceValue / 10);
         if ( numDimes > 0 ) {
-            changeString += " " + numDimes + " Dimes";
+            changeString += " " + numDimes + " Dime";
+            if ( numDimes > 1 ) {
+                 changeString += "s";
+            }
             balanceValue -= (numDimes * 10);
         }
-        //alert(balanceValue);       
+      
         var numNickels = parseInt(balanceValue / 5);
         if ( numNickels > 0 ) {
-            changeString += " " + numNickels + " Nickels";
+            changeString += " " + numNickels + " Nickel";
+            if ( numNickels > 1 ) {
+                 changeString += "s";
+            }            
             balanceValue -= (numNickels * 5);
         }
              
@@ -115,67 +103,31 @@ $(document).ready(function () {
    
     });
     
+    
     $("#make-purchase-button").click(function (event) {
        // reference the total amount deposited
     
         var message = $("#messages");
         // get the selected item id in item
         var itemRef = $("#item");
+        var itemId = itemRef.val();
+            
         var itemQtyId = "#item-" + itemRef.val() + "-qty";
         var qty = parseInt($(itemQtyId).text());
         
         var change = $("#change");
-        change.val("");   
-       
-       if ( qty > 0 ) {    
+        change.val(""); 
         
-           var balance = $("#money-total");
-           // reference the change field
-
-
-            var itemRef = $("#item");
-            var itemId = itemRef.val();
-
-
-
-           // create the id for the selected item
-           var itemCostId = "#item-" + itemId + "-price";
-           var itemQtyId = "#item-" + itemId + "-qty";
-
-           var itemPrice = $(itemCostId);
-           // turn the amount deposited into pennies
-           var balanceValue = parseFloat(balance.text()) * 100;  
-
-
-           // turn the item cost into pennies
-           var cost= parseFloat(itemPrice.text().substring(1)) * 100;
-           //alert(balanceValue + " " + cost);
-
-           var qty = parseInt($(itemQtyId).text());
-
-           if ( balanceValue >= cost ) {
-
-              $(itemQtyId).text(qty-1);
-
-              var surplus = (balanceValue - cost)/100; 
-              balance.text(surplus.toFixed(2));
-              $('#change-return-button').click();
-              message.val("Thank You!");      
-           }
-        }
-        else {
-          message.val("Sold Out!");   
-        }
-       
+        var balance = $("#money-total");
+        
+        vendItem(balance.text(),itemId);
     });
 
     
-    $(".vendingItem").click(function (event) {
-
-
+    $(document).on('click','.vendingItem', function (event) {
         
         var message = $("#messages");
-                  // display the selected item id in item
+        // display the selected item id in item field
         var itemRef = $("#item");
         itemRef.val($(this).attr("id")); 
         var itemQtyId = "#item-" + $(this).attr("id") + "-qty";
@@ -185,37 +137,20 @@ $(document).ready(function () {
         change.val("");  
        
        if ( qty > 0 ) {
-
            // reference the total amount deposited
            var balance = $("#money-total");
-           // reference the change field
-
-
            // create the id for the selected item
            var itemCostId = "#item-" + $(this).attr("id") + "-price";
            var itemPrice = $(itemCostId);
            // turn the amount deposited into pennies
            var balanceValue = parseFloat(balance.text()) * 100;  
-
-
-           // turn the item cost into pennies
+          // turn the item cost into pennies
            var cost= parseFloat(itemPrice.text().substring(1)) * 100;
-
-
-
-
-
-
-
            updateDepositMessage(balanceValue,cost);
        }
        else {
            message.val("Sold Out!");
        }
-
-   
-      // alert($(this).attr("id") + " " + cost);
-         
     });
 
 });
@@ -229,18 +164,76 @@ function reSelectItem() {
     
 function updateDepositMessage(balanceValue,cost) {
        var message = $("#messages");
-       
-       
-      
        if ( balanceValue < cost ) {
-        
           var shortage = (cost - balanceValue)/100;
-             //alert($(this).attr("id") + " " + cost + " " + shortage);
-              message.val("Please deposit $" + shortage.toFixed(2));        
+          message.val("Please deposit $" + shortage.toFixed(2));        
        }
        else {
             message.val("");
        }
+}
+
+function vendItem(balance, id) {
+
+        var change = $("#change");
+        var message = $("#messages");
+        
+         $('#errorMessages').empty();
+        
+        $.ajax ({
+        type: 'GET',
+        url:  vendingServiceURL + "/money/" + balance + "/item/" + id,
+        success: function (data, status) {
+            var quarters = data.quarters;
+            var dimes = data.dimes;
+            var nickels = data.nickels;
+            var pennies = data.pennies;
+            
+            var changeString = "";
+            
+            if ( quarters > 0 ) {
+               changeString = quarters + " Quarter";
+               if ( quarters > 1) {
+                   changeString += "s";
+               }
+            }
+            if ( dimes > 0 ) {
+               changeString +=  " " + dimes + " Dime";
+               if ( dimes > 1) {
+                   changeString += "s";
+               }
+            }                              
+            if ( nickels > 0 ) {
+               changeString +=  " " + nickels + " Nickel";
+               if ( nickels > 1) {
+                   changeString += "s";
+               }
+            } 
+            if ( pennies > 0 ) {
+               changeString +=  " " +  pennies + " ";
+               if ( pennies > 1) {
+                   changeString += "Pennies";
+               }
+               else {
+                  changeString += "Penny"; 
+               }
+            } 
+            change.val(changeString);
+            message.val("Thank You!!");
+            
+           var itemQtyId = "#item-" + id + "-qty";
+           var qty = parseInt($(itemQtyId).text());
+           $(itemQtyId).text(qty-1);
+           var balance = $("#money-total");
+           balance.text("0.00");
+            
+        },
+        error: function(jqXHR) {
+            var errMsg = jqXHR.responseText.split('"');
+            message.val(errMsg[3]);
+        }
+    });
+    
 }
 
 
@@ -255,42 +248,22 @@ function loadItems() {
         type: 'GET',
         url:  vendingServiceURL + "/items",
         success: function (data, status) {
-                //alert(data.length);
             
             var row = "";
-            
             $.each(data, function (index, item) {
-
                 var name = item.name;
                 var price = item.price;
                 var id = item.id;
                 var qty = item.quantity;
 
-                if ( index === 0 || (index%3 === 0) ) {
-                    // starting a new row
-                    //row += '<tr>';
-                    row += '<div class="row" >';                
-                }
-               // row += '<td>';
- 
-                row += ' <div class="form-control-static vendingItem" id="item-' + id + '">';                
-                row += '   <div class="col-md-4">';
-                //row += '     <div class="container">';
-                //row += '     <div class=" vendingItem" id="item-' + id + '">';
-                row += '     <p>' + index+1;
-                row += '     <p>' + name;
-                row += '     <p>' + price;
-                row += '     <p>Quantity Left: ' + qty;
-                row += '   </div>';
-                row += ' </div>'
-               // row += '</td>';  // end of column div
-                    
-                if ( index === data.length || (index+1)%3 === 0)  {
-                    // end of the current row
-                    row += '</div>';  // end or row div
-                }                    
-                    
-                
+                row += '                 <div class="form-control-static col-md-4">';
+                row += '                    <div class="vendingItem" id="' + id + '">';
+                row += '                        <div>' + id + '</div>';
+                row += '                        <div id="item-' + id + '-name">' + name + '</div>';
+                row += '                        <div id="item-' + id + '-price">$' + price + '</div>'
+                row += '                        <div>Quantity Left: <span id="item-' + id + '-qty">' + qty + '</span></div>';
+                row +='                    </div>';
+                row += '                </div>';
             });
            
             contentRows.append(row);
@@ -305,5 +278,6 @@ function loadItems() {
 }
 
 function clearItemsTable() {
-    $('#contentRows').empty();
+    var contentRows = $('#itemTableDiv');
+    contentRows.empty();
 }
