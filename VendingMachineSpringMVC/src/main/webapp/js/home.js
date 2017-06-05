@@ -7,7 +7,7 @@
 var vendingServiceURL = "http://localhost:8080";
 
 $(document).ready(function () {
-    //loadItems();
+
     
     // Add Button onclick handler
     $('#add-dollar-button').click(function (event) {
@@ -130,7 +130,7 @@ $(document).ready(function () {
     
     $("#make-purchase-button").click(function (event) {
        // reference the total amount deposited
-    
+    /*
         var message = $("#messages");
         // get the selected item id in item
         var itemRef = $("#item");
@@ -143,8 +143,8 @@ $(document).ready(function () {
         change.val(""); 
         
         var balance = $("#money-total");
-        
-        //vendItem(balance.text(),itemId);
+        var msg = message.val();
+*/
         $("#make-purchase-form").submit();
     });
 
@@ -190,41 +190,20 @@ function reSelectItem() {
 function updateDepositMessage(balanceValue,cost) {
        var message = $("#messages");
        var balanceMsg = $("#balance-message");
+       var makePurchaseMsg = $("#make-purchase-message");
+       
        if ( balanceValue < cost ) {
           var shortage = (cost - balanceValue)/100;
           message.val("Please deposit $" + shortage.toFixed(2));
           balanceMsg.val(message.val());
+          makePurchaseMsg.val(message.val());
           
        }
        else {
             message.val("");
             balanceMsg.val(message.val());
+            makePurchaseMsg.val(message.val());
        }
 }
 
-function vendItem(balance, id) {
 
-        var change = $("#change");
-        var message = $("#messages");
-        
-        $('#errorMessages').empty();
-        
-
-    
-}
-
-
-function loadItems() {
-    // we need to clear the previous content so we don't append to it
-    clearItemsTable();
-
-    // grab the the tbody element that will hold the rows of contact information
-    var contentRows = $('#itemTableDiv');
-
-
-}
-
-function clearItemsTable() {
-    var contentRows = $('#itemTableDiv');
-    contentRows.empty();
-}

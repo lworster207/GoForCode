@@ -35,16 +35,18 @@ public class VendingMachineController {
         this.fundsDao = fundsDao;
 
         try {
-            dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
-            dao.addItem("2", new Item("2", "Lays", new BigDecimal("1.25"), 7));
-            dao.addItem("3", new Item("3", "Snickers", new BigDecimal("1.50"), 2));
-            dao.addItem("4", new Item("4", "Milky Way", new BigDecimal("1.25"), 1));
-            dao.addItem("5", new Item("5", "Three Musketeers", new BigDecimal("1.50"), 6));
-            dao.addItem("6", new Item("6", "Lays BBQ", new BigDecimal("1.25"), 3));
-            dao.addItem("7", new Item("7", "M&M Plain", new BigDecimal("1.75"), 10));
-            dao.addItem("8", new Item("8", "Milk Duds", new BigDecimal("1.65"), 4));
-            dao.addItem("9", new Item("9", "M&M Peanut", new BigDecimal("1.75"), 7));
-            fundsDao.setBalance(new BigDecimal("0.00"));
+            if (dao.getItem("1") == null) {
+                dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
+                dao.addItem("2", new Item("2", "Lays", new BigDecimal("1.25"), 7));
+                dao.addItem("3", new Item("3", "Snickers", new BigDecimal("1.50"), 2));
+                dao.addItem("4", new Item("4", "Milky Way", new BigDecimal("1.25"), 1));
+                dao.addItem("5", new Item("5", "Three Musketeers", new BigDecimal("1.50"), 6));
+                dao.addItem("6", new Item("6", "Lays BBQ", new BigDecimal("1.25"), 3));
+                dao.addItem("7", new Item("7", "M&M Plain", new BigDecimal("1.75"), 10));
+                dao.addItem("8", new Item("8", "Milk Duds", new BigDecimal("1.65"), 4));
+                dao.addItem("9", new Item("9", "M&M Peanut", new BigDecimal("1.75"), 7));
+                fundsDao.setBalance(new BigDecimal("0.00"));
+            }
 
         } catch (VendingMachinePersistenceException e) {
             return;
@@ -73,25 +75,56 @@ public class VendingMachineController {
     @RequestMapping(value = "/purchaseItem", method = RequestMethod.POST)
     public String purchaseItem(HttpServletRequest request,
             Model model) {
-        String itemIdParameter = request.getParameter("item");
+
+        String itemId = request.getParameter("item");
+        List<Item> itemList;
 
         try {
-            Item item = dao.getItem(itemIdParameter);
 
-            Change change = new Change(fundsDao.getBalance().subtract(item.getPrice()));
-            String changeMsg = change.toString();
+            Item item = dao.getItem(itemId);
+            if (item == null) {
+                itemList = dao.getAllItems();
+                model.addAttribute("itemList", itemList);
+                model.addAttribute("balance", fundsDao.getBalance().toString());
+                model.addAttribute("message", "Please select an item.");
+                model.addAttribute("itemId", "");
+                model.addAttribute("changeMessage", "");
+                return "vendingMachine";
+            }
+            if (item.getQuantity() == 0) {
+                itemList = dao.getAllItems();
+                model.addAttribute("itemList", itemList);
+                model.addAttribute("balance", fundsDao.getBalance().toString());
+                model.addAttribute("message", "Sold Out!!!");
+                model.addAttribute("itemId", itemId);
+                model.addAttribute("changeMessage", "");
+                return "vendingMachine";
+            } else if (fundsDao.getBalance().compareTo(item.getPrice()) == -1) {
+                // not enough money.
+                itemList = dao.getAllItems();
+                model.addAttribute("itemList", itemList);
+                model.addAttribute("balance", fundsDao.getBalance().toString());
+                model.addAttribute("message", "Insufficient funds! " + request.getParameter("make-purchase-message"));
+                model.addAttribute("itemId", itemId);
+                //model.addAttribute("changeMessage", "");
+                return "vendingMachine";
+            } else {
 
-            dao.setQuantity(item, item.getQuantity() - 1);
+                Change change = new Change(fundsDao.getBalance().subtract(item.getPrice()));
+                String changeMsg = change.toString();
 
-            fundsDao.setBalance(new BigDecimal("0.00"));
+                dao.setQuantity(item, item.getQuantity() - 1);
 
-            List<Item> itemList = dao.getAllItems();
-            model.addAttribute("itemList", itemList);
-            model.addAttribute("balance", fundsDao.getBalance().toString());
-            model.addAttribute("message", "Thank You!!!");
-            model.addAttribute("itemId", "");
-            model.addAttribute("changeMessage", changeMsg);
-            return "vendingMachine";
+                fundsDao.setBalance(new BigDecimal("0.00"));
+
+                itemList = dao.getAllItems();
+                model.addAttribute("itemList", itemList);
+                model.addAttribute("balance", fundsDao.getBalance().toString());
+                model.addAttribute("message", "Thank You!!!");
+                model.addAttribute("itemId", "");
+                model.addAttribute("changeMessage", changeMsg);
+                return "vendingMachine";
+            }
         } catch (VendingMachinePersistenceException e) {
             model.addAttribute("message", "error in purchaseItem");
             return "vendingMachine";

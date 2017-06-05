@@ -15,7 +15,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>Vending Machine - vendingMachine.jsp</h1>
+            <h1>Vending Machine</h1>
             <hr/>
             <ul class="list-group" id="errorMessages">
             </ul>
@@ -113,7 +113,7 @@
                        
                         <div class="row">
                             <form class="form-horizontal" role="form" id="make-purchase-form" name="make-purchase-form" action="purchaseItem" method="POST">
-                                
+                                <input type="hidden" name="make-purchase-message" id="make-purchase-message" value="<c:out value='${message}' />">
                                 <div class="row">
                                      <div class="form-control-static">  
                                          <div class="col-md-6">
@@ -124,7 +124,7 @@
                                 <div class="row">
                                    <div class="form-control-static col-md-6">
                                       
-                                           <input type="text"  id='messages' value="<c:out value='${message}' />">
+                                           <input type="text"  name='messages' id='messages' value="<c:out value='${message}' />">
                                             
                                       
                                    </div>
