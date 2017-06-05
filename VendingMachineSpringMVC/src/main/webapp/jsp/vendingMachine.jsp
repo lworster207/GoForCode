@@ -26,7 +26,8 @@
                 <!-- #2: Add a col to hold the summary table - have it take up half the row -->
                 <div class="col-md-6">
                     <h2>Available Items</h2>
-                    <form class="form-horizontal" role="form" id="item-form">
+                    <form class="form-horizontal" role="form" id="item-form" name="item-form" action="selectItem" method="POST">
+                    <input type="hidden" name="item-form-itemId" id="item-form-itemId" value="">
                     <div class="form-group" id="itemTableDiv">
                     <c:forEach var="currentItem" items="${itemList}">    
                         <div class="form-control-static col-md-4">
@@ -50,7 +51,7 @@
                         <form class="form-horizontal" role="form" id="money-form" action="addMoney" method="POST">
                             <input type="hidden" name="amountToAdd" id="amountToAdd" value="0.00">
                             <input type="hidden" name="balance-message" id="balance-message" value="">
-                            <input type="hidden" name="itemId" id="itemId" value="">
+                            <input type="hidden" name="itemId" id="itemId" value="<c:out value='${itemId}' />">
                             <div class="row">
                                  <div class="form-control-static">  
                                      <div class="col-md-6">
@@ -124,7 +125,7 @@
                                 <div class="row">
                                    <div class="form-control-static col-md-6">
                                       
-                                           <input type="text"  name='messages' id='messages' value="<c:out value='${message}' />">
+                                           <input type="text"  size="50" name='messages' id='messages' value="<c:out value='${message}' />">
                                             
                                       
                                    </div>
