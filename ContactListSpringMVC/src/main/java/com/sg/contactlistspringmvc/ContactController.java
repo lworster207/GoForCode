@@ -1,4 +1,4 @@
-package com.sg.contactlistspringmvc.controller;
+package com.sg.contactlistspringmvc;
 
 import com.sg.contactlistspringmvc.dao.ContactListDao;
 import com.sg.contactlistspringmvc.model.Contact;

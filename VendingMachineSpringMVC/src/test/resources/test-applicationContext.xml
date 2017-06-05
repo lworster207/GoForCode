@@ -17,4 +17,6 @@
     <!-- Bean definitions go here -->
         <bean id="itemListDao"
       class="com.sg.vendingmachinespringmvc.dao.ItemListDaoInMemImpl"/>
+         <bean id="fundsDao"
+      class="com.sg.vendingmachinespringmvc.dao.FundsDaoImpl"/>       
 </beans>

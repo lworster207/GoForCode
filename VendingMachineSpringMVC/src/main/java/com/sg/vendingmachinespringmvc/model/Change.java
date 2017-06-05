@@ -62,4 +62,32 @@ public class Change {
         return nickels;
     }
 
+    public String toString() {
+        String retString = "";
+
+        if (this.changeIsDue()) {
+            if (this.quarters > 0) {
+                retString += this.quarters + " Quarter";
+                if (this.quarters > 1) {
+                    retString += "s";
+                }
+                retString += " ";
+            }
+            if (this.dimes > 0) {
+                retString += this.dimes + " Dime";
+                if (this.dimes > 1) {
+                    retString += "s";
+                }
+                retString += " ";
+            }
+            if (this.nickels > 0) {
+                retString += this.nickels + " Nickel";
+                if (this.nickels > 1) {
+                    retString += "s";
+                }
+            }
+        }
+        return retString;
+    }
+
 }

@@ -13,6 +13,8 @@ $(document).ready(function () {
     $('#add-dollar-button').click(function (event) {
     
         var balance = $("#money-total");
+        var item = $("#item");
+        var itemId = $("#itemId");
         
         var numToAdd = parseFloat("1.00");
         var balanceValue = parseFloat(balance.text());
@@ -20,33 +22,48 @@ $(document).ready(function () {
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
         balance.text(newBalance);
         reSelectItem();
+        itemId.val(item.val());
+        $("#amountToAdd").val("1.00");
+        $("#money-form").submit();
+
     });
 
     $('#add-quarter-button').click(function (event) {
         var balance = $("#money-total");
-    
+        var item = $("#item");
+        var itemId = $("#itemId");
+        
         var numToAdd = parseFloat("0.25");
         var balanceValue = parseFloat(balance.text());
         
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
         balance.text(newBalance);
         reSelectItem();
+        itemId.val(item.val());
+        $("#amountToAdd").val("0.25");
+        $("#money-form").submit();
     });
 
     $('#add-dime-button').click(function (event) {
         var balance = $("#money-total");
-    
+        var item = $("#item");
+        var itemId = $("#itemId");    
         var numToAdd = parseFloat("0.10");
         var balanceValue = parseFloat(balance.text());
         
         var newBalance = ( numToAdd  + balanceValue).toFixed(2);
         balance.text(newBalance);
-        reSelectItem();
+       reSelectItem();
+       itemId.val(item.val());
+       $("#amountToAdd").val("0.10");
+       $("#money-form").submit();
     });
 
     $('#add-nickel-button').click(function (event) {
         var balance = $("#money-total");
-    
+        var item = $("#item");
+        var itemId = $("#itemId");
+        
         var numToAdd = parseFloat("0.05");
         var balanceValue = parseFloat(balance.text());
         
@@ -54,6 +71,10 @@ $(document).ready(function () {
         
         balance.text(newBalance);
         reSelectItem();
+        itemId.val(item.val());
+        $("#amountToAdd").val("0.05");
+        $("#money-form").submit();        
+
     });
     
     $('#change-return-button').click(function (event) {
@@ -101,6 +122,9 @@ $(document).ready(function () {
         var message = $("#messages");
         message.val("");
    
+        $("#changeMsg").val(changeString);
+        $("#change-return-form").submit();
+        
     });
     
     
@@ -120,7 +144,8 @@ $(document).ready(function () {
         
         var balance = $("#money-total");
         
-        vendItem(balance.text(),itemId);
+        //vendItem(balance.text(),itemId);
+        $("#make-purchase-form").submit();
     });
 
     
@@ -164,12 +189,16 @@ function reSelectItem() {
     
 function updateDepositMessage(balanceValue,cost) {
        var message = $("#messages");
+       var balanceMsg = $("#balance-message");
        if ( balanceValue < cost ) {
           var shortage = (cost - balanceValue)/100;
-          message.val("Please deposit $" + shortage.toFixed(2));        
+          message.val("Please deposit $" + shortage.toFixed(2));
+          balanceMsg.val(message.val());
+          
        }
        else {
             message.val("");
+            balanceMsg.val(message.val());
        }
 }
 
@@ -178,7 +207,7 @@ function vendItem(balance, id) {
         var change = $("#change");
         var message = $("#messages");
         
-         $('#errorMessages').empty();
+        $('#errorMessages').empty();
         
 
     

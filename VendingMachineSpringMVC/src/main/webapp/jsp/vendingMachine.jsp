@@ -3,7 +3,7 @@
     Created on : Jun 2, 2017, 11:22:11 AM
     Author     : apprentice
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,27 +17,40 @@
         <div class="container">
             <h1>Vending Machine - vendingMachine.jsp</h1>
             <hr/>
-            <ul class="list-group" id="errorMessages"></ul>
+            <ul class="list-group" id="errorMessages">
+            </ul>
             <!--
             Add a row to our container - this will hold the summary table and the new contact form.
             -->
           <!--  <div class="row"> -->
                 <!-- #2: Add a col to hold the summary table - have it take up half the row -->
                 <div class="col-md-6">
-                     <h2>Available Items</h2>
-                     <form class="form-horizontal" role="form" id="item-form">
+                    <h2>Available Items</h2>
+                    <form class="form-horizontal" role="form" id="item-form">
                     <div class="form-group" id="itemTableDiv">
+                    <c:forEach var="currentItem" items="${itemList}">    
+                        <div class="form-control-static col-md-4">
+                        <div class="vendingItem" id="${currentItem.itemId}">
+                            <div>${currentItem.itemId}</div>
+                            <div id="item-${currentItem.itemId}-name">${currentItem.name}</div>
+                            <div id="item-${currentItem.itemId}-price">$${currentItem.price}</div>
+                            <div>Quantity Left: <span id="item-${currentItem.itemId}-qty">${currentItem.quantity}</span></div>
+                        </div>
+                        </div>
+                    </c:forEach>                             
                     </div>
-                     </form>    
+                    </form>    
 
                 </div> <!-- End col div -->
                 <!--
                 #4: Add col to hold the new contact form - have it take up the other half of the row
                 -->
-                
-                <div class="col-md-6">
+               <div class="col-md-6">
                     <div class="container" id="view">
-                        <form class="form-horizontal" role="form" id="money-form">
+                        <form class="form-horizontal" role="form" id="money-form" action="addMoney" method="POST">
+                            <input type="hidden" name="amountToAdd" id="amountToAdd" value="0.00">
+                            <input type="hidden" name="balance-message" id="balance-message" value="">
+                            <input type="hidden" name="itemId" id="itemId" value="">
                             <div class="row">
                                  <div class="form-control-static">  
                                      <div class="col-md-6">
@@ -48,7 +61,7 @@
                             <div class="row">
                                 <div class="form-control-static">
                                     <div class="col-md-6">
-                                        <div align='center' id='money-total'>0.00</div>
+                                        <div align='center' id='money-total'><c:out value="${balance}" /></div>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +112,8 @@
                         <hr>
                        
                         <div class="row">
-                            <form class="form-horizontal" role="form" id="messages-form">
+                            <form class="form-horizontal" role="form" id="make-purchase-form" name="make-purchase-form" action="purchaseItem" method="POST">
+                                
                                 <div class="row">
                                      <div class="form-control-static">  
                                          <div class="col-md-6">
@@ -110,7 +124,8 @@
                                 <div class="row">
                                    <div class="form-control-static col-md-6">
                                       
-                                           <input type="text"  id='messages'>
+                                           <input type="text"  id='messages' value="<c:out value='${message}' />">
+                                            
                                       
                                    </div>
                                 </div>  
@@ -118,7 +133,7 @@
                                    <div class="form-control-static">
                                     <div class="col-md-6">
                                         <label for="item">Item</label>
-                                        <input type="text" id="item">
+                                        <input type="text" id="item" name="item" value="<c:out value='${itemId}' />">
                                     </div>
                                    </div>
                                 </div>
@@ -140,7 +155,8 @@
                             
                         <hr>
                         <div class="row">
-                            <form class="form-horizontal" role="form" id="messages-form">
+                            <form class="form-horizontal" role="form" name="change-return-form" id="change-return-form" action="changeReturn" method="POST">
+                                  <input type="hidden" name="changeMsg" id="changeMsg" value="">
                                 <div class="row">
                                      <div class="form-control-static">  
                                          <div class="col-md-6">
@@ -152,7 +168,7 @@
                                    <div class='col-md-6'> 
                                    <div class="form-control-static">
                                       
-                                           <input type="text"  id='change'>
+                                           <input type="text"  id='change' value="<c:out value='${changeMessage}' />">
                                       
                                    </div>
                                    </div>
@@ -176,9 +192,11 @@
                
            <!--  </div> --> <!-- End row div -->
         </div>
-        <!-- #5: Placed at the end of the document so the pages load faster -->
-        <script src="js/jquery-2.2.4.min.js"></script>
-        <script src="js/bootstrap.js"></script>
-        <script src="js/home.js"></script>
+        </div>
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/home.js"></script>
+
     </body>
 </html>
