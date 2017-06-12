@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-var vendingServiceURL = "http://localhost:8080";
-
 $(document).ready(function () {
 
     

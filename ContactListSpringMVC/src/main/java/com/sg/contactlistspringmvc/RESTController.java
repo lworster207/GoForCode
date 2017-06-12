@@ -7,6 +7,7 @@ package com.sg.contactlistspringmvc;
 
 import com.sg.contactlistspringmvc.dao.ContactListDao;
 import com.sg.contactlistspringmvc.model.Contact;
+import java.util.List;
 import javax.inject.Inject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
