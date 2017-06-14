@@ -14,6 +14,7 @@ import java.util.Objects;
  */
 public class Item {
 
+    private long db_itemId;
     public String itemId;
     public String name;
     public BigDecimal price;
@@ -26,12 +27,24 @@ public class Item {
         this.quantity = quantity;
     }
 
+    public Item() {
+
+    }
+
     public String getItemId() {
         return itemId;
     }
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public void setDbItemId(long itemId) {
+        this.db_itemId = itemId;
+    }
+
+    public long getDbItemId() {
+        return this.db_itemId;
     }
 
     public String getName() {
@@ -65,11 +78,11 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.itemId);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.price);
-        hash = 97 * hash + this.quantity;
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.itemId);
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.price);
+        hash = 89 * hash + this.quantity;
         return hash;
     }
 

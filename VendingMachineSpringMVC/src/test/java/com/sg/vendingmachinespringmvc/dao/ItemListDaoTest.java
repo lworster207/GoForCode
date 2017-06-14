@@ -42,15 +42,7 @@ public class ItemListDaoTest {
     public void setUp() throws Exception {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
         dao = ctx.getBean("itemListDao", ItemListDao.class);
-        dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
-        dao.addItem("2", new Item("2", "Lays", new BigDecimal("1.25"), 7));
-        dao.addItem("3", new Item("3", "Snickers", new BigDecimal("1.50"), 2));
-        dao.addItem("4", new Item("4", "Milky Way", new BigDecimal("1.25"), 1));
-        dao.addItem("5", new Item("5", "Three Musketeers", new BigDecimal("1.50"), 6));
-        dao.addItem("6", new Item("6", "Lays BBQ", new BigDecimal("1.25"), 3));
-        dao.addItem("7", new Item("7", "M&M Plain", new BigDecimal("1.75"), 10));
-        dao.addItem("8", new Item("8", "Milk Duds", new BigDecimal("1.65"), 5));
-        dao.addItem("9", new Item("9", "M&M Peanut", new BigDecimal("1.75"), 5));
+
     }
 
     @After
@@ -63,8 +55,7 @@ public class ItemListDaoTest {
     @Test
     public void testGetName() throws Exception {
 
-        Item expItem = dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
-
+        //Item expItem = dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
         Assert.assertEquals("Doritos", dao.getItem("1").getName());
 
     }
@@ -75,7 +66,7 @@ public class ItemListDaoTest {
     @Test
     public void testGetAllItems() throws Exception {
 
-        dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
+        /* dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
         dao.addItem("2", new Item("2", "Lays", new BigDecimal("1.25"), 7));
         dao.addItem("3", new Item("3", "Snickers", new BigDecimal("1.50"), 2));
         dao.addItem("4", new Item("4", "Milky Way", new BigDecimal("1.25"), 1));
@@ -84,7 +75,7 @@ public class ItemListDaoTest {
         dao.addItem("7", new Item("7", "M&M Plain", new BigDecimal("1.75"), 10));
         dao.addItem("8", new Item("8", "Milk Duds", new BigDecimal("1.65"), 4));
         dao.addItem("9", new Item("9", "M&M Peanut", new BigDecimal("1.75"), 7));
-
+         */
         List<Item> result = dao.getAllItems();
 
         Assert.assertEquals(9, result.size());
@@ -112,6 +103,7 @@ public class ItemListDaoTest {
         Item expected = dao.addItem("10", new Item("10", "M&M Peanut Butter", new BigDecimal("1.75"), 7));
         Item result = dao.getItem("10");
         assertEquals(expected, result);
+        dao.removeItem("10");
     }
 
     /**
@@ -156,6 +148,7 @@ public class ItemListDaoTest {
         Item expected = dao.addItem("10", new Item("10", "M&M Peanut Butter", new BigDecimal("1.75"), 7));
         Item result = dao.getItem("10");
         assertEquals(expected, result);
+        dao.removeItem("10");
     }
 
     /**

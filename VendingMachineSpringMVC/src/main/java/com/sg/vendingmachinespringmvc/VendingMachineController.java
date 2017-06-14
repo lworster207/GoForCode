@@ -33,7 +33,9 @@ public class VendingMachineController {
     public VendingMachineController(ItemListDao dao, FundsDao fundsDao) {
         this.dao = dao;
         this.fundsDao = fundsDao;
+        fundsDao.setBalance(new BigDecimal("0.00"));
 
+        /*
         try {
             if (dao.getItem("1") == null) {
                 dao.addItem("1", new Item("1", "Doritos", new BigDecimal("1.25"), 5));
@@ -47,13 +49,13 @@ public class VendingMachineController {
                 dao.addItem("9", new Item("9", "M&M Peanut", new BigDecimal("1.75"), 7));
                 dao.addItem("10", new Item("10", "M&M Peanut", new BigDecimal("1.75"), 7));
                 dao.addItem("11", new Item("11", "M&M Peanut", new BigDecimal("1.75"), 7));
-                fundsDao.setBalance(new BigDecimal("0.00"));
+               fundsDao.setBalance(new BigDecimal("0.00"));
             }
 
         } catch (VendingMachinePersistenceException e) {
             return;
         }
-
+         */
     }
 
     @RequestMapping(value = "/displayVendingMachine", method = RequestMethod.GET)
