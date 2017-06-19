@@ -35,12 +35,6 @@ public class HeroController {
         return "sightings";
     }
 
-    @RequestMapping(value = "/displayLocations", method = RequestMethod.GET)
-    public String displayLocations(Map<String, Object> model) {
-        //model.put("message", "Hello from the controller");
-        return "locations";
-    }
-
     @RequestMapping(value = "/createNewHero", method = RequestMethod.GET)
     public String createNewHero(Map<String, Object> model) {
         //model.put("message", "Hello from the controller");
@@ -75,6 +69,12 @@ public class HeroController {
     public String createSighting(Map<String, Object> model) {
         //model.put("message", "Hello from the controller");
         return "sightings";
+    }
+
+    @RequestMapping(value = "/displayLocations", method = RequestMethod.GET)
+    public String displayLocations(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "locations";
     }
 
     @RequestMapping(value = "/createNewLocation", method = RequestMethod.GET)
