@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Super Heros - Sightings</title>
+        <title>Create New Super Hero</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
     </head>
@@ -20,7 +20,7 @@
                             Home
                         </a>
                   </li>
-                  <li role="presentation">
+                  <li role="presentation" >
                       <a href="${pageContext.request.contextPath}/displayHerosPage">
                           Heros
                       </a>
@@ -31,7 +31,7 @@
                           Organizations
                       </a>
                   </li>
-                  <li role="presentation"  class="active">
+                  <li role="presentation" class="active">
                       <a href="${pageContext.request.contextPath}/displaySightings">
                           Sightings
                       </a>
@@ -49,49 +49,41 @@
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
     -->
-    <div class="col-md-10">
-        <h2>Sightings</h2>
-<table id="contactTable" class="table table-hover">
-    <tr>
-        <th width="30%">Super Hero</th>
-        <th width="30%">Location</th>
-        <th width="20%">Date</th>
-        <th width="10%"></th>
-        <th width="10%"></th>
-    </tr>
-<c:forEach var="currentContact" items="${contactList}">
-    <tr>
-        <td>
-            <a href="displayContactDetails?contactId=${currentContact.contactId}">
-            <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
-            </a>
-        </td>
-        <td>
-            <c:out value="${currentContact.company}"/>
-        </td>
-        <td>
-            <c:out value="${currentContact.date}"/>
-        </td>
-        <td>
-            <a href="displayEditContactForm?contactId=${currentContact.contactId}">
-            Edit
-            </a>
-        </td>
-        <td>
-            <a href="deleteContact?contactId=${currentContact.contactId}">
-            Delete
-            </a>
-        </td>
-    </tr>
-</c:forEach>
-</table>                   
-    </div> <!-- End col div -->
     <!-- 
         Add col to hold the new contact form - have it take up the other 
         half of the row
     -->
-    <div class="col-md-2">
-        <a href="createNewSighting">New Sighting</a>
+    <div class="col-md-6">
+        <h2>New Sighting</h2>
+        <form class="form-horizontal" 
+              role="form" method="POST" 
+              action="createSighting">
+            <div class="form-group">
+                <label for="add-hero-id" class="col-md-4 control-label">Hero Name:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="add-hero-id" placeholder="Hero Name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="add-location-id" class="col-md-4 control-label">Location:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="add-location-id" placeholder="Location"/>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="add-date" class="col-md-4 control-label">Date:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="add-date" placeholder="Date"/>
+                </div>
+            </div>            
+ 
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" class="btn btn-default" value="Add Sighting"/>
+                </div>
+            </div>
+        </form>
 
     </div> <!-- End col div -->
 

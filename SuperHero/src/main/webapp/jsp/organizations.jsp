@@ -49,7 +49,7 @@
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
     -->
-    <div class="col-md-6">
+    <div class="col-md-10">
         <h2>Organizations</h2>
 <table id="contactTable" class="table table-hover">
     <tr>
@@ -86,62 +86,11 @@
         Add col to hold the new contact form - have it take up the other 
         half of the row
     -->
-    <div class="col-md-6">
-        <h2>Create Organization</h2>
-        <form class="form-horizontal" 
-              role="form" method="POST" 
-              action="createContact">
-            <div class="form-group">
-                <label for="add-hero-name" class="col-md-4 control-label">Hero Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="add-hero-name" placeholder="Hero Name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-super-power" class="col-md-4 control-label">Super Power:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="superPower" placeholder="Super Power"/>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="add-first-name" class="col-md-4 control-label">First Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="firstName" placeholder="First Name"/>
-                </div>
-            </div>            
-            <div class="form-group">
-                <label for="add-last-name" class="col-md-4 control-label">Last Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="lastName" placeholder="Last Name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-company" class="col-md-4 control-label">Company:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="company" placeholder="Company"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-email" class="col-md-4 control-label">Email:</label>
-                <div class="col-md-8">
-                    <input type="email" class="form-control" name="email" placeholder="Email"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-phone" class="col-md-4 control-label">Phone:</label>
-                <div class="col-md-8">
-                    <input type="tel" class="form-control" name="phone" placeholder="Phone"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-default" value="Create Organization"/>
-                </div>
-            </div>
-        </form>
+    <div class="col-md-2">
+        <a href="createNewOrganization">Create New Organization</a>
 
     </div> <!-- End col div -->
+ 
 
 </div> <!-- End row div -->   
         </div>

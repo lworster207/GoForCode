@@ -40,4 +40,52 @@ public class HeroController {
         //model.put("message", "Hello from the controller");
         return "locations";
     }
+
+    @RequestMapping(value = "/createNewHero", method = RequestMethod.GET)
+    public String createNewHero(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "newhero";
+    }
+
+    @RequestMapping(value = "/createSuperHero", method = RequestMethod.POST)
+    public String createSuperHero(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "heros";
+    }
+
+    @RequestMapping(value = "/createNewOrganization", method = RequestMethod.GET)
+    public String createNewOrganization(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "neworganization";
+    }
+
+    @RequestMapping(value = "/createOrganization", method = RequestMethod.POST)
+    public String createOrganization(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "organizations";
+    }
+
+    @RequestMapping(value = "/createNewSighting", method = RequestMethod.GET)
+    public String createNewSighting(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "newsighting";
+    }
+
+    @RequestMapping(value = "/createSighting", method = RequestMethod.POST)
+    public String createSighting(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "sightings";
+    }
+
+    @RequestMapping(value = "/createNewLocation", method = RequestMethod.GET)
+    public String createNewLocation(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "newlocation";
+    }
+
+    @RequestMapping(value = "/createLocation", method = RequestMethod.POST)
+    public String createLocation(Map<String, Object> model) {
+        //model.put("message", "Hello from the controller");
+        return "locations";
+    }
 }

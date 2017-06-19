@@ -49,32 +49,38 @@
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
     -->
-    <div class="col-md-6">
+    <div class="col-md-10">
         <h2>Super Heros</h2>
-<table id="contactTable" class="table table-hover">
+        
+        
+<table id="heroTable" class="table table-hover">
     <tr>
-        <th width="35%">Super Hero Name</th>
-        <th width="35%">Super Power</th>
+        <th width="20%">Super Hero Name</th>
+        <th width="20%">Super Power</th>
+        <th width="30%">Description</th>       
         <th width="15%"></th>
         <th width="15%"></th>
     </tr>
-<c:forEach var="currentContact" items="${contactList}">
+<c:forEach var="currentHero" items="${heroList}">
     <tr>
         <td>
-            <a href="displayContactDetails?contactId=${currentContact.contactId}">
-            <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+            <a href="viewHero?heroId=${currentHero.heroId}">
+            <c:out value="${currentHero.heroName}"/>
             </a>
         </td>
         <td>
-            <c:out value="${currentContact.company}"/>
+            <c:out value="${currentHero.superPower}"/>
         </td>
         <td>
-            <a href="displayEditContactForm?contactId=${currentContact.contactId}">
+            <c:out value="${currentHero.description}"/>
+        </td>
+        <td>
+            <a href="editHero?heroId=${currentHero.heroId}">
             Edit
             </a>
         </td>
         <td>
-            <a href="deleteContact?contactId=${currentContact.contactId}">
+            <a href="deleteHero?heroId=${currentHero.heroId}">
             Delete
             </a>
         </td>
@@ -83,87 +89,11 @@
 </table>                   
     </div> <!-- End col div -->
     <!-- 
-        Add col to hold the new contact form - have it take up the other 
+        Add col to hold the new hero form - have it take up the other 
         half of the row
     -->
-    <div class="col-md-6">
-        <h2>Add New Super Hero</h2>
-        <form class="form-horizontal" 
-              role="form" method="POST" 
-              action="createContact">
-            <div class="form-group">
-                <label for="add-hero-name" class="col-md-4 control-label">Hero Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-hero-name"  name="add-hero-name" placeholder="Hero Name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-super-power" class="col-md-4 control-label">Super Power:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-super-power" name="add-super-power" placeholder="Super Power"/>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="add-description" class="col-md-4 control-label">Description:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-description" name="add-description" placeholder="First Name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-first-name" class="col-md-4 control-label">First Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-first-name" name="add-first-name" placeholder="First Name"/>
-                </div>
-            </div>            
-            <div class="form-group">
-                <label for="add-last-name" class="col-md-4 control-label">Last Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-last-name" name="add-last-name" placeholder="Last Name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-address" class="col-md-4 control-label">Address:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-address" name="add-address" placeholder="Address"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-city" class="col-md-4 control-label">City:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-city" name="add-city" placeholder="Address"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-state" class="col-md-4 control-label">State:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-postcode" class="col-md-4 control-label">Post Code:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-postcode" name="add-postcode" placeholder="PostCode"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-email" class="col-md-4 control-label">Email:</label>
-                <div class="col-md-8">
-                    <input type="email" class="form-control" id="add-email" name="add-email" placeholder="Email"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-phone" class="col-md-4 control-label">Phone:</label>
-                <div class="col-md-8">
-                    <input type="tel" class="form-control" id="add-phone" name="add-phone" placeholder="Phone"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-default" value="Create Super Hero"/>
-                </div>
-            </div>
-        </form>
+    <div class="col-md-2">
+        <a href="createNewHero">Create New Super Hero</a>
 
     </div> <!-- End col div -->
 
