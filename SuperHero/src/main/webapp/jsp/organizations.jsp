@@ -11,7 +11,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>Organizations</h1>
+            <h1>Superhero Sightings</h1>
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">

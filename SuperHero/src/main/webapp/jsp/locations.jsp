@@ -49,7 +49,7 @@
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
     -->
-    <div class="col-md-6">
+    <div class="col-md-10">
         <h2>Locations</h2>
 <table id="contactTable" class="table table-hover">
     <tr>
