@@ -67,10 +67,14 @@
             <div class="form-group">
                 <label for="add-super-power" class="col-md-4 control-label">Super Power:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-super-power" name="add-super-power" placeholder="Super Power"/>
+                    <select multiple class="form-control" id="add-super-power" name="add-super-power">
+                        <c:forEach var="currentPower" items="${powersList}"> 
+                            <option value="${currentPower.superPowerId}">${currentPower.description}</option>
+                        </c:forEach>                          
+                    </select>
                 </div>
-            </div>
-            
+            </div>           
+         
             <div class="form-group">
                 <label for="add-description" class="col-md-4 control-label">Description:</label>
                 <div class="col-md-8">
