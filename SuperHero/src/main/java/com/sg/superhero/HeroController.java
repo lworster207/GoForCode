@@ -2,10 +2,13 @@ package com.sg.superhero;
 
 import com.sg.superhero.dao.HeroDao;
 import com.sg.superhero.dao.SuperPowerDao;
+import com.sg.superhero.model.Address;
+import com.sg.superhero.model.Contact;
+import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +41,38 @@ public class HeroController {
     }
 
     @RequestMapping(value = "/createSuperHero", method = RequestMethod.POST)
-    public String createSuperHero(Map<String, Object> model) {
+    public String createSuperHero(HttpServletRequest request, Model model) {
+
+        request.getParameter("add-hero-name");
+        request.getParameter("add-super-power");
+        request.getParameter("add-description");
+
+        request.getParameter("add-first-name");
+        request.getParameter("add-last-name");
+        request.getParameter("add-phone");
+        request.getParameter("add-email");
+
+        request.getParameter("add-address");
+        request.getParameter("add-city");
+        request.getParameter("add-state");
+        request.getParameter("add-postcode");
+
+        Address newAddress = new Address(
+                "noId",
+                request.getParameter("add-address"),
+                request.getParameter("add-city"),
+                request.getParameter("add-state"),
+                request.getParameter("add-postcode")
+        );
+
+        Contact newContact = new Contact();
+
+        Hero newHero = new Hero();
+        newHero.setHeroName(request.getParameter("add-hero-name"));
+        newHero.setDescription(request.getParameter("add-description"));
+        newHero.setSuperpower(request.getParameter("add-super-power"));
+        .
+        addHero(heroId, hero);
         //model.put("message", "Hello from the controller");
         return "heros";
     }

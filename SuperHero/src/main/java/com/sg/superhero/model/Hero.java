@@ -16,12 +16,25 @@ public class Hero {
     private String heroId;
     private SuperPower superpower;
     private Contact contact;
+    private String heroName;
     private String description;
 
-    public Hero(SuperPower superpower, Contact contact, String description) {
+    public Hero(String heroName, SuperPower superpower, Contact contact, String description) {
+        this.heroName = heroName;
         this.superpower = superpower;
         this.contact = contact;
         this.description = description;
+    }
+
+    public Hero() {
+    }
+
+    public String getHeroName() {
+        return heroName;
+    }
+
+    public void setHeroName(String heroName) {
+        this.heroName = heroName;
     }
 
     public String getHeroId() {

@@ -70,7 +70,7 @@ public class HeroDaoTest {
         contact.setLastName("Parker");
         contact.setAddress(address);
 
-        Hero hero = new Hero(superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
 
         Hero result = dao.addHero("1", hero);
         Hero expected = dao.getHero("1");
@@ -99,7 +99,7 @@ public class HeroDaoTest {
         contact.setLastName("Parker");
         contact.setAddress(address);
 
-        Hero hero = new Hero(superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);
@@ -134,7 +134,7 @@ public class HeroDaoTest {
         contact.setLastName("Parker");
         contact.setAddress(address);
 
-        Hero hero = new Hero(superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);
@@ -168,7 +168,7 @@ public class HeroDaoTest {
         contact.setLastName("Parker");
         contact.setAddress(address);
 
-        Hero hero = new Hero(superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);
@@ -198,7 +198,7 @@ public class HeroDaoTest {
         contact.setLastName("Parker");
         contact.setAddress(address);
 
-        Hero hero = new Hero(superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);

@@ -20,6 +20,17 @@ public class Contact {
     private String phone;
     private String email;
 
+    public Contact(String firstName, String lastName, Address address, String phone, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+    }
+
+    public Contact() {
+    }
+
     public String getContactId() {
         return contactId;
     }

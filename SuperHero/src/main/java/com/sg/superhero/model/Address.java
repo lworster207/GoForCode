@@ -19,6 +19,17 @@ public class Address {
     private String stateProvince;
     private String postCode;
 
+    public Address(String addressId, String streetAddress, String city, String stateProvince, String postCode) {
+        this.addressId = addressId;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.stateProvince = stateProvince;
+        this.postCode = postCode;
+    }
+
+    public Address() {
+    }
+
     public String getAddressId() {
         return addressId;
     }
