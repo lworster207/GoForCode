@@ -40,8 +40,9 @@ ALTER TABLE `Contact`
 CREATE TABLE IF NOT EXISTS `Hero` (
 	`HeroId` int(11) not null auto_increment,
 	`SuperPowerId` int(11) not null,
-	`ContactId` int(11) not null,
-	`Description` varchar(30) not null,
+	`ContactId` int(11) null,
+    `Name` varchar(30) not null,
+	`Description` varchar(30) null,
     PRIMARY KEY (`HeroId`)
 );
 

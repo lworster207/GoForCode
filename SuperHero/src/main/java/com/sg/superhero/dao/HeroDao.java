@@ -18,7 +18,7 @@ public interface HeroDao {
 
     public Hero deleteHero(String heroId);
 
-    public Hero updateHero(Hero hero);
+    public Hero updateHero(String heroId, Hero hero);
 
     public Hero getHero(String heroId);
 

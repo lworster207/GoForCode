@@ -18,7 +18,7 @@ public interface OrganizationDao {
 
     public Organization deleteOrganization(String organizationId);
 
-    public Organization updateOrganization(Organization organization);
+    public Organization updateOrganization(String organizationId, Organization organization);
 
     public Organization getOrganization(String organizationId);
 

@@ -76,7 +76,7 @@
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="add-description" name="add-description" placeholder="First Name"/>
                 </div>
-            </div>
+            </div>                        
             <div class="form-group">
                 <label for="add-first-name" class="col-md-4 control-label">First Name:</label>
                 <div class="col-md-8">

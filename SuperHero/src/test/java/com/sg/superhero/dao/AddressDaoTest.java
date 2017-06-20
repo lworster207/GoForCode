@@ -107,7 +107,7 @@ public class AddressDaoTest {
         assertEquals(address, result);
 
         address.setStreetAddress("234 Elm Street");
-        result = dao.updateAddress(address);
+        result = dao.updateAddress(addressId, address);
         assertEquals(address, result);
     }
 

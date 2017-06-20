@@ -18,7 +18,7 @@ public interface AddressDao {
 
     public Address deleteAddress(String addressId);
 
-    public Address updateAddress(Address address);
+    public Address updateAddress(String addressId, Address address);
 
     public Address getAddress(String addressId);
 

@@ -142,7 +142,7 @@ public class HeroDaoTest {
         assertEquals(expected, result);
 
         result.setDescription("new super hero description");
-        expected = dao.updateHero(result);
+        expected = dao.updateHero("1", result);
         assertEquals(expected, result);
     }
 

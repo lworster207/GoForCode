@@ -34,11 +34,11 @@ public class HeroDaoInMemImpl implements HeroDao {
     }
 
     @Override
-    public Hero updateHero(Hero hero) {
-        heroes.get(hero.getHeroId()).setContact(hero.getContact());
-        heroes.get(hero.getHeroId()).setDescription(hero.getDescription());
-        heroes.get(hero.getHeroId()).setSuperpower(hero.getSuperpower());
-        return heroes.get(hero.getHeroId());
+    public Hero updateHero(String heroId, Hero hero) {
+        heroes.get(heroId).setContact(hero.getContact());
+        heroes.get(heroId).setDescription(hero.getDescription());
+        heroes.get(heroId).setSuperpower(hero.getSuperpower());
+        return heroes.get(heroId);
     }
 
     @Override

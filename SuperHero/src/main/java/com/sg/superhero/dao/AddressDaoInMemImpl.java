@@ -35,12 +35,12 @@ public class AddressDaoInMemImpl implements AddressDao {
     }
 
     @Override
-    public Address updateAddress(Address address) {
-        addresses.get(address.getAddressId()).setCity(address.getCity());
-        addresses.get(address.getAddressId()).setPostCode(address.getPostCode());
-        addresses.get(address.getAddressId()).setStateProvince(address.getStateProvince());
-        addresses.get(address.getAddressId()).setStreetAddress(address.getStreetAddress());
-        return addresses.get(address.getAddressId());
+    public Address updateAddress(String addressId, Address address) {
+        addresses.get(addressId).setCity(address.getCity());
+        addresses.get(addressId).setPostCode(address.getPostCode());
+        addresses.get(addressId).setStateProvince(address.getStateProvince());
+        addresses.get(addressId).setStreetAddress(address.getStreetAddress());
+        return addresses.get(addressId);
     }
 
     @Override
