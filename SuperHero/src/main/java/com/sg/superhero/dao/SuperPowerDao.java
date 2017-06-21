@@ -23,4 +23,7 @@ public interface SuperPowerDao {
     SuperPower updateSuperPower(String superPowerId, SuperPower superPower);
 
     List<SuperPower> getAllSuperPowers();
+
+    List<SuperPower> getSuperPowersByHero(String heroId);
+
 }

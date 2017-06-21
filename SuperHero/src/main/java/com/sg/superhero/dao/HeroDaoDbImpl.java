@@ -5,6 +5,7 @@
  */
 package com.sg.superhero.dao;
 
+import com.sg.supercontact.dao.ContactDao;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.SuperPower;
@@ -22,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class HeroDaoDbImpl implements HeroDao {
 
-    SuperPowerDao spDao = new SuperPowerDaoDbImpl();
+    private static SuperPowerDao spDao = new SuperPowerDaoDbImpl();
+    private static ContactDao contactDao = new ContactDaoDbImpl();
 
     private static final String SQL_INSERT_ITEM
             = "insert into Hero "
@@ -82,7 +84,8 @@ public class HeroDaoDbImpl implements HeroDao {
 
     @Override
     public Hero getHero(String heroId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.queryForObject(SQL_SELECT_ITEM,
+                new HeroMapper(), heroId);
     }
 
     @Override

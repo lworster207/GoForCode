@@ -40,6 +40,21 @@ public class HeroController {
         return "newhero";
     }
 
+    @RequestMapping(value = "/editHero", method = RequestMethod.GET)
+    public String editHero(HttpServletRequest request, Model model) {
+        String heroId = request.getParameter("heroId");
+        List<SuperPower> powersList = service.getAllSuperPowers();
+
+        Hero hero = service.getHero(heroId);
+        List<SuperPower> heroPowersList = service.getSuperPowersByHero(heroId);
+
+        //model.addAttribute("contact", hero.getContact());
+        model.addAttribute("hero", hero);
+        model.addAttribute("powersList", powersList);
+        model.addAttribute("heroPowersList", heroPowersList);
+        return "edithero";
+    }
+
     @RequestMapping(value = "/createSuperHero", method = RequestMethod.POST)
     public String createSuperHero(HttpServletRequest request, Model model) {
         Address newAddress;
@@ -79,4 +94,5 @@ public class HeroController {
         }
         return "redirect:displayHerosPage";
     }
+
 }

@@ -6,8 +6,7 @@ CREATE DATABASE IF NOT EXISTS SuperHeroSightings;
 USE SuperHeroSightings;
 
 CREATE TABLE IF NOT EXISTS `SuperPower` (
-	`SuperPowerDbId` int(11) not null auto_increment,
-    `SuperPowerId` varchar(11) not  null,
+	`SuperPowerId` int(11) not null auto_increment,
 	`Description` varchar(40) not null,
     PRIMARY KEY (`SuperPowerId`)
 );
@@ -40,16 +39,11 @@ ALTER TABLE `Contact`
 
 CREATE TABLE IF NOT EXISTS `Hero` (
 	`HeroId` int(11) not null auto_increment,
-	`SuperPowerId` int(11) not null,
 	`ContactId` int(11) null,
     `Name` varchar(30) not null,
 	`Description` varchar(30) null,
     PRIMARY KEY (`HeroId`)
 );
-
-ALTER TABLE `Hero`
- ADD CONSTRAINT `fkHeroSuperPower` FOREIGN KEY (`SuperPowerId`) REFERENCES `SuperPower`
-(`SuperPowerId`) ON DELETE NO ACTION;  
 
 ALTER TABLE `Hero`
  ADD CONSTRAINT `fkHeroContact` FOREIGN KEY (`ContactId`) REFERENCES `Contact`

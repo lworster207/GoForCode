@@ -55,4 +55,9 @@ public class SuperPowerDaoInMemImpl implements SuperPowerDao {
         return new ArrayList(c);
     }
 
+    @Override
+    public List<SuperPower> getSuperPowersByHero(String heroId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

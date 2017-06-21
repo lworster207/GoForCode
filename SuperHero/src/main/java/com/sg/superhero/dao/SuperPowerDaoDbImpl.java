@@ -37,6 +37,11 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     private static final String SQL_SELECT_ALL_ITEMS
             = "select * from SuperPower";
 
+    private static final String SQL_SELECT_SUPERPOWERS_BY_HERO
+            = "select sp.SuperPowerId, sp.Description from HeroSuperPower hsp "
+            + "join SuperPower sp on sp.SuperPowerId = hsp.SuperPowerId "
+            + "where hsp.HeroId = ?";
+
     private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -54,6 +59,18 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             return null;
         }
         //return superPowers.get(superPowerId);
+    }
+
+    @Override
+    public List<SuperPower> getSuperPowersByHero(String heroId) {
+        try {
+            return jdbcTemplate.query(SQL_SELECT_SUPERPOWERS_BY_HERO,
+                    new SuperPowerMapper(), heroId);
+        } catch (EmptyResultDataAccessException ex) {
+            // there were no results for the given item id - we just
+            // want to return null in this case
+            return null;
+        }
     }
 
     @Override

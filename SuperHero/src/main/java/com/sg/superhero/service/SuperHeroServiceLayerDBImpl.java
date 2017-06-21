@@ -8,12 +8,12 @@ package com.sg.superhero.service;
 import com.sg.supercontact.dao.ContactDao;
 import com.sg.superhero.dao.AddressDao;
 import com.sg.superhero.dao.HeroDao;
-import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.dao.OrganizationDao;
 import com.sg.superhero.dao.SuperPowerDao;
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Organization;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author apprentice
  */
-public class SuperHeroServiceLayerDbImpl implements SuperHeroServiceLayer {
+public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
 
     HeroDao heroDao;
     ContactDao contactDao;
@@ -30,7 +30,7 @@ public class SuperHeroServiceLayerDbImpl implements SuperHeroServiceLayer {
     OrganizationDao organizationDao;
     SuperPowerDao superpowerDao;
 
-    public SuperHeroServiceLayerDbImpl(HeroDao heroDao, ContactDao contactDao, AddressDao addressDao, OrganizationDao organizationDao, SuperPowerDao superpowerDao) {
+    public SuperHeroServiceLayerDBImpl(HeroDao heroDao, ContactDao contactDao, AddressDao addressDao, OrganizationDao organizationDao, SuperPowerDao superpowerDao) {
         this.heroDao = heroDao;
         this.contactDao = contactDao;
         this.addressDao = addressDao;
@@ -172,6 +172,11 @@ public class SuperHeroServiceLayerDbImpl implements SuperHeroServiceLayer {
     @Override
     public List<SuperPower> getAllSuperPowers() {
         return superpowerDao.getAllSuperPowers();
+    }
+
+    @Override
+    public List<SuperPower> getSuperPowersByHero(String heroId) {
+        return superpowerDao.getSuperPowersByHero(heroId);
     }
 
 }

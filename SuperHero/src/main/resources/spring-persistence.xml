@@ -56,7 +56,7 @@
       class="com.sg.superhero.dao.OrganizationDaoDbImpl"> 
     </bean>  
     <bean id="serviceLayer"
-       class="com.sg.superhero.service.SuperHeroServiceLayerDbImpl">
+       class="com.sg.superhero.service.SuperHeroServiceLayerDBImpl">
         <constructor-arg ref="heroDao"/>
         <constructor-arg ref="contactDao"/>
         <constructor-arg ref="addressDao"/>
@@ -74,5 +74,12 @@
     </bean> 
     <bean id="sightingsController" class="com.sg.superhero.SightingsController">
         <constructor-arg ref="serviceLayer"/>
+    </bean>  
+    <!--  
+    <bean id="restController" class="com.sg.superhero.SuperHeroRESTController">
+        <constructor-arg ref="heroDao"/>
+        <constructor-arg ref="superpowerDao"/>
     </bean>   
+    -->  
+    
 </beans>

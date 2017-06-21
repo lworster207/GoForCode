@@ -5,10 +5,10 @@
  */
 package com.sg.superhero.service;
 
-import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Organization;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
@@ -72,4 +72,6 @@ public interface SuperHeroServiceLayer {
     public SuperPower updateSuperPower(String superPowerId, SuperPower superPower);
 
     public List<SuperPower> getAllSuperPowers();
+
+    public List<SuperPower> getSuperPowersByHero(String heroId);
 }
