@@ -27,6 +27,7 @@ public class HeroController {
     @RequestMapping(value = "/displayHerosPage", method = RequestMethod.GET)
     public String displayHeros(Model model) {
         List<Hero> heroList = service.getAllHeroes();
+        // List<HeroPower> heroList = service.getAllHeroesAndPowers();
         model.addAttribute("heroList", heroList);
         return "heros";
     }

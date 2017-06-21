@@ -8,6 +8,7 @@ package com.sg.superhero.service;
 import com.sg.supercontact.dao.ContactDao;
 import com.sg.superhero.dao.AddressDao;
 import com.sg.superhero.dao.HeroDao;
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.dao.OrganizationDao;
 import com.sg.superhero.dao.SuperPowerDao;
 import com.sg.superhero.model.Address;
@@ -61,6 +62,11 @@ public class SuperHeroServiceLayerDbImpl implements SuperHeroServiceLayer {
     @Override
     public List<Hero> getAllHeroes() {
         return heroDao.getAllHeroes();
+    }
+
+    @Override
+    public List<HeroPower> getAllHeroesAndPowers() {
+        return heroDao.getAllHeroesAndPowers();
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package com.sg.superhero.service;
 
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
@@ -27,6 +28,8 @@ public interface SuperHeroServiceLayer {
     public Hero getHero(String heroId);
 
     public List<Hero> getAllHeroes();
+
+    public List<HeroPower> getAllHeroesAndPowers();
 
     public Contact addContact(String contactId, Contact contact);
 

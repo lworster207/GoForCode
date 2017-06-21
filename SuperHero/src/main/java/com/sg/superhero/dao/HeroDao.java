@@ -5,6 +5,7 @@
  */
 package com.sg.superhero.dao;
 
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Hero;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface HeroDao {
     public Hero getHero(String heroId);
 
     public List<Hero> getAllHeroes();
+
+    public List<HeroPower> getAllHeroesAndPowers();
 }

@@ -5,6 +5,7 @@
  */
 package com.sg.superhero.dao;
 
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Hero;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,6 +57,11 @@ public class HeroDaoInMemImpl implements HeroDao {
     public List<Hero> getAllHeroes() {
         Collection<Hero> c = heroes.values();
         return new ArrayList(c);
+    }
+
+    @Override
+    public List<HeroPower> getAllHeroesAndPowers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

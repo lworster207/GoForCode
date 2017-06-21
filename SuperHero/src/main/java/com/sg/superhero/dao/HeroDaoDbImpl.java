@@ -6,6 +6,7 @@
 package com.sg.superhero.dao;
 
 import com.sg.superhero.model.Hero;
+import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.SuperPower;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,6 +42,11 @@ public class HeroDaoDbImpl implements HeroDao {
 
     private static final String SQL_SELECT_ALL_ITEMS
             = "select * from Hero";
+
+    private static final String SQL_SELECT_ALL_AND_SUPERPOWERS
+            = "SELECT h.HeroId, h.ContactId, h.Name as HeroName,h.Description as HeroDescription,sp.Description as SuperPower FROM Hero h "
+            + "join HeroSuperPower on HeroSuperPower.HeroId = h.HeroId "
+            + "join SuperPower sp on sp.SuperPowerId=HeroSuperPower.SuperPowerId";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -83,6 +89,25 @@ public class HeroDaoDbImpl implements HeroDao {
     public List<Hero> getAllHeroes() {
         return jdbcTemplate.query(SQL_SELECT_ALL_ITEMS,
                 new HeroMapper());
+    }
+
+    @Override
+    public List<HeroPower> getAllHeroesAndPowers() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_AND_SUPERPOWERS,
+                new HeroPowerMapper());
+    }
+
+    private static final class HeroPowerMapper implements RowMapper<HeroPower> {
+
+        public HeroPower mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            HeroPower hp = new HeroPower();
+            hp.setHeroId(rs.getString("HeroId"));
+            hp.setHeroName(rs.getString("HeroName"));
+            hp.setHeroDescription(rs.getString("HeroDescription"));
+            hp.setSuperPower(rs.getString("SuperPower"));
+            return hp;
+        }
 
     }
 

@@ -54,7 +54,6 @@
     </bean>   
      <bean id="organizationDao"
       class="com.sg.superhero.dao.OrganizationDaoDbImpl"> 
-       <property name="jdbcTemplate" ref="jdbcTemplate" />  
     </bean>  
     <bean id="serviceLayer"
        class="com.sg.superhero.service.SuperHeroServiceLayerDbImpl">
