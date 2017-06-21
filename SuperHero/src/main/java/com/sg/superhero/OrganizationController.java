@@ -5,6 +5,7 @@
  */
 package com.sg.superhero;
 
+import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class OrganizationController {
 
-    public OrganizationController() {
+    private SuperHeroServiceLayer service;
+
+    public OrganizationController(SuperHeroServiceLayer service) {
+        this.service = service;
     }
 
     @RequestMapping(value = "/displayOrganizations", method = RequestMethod.GET)

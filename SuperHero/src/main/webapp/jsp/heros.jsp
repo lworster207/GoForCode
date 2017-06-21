@@ -69,7 +69,7 @@
             </a>
         </td>
         <td>
-            <c:out value="${currentHero.superPower}"/>
+            <c:out value="${currentHero.superpower}"/>
         </td>
         <td>
             <c:out value="${currentHero.description}"/>

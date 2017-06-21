@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -55,8 +56,10 @@
     -->
     <div class="col-md-6">
         <h2>New Super Hero</h2>
+        
         <form class="form-horizontal" 
-              role="form" method="POST" 
+              role="form" method="POST"
+               modelAttribute="hero"
               action="createSuperHero">
             <div class="form-group">
                 <label for="add-hero-name" class="col-md-4 control-label">Hero Name:</label>

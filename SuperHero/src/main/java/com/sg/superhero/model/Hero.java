@@ -6,6 +6,8 @@
 package com.sg.superhero.model;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -16,7 +18,10 @@ public class Hero {
     private String heroId;
     private SuperPower superpower;
     private Contact contact;
+    @NotEmpty(message = "You must supply a value for Hero Name.")
+    @Length(max = 50, message = "Hero Name must be no more than 30 characters in length.")
     private String heroName;
+
     private String description;
 
     public Hero(String heroName, SuperPower superpower, Contact contact, String description) {

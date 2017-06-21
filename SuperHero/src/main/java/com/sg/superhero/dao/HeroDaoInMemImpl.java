@@ -19,6 +19,12 @@ import java.util.Map;
 public class HeroDaoInMemImpl implements HeroDao {
 
     public Map<String, Hero> heroes = new HashMap<>();
+    public Integer nextId = 1;
+
+    public int getNextId() {
+        nextId++;
+        return nextId;
+    }
 
     @Override
     public Hero addHero(String heroId, Hero hero) {

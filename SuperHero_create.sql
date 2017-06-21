@@ -6,7 +6,8 @@ CREATE DATABASE IF NOT EXISTS SuperHeroSightings;
 USE SuperHeroSightings;
 
 CREATE TABLE IF NOT EXISTS `SuperPower` (
-	`SuperPowerId` int(11) not null auto_increment,
+	`SuperPowerDbId` int(11) not null auto_increment,
+    `SuperPowerId` varchar(11) not  null,
 	`Description` varchar(40) not null,
     PRIMARY KEY (`SuperPowerId`)
 );
@@ -89,7 +90,19 @@ ALTER TABLE `Organization`
 (`AddressId`) ON DELETE NO ACTION;
 
 
+CREATE TABLE IF NOT EXISTS `HeroSuperPower` (
+	`HeroId` int(11) not null,
+    `SuperPowerId` int(11) not null,
+    PRIMARY KEY ( `HeroId` , `SuperPowerId` )
+);
 
+ALTER TABLE `HeroSuperPower`
+ ADD CONSTRAINT `fkHeroSuperPowerHero` FOREIGN KEY (`HeroId`) REFERENCES `Hero`
+(`HeroId`) ON DELETE NO ACTION;  
+
+ALTER TABLE `HeroSuperPower`
+ ADD CONSTRAINT `fkHeroSuperPowerSuperPower` FOREIGN KEY (`SuperPowerId`) REFERENCES `SuperPower`
+(`SuperPowerId`) ON DELETE NO ACTION;  
 
 CREATE TABLE IF NOT EXISTS `OrgMembers` (
 	`OrgMembersId` int(11) not null auto_increment,
@@ -122,3 +135,6 @@ ALTER TABLE `Sighting`
 ALTER TABLE `Sighting`
  ADD CONSTRAINT `fkSightingLocation` FOREIGN KEY (`LocationId`) REFERENCES `Location`
 (`LocationId`) ON DELETE NO ACTION;  
+
+
+    

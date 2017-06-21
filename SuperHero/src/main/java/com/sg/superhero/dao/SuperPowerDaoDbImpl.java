@@ -67,6 +67,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             // row in the database
             Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
             // set the new id value on the item object and return it
+            superPower.setSuperPowerId(newId.toString());
             newSuperPower = getSuperPower(newId.toString());
         }
 
