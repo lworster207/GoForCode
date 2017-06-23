@@ -16,18 +16,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Hero {
 
     private String heroId;
-    private SuperPower superpower;
-    private Contact contact;
+    private String contactId;
     @NotEmpty(message = "You must supply a value for Hero Name.")
     @Length(max = 50, message = "Hero Name must be no more than 30 characters in length.")
     private String heroName;
 
     private String description;
 
-    public Hero(String heroName, SuperPower superpower, Contact contact, String description) {
+    public Hero(String heroName, String contactId, String description) {
         this.heroName = heroName;
-        this.superpower = superpower;
-        this.contact = contact;
+        this.contactId = contactId;
         this.description = description;
     }
 
@@ -50,20 +48,12 @@ public class Hero {
         this.heroId = heroId;
     }
 
-    public SuperPower getSuperpower() {
-        return superpower;
+    public String getContactId() {
+        return contactId;
     }
 
-    public void setSuperpower(SuperPower superpower) {
-        this.superpower = superpower;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     public String getDescription() {
@@ -76,9 +66,9 @@ public class Hero {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.superpower);
-        hash = 97 * hash + Objects.hashCode(this.contact);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.contactId);
+        hash = 97 * hash + Objects.hashCode(this.heroName);
         hash = 97 * hash + Objects.hashCode(this.description);
         return hash;
     }
@@ -95,13 +85,13 @@ public class Hero {
             return false;
         }
         final Hero other = (Hero) obj;
+        if (!Objects.equals(this.contactId, other.contactId)) {
+            return false;
+        }
+        if (!Objects.equals(this.heroName, other.heroName)) {
+            return false;
+        }
         if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.superpower, other.superpower)) {
-            return false;
-        }
-        if (!Objects.equals(this.contact, other.contact)) {
             return false;
         }
         return true;

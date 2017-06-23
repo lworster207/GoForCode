@@ -65,6 +65,9 @@
             <div class="form-group">
                 <label for="add-hero-name" class="col-md-4 control-label">Hero Name:</label>
                 <div class="col-md-8">
+                    <input type="hidden" id="add-hero-id" value="<c:out value='${hero.heroId}' />" />
+                    <input type="hidden" id="add-hero-contactid" value="<c:out value='${hero.contactId}' />" />    
+                    <input type="hidden" id="add-hero-addressid" value="<c:out value='${address.addressId}' />" /> 
                     <input type="text" class="form-control" id="add-hero-name"  name="add-hero-name" placeholder="Hero Name" value="<c:out value='${hero.heroName}' />"/>
                 </div>
             </div>
@@ -94,54 +97,55 @@
             <div class="form-group">
                 <label for="add-first-name" class="col-md-4 control-label">First Name:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-first-name" name="add-first-name" placeholder="First Name"/>
+                    <input type="text" class="form-control" id="add-first-name" name="add-first-name" placeholder="First Name" value="<c:out value='${contact.firstName}' />"/>
                 </div>
             </div>            
             <div class="form-group">
                 <label for="add-last-name" class="col-md-4 control-label">Last Name:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-last-name" name="add-last-name" placeholder="Last Name"/>
+                    <input type="text" class="form-control" id="add-last-name" name="add-last-name" placeholder="Last Name" value="<c:out value='${contact.lastName}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="add-address" class="col-md-4 control-label">Address:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-address" name="add-address" placeholder="Address" value="<c:out value='${hero.contact}' />"/>
+                    <input type="text" class="form-control" id="add-address" name="add-address" placeholder="Address" value="<c:out value='${address.streetAddress}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="add-city" class="col-md-4 control-label">City:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-city" name="add-city" placeholder="Address"/>
+                    <input type="text" class="form-control" id="add-city" name="add-city" placeholder="City" value="<c:out value='${address.city}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="add-state" class="col-md-4 control-label">State:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province"/>
+                    <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province" value="<c:out value='${address.stateProvince}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="add-postcode" class="col-md-4 control-label">Post Code:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-postcode" name="add-postcode" placeholder="PostCode"/>
+                    <input type="text" class="form-control" id="add-postcode" name="add-postcode" placeholder="PostCode" value="<c:out value='${address.postCode}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="add-email" class="col-md-4 control-label">Email:</label>
                 <div class="col-md-8">
-                    <input type="email" class="form-control" id="add-email" name="add-email" placeholder="Email"/>
+                    <input type="email" class="form-control" id="add-email" name="add-email" placeholder="Email" value="<c:out value='${contact.email}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="add-phone" class="col-md-4 control-label">Phone:</label>
                 <div class="col-md-8">
-                    <input type="tel" class="form-control" id="add-phone" name="add-phone" placeholder="Phone"/>
+                    <input type="tel" class="form-control" id="add-phone" name="add-phone" placeholder="Phone" value="<c:out value='${contact.phone}' />"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                     <input type="submit" class="btn btn-default" value="Update Super Hero"/>
+                    <input type="button" class="btn btn-default" value="Cancel"/>
                 </div>
             </div>
         </form>

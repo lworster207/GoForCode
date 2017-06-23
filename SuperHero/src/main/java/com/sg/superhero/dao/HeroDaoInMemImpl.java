@@ -5,8 +5,10 @@
  */
 package com.sg.superhero.dao;
 
-import com.sg.superhero.model.HeroPower;
+import com.sg.superhero.model.Address;
+import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
+import com.sg.superhero.model.HeroPower;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,6 +36,11 @@ public class HeroDaoInMemImpl implements HeroDao {
     }
 
     @Override
+    public Hero addHero(Hero hero, Contact contact, Address address) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public Hero deleteHero(String heroId) {
         Hero removedHero = heroes.get(heroId);
         heroes.remove(heroId);
@@ -42,9 +49,8 @@ public class HeroDaoInMemImpl implements HeroDao {
 
     @Override
     public Hero updateHero(String heroId, Hero hero) {
-        heroes.get(heroId).setContact(hero.getContact());
+        heroes.get(heroId).setContactId(hero.getContactId());
         heroes.get(heroId).setDescription(hero.getDescription());
-        heroes.get(heroId).setSuperpower(hero.getSuperpower());
         return heroes.get(heroId);
     }
 

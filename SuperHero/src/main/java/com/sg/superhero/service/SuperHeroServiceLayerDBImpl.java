@@ -5,8 +5,8 @@
  */
 package com.sg.superhero.service;
 
-import com.sg.supercontact.dao.ContactDao;
 import com.sg.superhero.dao.AddressDao;
+import com.sg.superhero.dao.ContactDao;
 import com.sg.superhero.dao.HeroDao;
 import com.sg.superhero.dao.OrganizationDao;
 import com.sg.superhero.dao.SuperPowerDao;
@@ -45,7 +45,34 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
+    public Hero addHero(Hero hero, Contact contact, Address address) {
+        String addressId;
+
+        if (contact != null) {
+            if (address == null) {
+                addressId = null;
+            } else {
+                addressDao.addAddress("0", address);
+            }
+            contact.setAddressId(address.getAddressId());
+            contactDao.addContact("0", contact);
+            hero.setContactId(contact.getContactId());
+        } else {
+            hero.setContactId(null);
+        }
+
+        return heroDao.addHero("1", hero);
+
+    }
+
+    @Override
     public Hero deleteHero(String heroId) {
+        Hero hero = heroDao.getHero(heroId);
+
+        if (hero.getContactId() != null) {
+            deleteContact(hero.getContactId());
+        }
+
         return heroDao.deleteHero(heroId);
     }
 
@@ -76,6 +103,11 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
 
     @Override
     public Contact deleteContact(String contactId) {
+        Contact contact = contactDao.getContact(contactId);
+        String addressId = contact.getAddressId();
+        if (addressId != null) {
+            addressDao.deleteAddress(addressId);
+        }
         return contactDao.deleteContact(contactId);
     }
 
@@ -86,7 +118,11 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
 
     @Override
     public Contact getContact(String contactId) {
-        return contactDao.getContact(contactId);
+        if (contactId != null) {
+            return contactDao.getContact(contactId);
+        } else {
+            return null;
+        }
     }
 
     @Override

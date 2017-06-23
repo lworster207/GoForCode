@@ -16,6 +16,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
@@ -23,7 +26,9 @@ import org.junit.Test;
  */
 public class HeroDaoTest {
 
-    HeroDao dao = new HeroDaoInMemImpl();
+    HeroDao dao;
+    ContactDao contactDao;
+    AddressDao addressDao;
 
     public HeroDaoTest() {
     }
@@ -38,10 +43,16 @@ public class HeroDaoTest {
 
     @Before
     public void setUp() {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
+        dao = ctx.getBean("heroDao", HeroDao.class);
+        contactDao = ctx.getBean("contactDao", ContactDao.class);
+        addressDao = ctx.getBean("addressDao", AddressDao.class);
+        /*
         List<Hero> heroList = dao.getAllHeroes();
         for (Hero hero : heroList) {
             dao.deleteHero(hero.getHeroId());
         }
+         */
     }
 
     @After
@@ -68,12 +79,12 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
-        contact.setAddress(address);
+        contact.setAddressId(address.getAddressId());
 
-        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", null, "super hero description");
 
         Hero result = dao.addHero("1", hero);
-        Hero expected = dao.getHero("1");
+        Hero expected = dao.getHero(result.getHeroId());
         assertEquals(expected, result);
     }
 
@@ -97,18 +108,22 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
-        contact.setAddress(address);
+        contact.setAddressId(address.getAddressId());
 
-        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", null, "super hero description");
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);
-        Hero expected = dao.getHero("1");
-        assertEquals(expected, result);
+        Hero expected = dao.getHero(result.getHeroId());
+        //assertEquals(expected, result);
 
-        dao.deleteHero("1");
-        expected = dao.getHero("1");
-        assertEquals(null, expected);
+        dao.deleteHero(result.getHeroId());
+        try {
+            expected = dao.getHero(result.getHeroId());
+            assertEquals(1, 0);
+        } catch (EmptyResultDataAccessException e) {
+            assertEquals(1, 1);
+        }
 
     }
 
@@ -132,17 +147,18 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
-        contact.setAddress(address);
+        contact.setAddressId(address.getAddressId());
 
-        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", null, "super hero description");
+
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);
-        Hero expected = dao.getHero("1");
+        Hero expected = dao.getHero(result.getHeroId());
         assertEquals(expected, result);
 
         result.setDescription("new super hero description");
-        expected = dao.updateHero("1", result);
+        expected = dao.updateHero(result.getHeroId(), result);
         assertEquals(expected, result);
     }
 
@@ -166,13 +182,14 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
-        contact.setAddress(address);
+        contact.setAddressId(address.getAddressId());
 
-        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", null, "super hero description");
+
         hero.setHeroId("1");
 
         Hero result = dao.addHero("1", hero);
-        Hero expected = dao.getHero("1");
+        Hero expected = dao.getHero(result.getHeroId());
         assertEquals(expected, result);
     }
 
@@ -196,17 +213,19 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
-        contact.setAddress(address);
+        contact.setAddressId(address.getAddressId());
 
-        Hero hero = new Hero("heroName", superpower, contact, "super hero description");
+        Hero hero = new Hero("heroName", contact.getContactId(), "super hero description");
+
         hero.setHeroId("1");
+        List<Hero> allHeroes = dao.getAllHeroes();
 
         Hero result = dao.addHero("1", hero);
 
         hero.setHeroId("2");
         Hero result2 = dao.addHero("2", hero);
-        List<Hero> allHeroes = dao.getAllHeroes();
-        assertEquals(allHeroes.size(), 2);
+        List<Hero> allHeroes2 = dao.getAllHeroes();
+        assertEquals(allHeroes.size() + 2, allHeroes2.size());
     }
 
 }

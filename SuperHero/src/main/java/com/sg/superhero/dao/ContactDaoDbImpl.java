@@ -5,7 +5,6 @@
  */
 package com.sg.superhero.dao;
 
-import com.sg.supercontact.dao.ContactDao;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.sql.ResultSet;
@@ -63,7 +62,7 @@ public class ContactDaoDbImpl implements ContactDao {
                 contact.getLastName(),
                 contact.getPhone(),
                 contact.getEmail(),
-                contact.getAddress().getAddressId());
+                contact.getAddressId());
 
         // query the database for the id that was just assigned to the new
         // row in the database
@@ -76,8 +75,9 @@ public class ContactDaoDbImpl implements ContactDao {
 
     @Override
     public Contact deleteContact(String contactId) {
-
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Contact removedContact = getContact(contactId);
+        jdbcTemplate.update(SQL_DELETE_ITEM, contactId);
+        return removedContact;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class ContactDaoDbImpl implements ContactDao {
                 contact.getLastName(),
                 contact.getPhone(),
                 contact.getEmail(),
-                contact.getAddress().getAddressId());
+                contact.getAddressId());
         return getContact(contactId);
     }
 
@@ -118,7 +118,7 @@ public class ContactDaoDbImpl implements ContactDao {
             contact.setLastName(rs.getString("LastName"));
             contact.setPhone(rs.getString("Phone"));
             contact.setEmail(rs.getString("Email"));
-            contact.setAddress(service.getAddress(rs.getString("AddressId")));
+            contact.setAddressId(rs.getString("AddressId"));
 
             return contact;
         }

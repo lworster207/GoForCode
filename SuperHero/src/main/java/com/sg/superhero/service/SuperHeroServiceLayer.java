@@ -21,6 +21,8 @@ public interface SuperHeroServiceLayer {
 
     public Hero addHero(String heroId, Hero hero);
 
+    public Hero addHero(Hero hero, Contact contact, Address address);
+
     public Hero deleteHero(String heroId);
 
     public Hero updateHero(String heroId, Hero hero);

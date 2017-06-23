@@ -5,6 +5,8 @@
  */
 package com.sg.superhero.dao;
 
+import com.sg.superhero.model.Address;
+import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.HeroPower;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 public interface HeroDao {
 
     public Hero addHero(String heroId, Hero hero);
+
+    public Hero addHero(Hero hero, Contact contact, Address address);
 
     public Hero deleteHero(String heroId);
 

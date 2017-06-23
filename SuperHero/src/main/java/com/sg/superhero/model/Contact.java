@@ -16,16 +16,16 @@ public class Contact {
     private String contactId;
     private String firstName;
     private String lastName;
-    private Address address;
+    private String addressId;
     private String phone;
     private String email;
 
-    public Contact(String firstName, String lastName, Address address, String phone, String email) {
+    public Contact(String firstName, String lastName, String addressId, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.addressId = addressId;
     }
 
     public Contact() {
@@ -55,12 +55,12 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     public String getPhone() {
@@ -81,10 +81,10 @@ public class Contact {
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         hash = 71 * hash + Objects.hashCode(this.firstName);
         hash = 71 * hash + Objects.hashCode(this.lastName);
-        hash = 71 * hash + Objects.hashCode(this.address);
+        hash = 71 * hash + Objects.hashCode(this.addressId);
         hash = 71 * hash + Objects.hashCode(this.phone);
         hash = 71 * hash + Objects.hashCode(this.email);
         return hash;
@@ -108,13 +108,13 @@ public class Contact {
         if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
+        if (!Objects.equals(this.addressId, other.addressId)) {
+            return false;
+        }
         if (!Objects.equals(this.phone, other.phone)) {
             return false;
         }
         if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.address, other.address)) {
             return false;
         }
         return true;

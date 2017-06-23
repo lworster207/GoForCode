@@ -4,11 +4,33 @@
  * and open the template in the editor.
  */
 
-var superheroServiceURL = "http://localhost:8080";
+var superheroServiceURL = "http://localhost:8080/SuperHero";
 
 $(document).ready(function () {
-    var powerOpt = [];
-    function setSelected(id) {
-        ${id}.prop("selected", true);
-    }
+
+    getSuperPowers();
+
+    
+
+    
+    
+}
+
+    
+function getSuperPowers() {
+       $.ajax ({
+        type: 'GET',
+        url:  superheroServiceURL + "/superpowers/1",
+        success: function (data, status) {
+
+            alert(data.superPowerId + " " + data.description);
+           $('#add-city').val(data.superPowerId);
+            
+        },
+        error: function(jqXHR) {
+            var errMsg = jqXHR.responseText.split('"');
+            alert("error");
+            //message.val(errMsg[3]);
+        }
+    });
 }

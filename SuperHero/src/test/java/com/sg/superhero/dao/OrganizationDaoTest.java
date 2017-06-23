@@ -53,11 +53,6 @@ public class OrganizationDaoTest {
      */
     @Test
     public void testAddOrganization() {
-        Contact contact = new Contact();
-        contact.setContactId("1");
-        contact.setFirstName("Bob");
-        contact.setLastName("Jones");
-        contact.setAddress(null);
 
         Address address = new Address();
         address.setAddressId("1");
@@ -66,10 +61,16 @@ public class OrganizationDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        Contact contact = new Contact();
+        contact.setContactId("1");
+        contact.setFirstName("Bob");
+        contact.setLastName("Jones");
+        contact.setAddressId(address.getAddressId());
+
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
@@ -84,11 +85,6 @@ public class OrganizationDaoTest {
      */
     @Test
     public void testDeleteOrganization() {
-        Contact contact = new Contact();
-        contact.setContactId("1");
-        contact.setFirstName("Bob");
-        contact.setLastName("Jones");
-        contact.setAddress(null);
 
         Address address = new Address();
         address.setAddressId("1");
@@ -97,10 +93,16 @@ public class OrganizationDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        Contact contact = new Contact();
+        contact.setContactId("1");
+        contact.setFirstName("Bob");
+        contact.setLastName("Jones");
+        contact.setAddressId(address.getAddressId());
+
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
@@ -118,11 +120,6 @@ public class OrganizationDaoTest {
      */
     @Test
     public void testUpdateOrganization() {
-        Contact contact = new Contact();
-        contact.setContactId("1");
-        contact.setFirstName("Bob");
-        contact.setLastName("Jones");
-        contact.setAddress(null);
 
         Address address = new Address();
         address.setAddressId("1");
@@ -131,10 +128,16 @@ public class OrganizationDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        Contact contact = new Contact();
+        contact.setContactId("1");
+        contact.setFirstName("Bob");
+        contact.setLastName("Jones");
+        contact.setAddressId(address.getAddressId());
+
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
@@ -149,12 +152,6 @@ public class OrganizationDaoTest {
      */
     @Test
     public void testGetOrganization() {
-        Contact contact = new Contact();
-        contact.setContactId("1");
-        contact.setFirstName("Bob");
-        contact.setLastName("Jones");
-        contact.setAddress(null);
-
         Address address = new Address();
         address.setAddressId("1");
         address.setStreetAddress("123 Elm Street");
@@ -162,17 +159,23 @@ public class OrganizationDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        Contact contact = new Contact();
+        contact.setContactId("1");
+        contact.setFirstName("Bob");
+        contact.setLastName("Jones");
+        contact.setAddressId(address.getAddressId());
+
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
         String organizationId2 = "2";
         Organization organization2 = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("OrganizationII description");
         organization.setName("OrganizationII Name");
 
@@ -194,12 +197,6 @@ public class OrganizationDaoTest {
      */
     @Test
     public void testGetAllOrganizations() {
-        Contact contact = new Contact();
-        contact.setContactId("1");
-        contact.setFirstName("Bob");
-        contact.setLastName("Jones");
-        contact.setAddress(null);
-
         Address address = new Address();
         address.setAddressId("1");
         address.setStreetAddress("123 Elm Street");
@@ -207,17 +204,23 @@ public class OrganizationDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        Contact contact = new Contact();
+        contact.setContactId("1");
+        contact.setFirstName("Bob");
+        contact.setLastName("Jones");
+        contact.setAddressId(address.getAddressId());
+
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
         String organizationId2 = "2";
         Organization organization2 = new Organization();
-        organization.setAddress(address);
-        organization.setContact(contact);
+        organization.setAddressId(address.getAddressId());
+        organization.setContactId(contact.getContactId());
         organization.setDescription("OrganizationII description");
         organization.setName("OrganizationII Name");
         Organization expOrg = dao.addOrganization(organizationId2, organization2);

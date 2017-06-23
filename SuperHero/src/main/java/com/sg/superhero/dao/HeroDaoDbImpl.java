@@ -5,7 +5,8 @@
  */
 package com.sg.superhero.dao;
 
-import com.sg.supercontact.dao.ContactDao;
+import com.sg.superhero.model.Address;
+import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.SuperPower;
@@ -23,13 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class HeroDaoDbImpl implements HeroDao {
 
-    private static SuperPowerDao spDao = new SuperPowerDaoDbImpl();
-    private static ContactDao contactDao = new ContactDaoDbImpl();
+    AddressDao addressDao = new AddressDaoDbImpl();
+    ContactDao contactDao = new ContactDaoDbImpl();
 
     private static final String SQL_INSERT_ITEM
             = "insert into Hero "
-            + "(Name, Description) "
-            + "values (?,?)";
+            + "(Name, ContactId, Description) "
+            + "values (?,?, ?)";
 
     private static final String SQL_DELETE_ITEM
             = "delete from Hero where HeroId = ?";
@@ -39,6 +40,8 @@ public class HeroDaoDbImpl implements HeroDao {
 
     private static final String SQL_UPDATE_ITEM
             = "update Hero set "
+            + "Name = ?, "
+            + "ContactId = ?, "
             + "Description = ? "
             + "where HeroId = ?";
 
@@ -60,7 +63,7 @@ public class HeroDaoDbImpl implements HeroDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Hero addHero(String heroId, Hero hero) {
         jdbcTemplate.update(SQL_INSERT_ITEM,
-                hero.getHeroName(), hero.getDescription());
+                hero.getHeroName(), hero.getContactId(), hero.getDescription());
 
         // query the database for the id that was just assigned to the new
         // row in the database
@@ -73,13 +76,47 @@ public class HeroDaoDbImpl implements HeroDao {
     }
 
     @Override
-    public Hero deleteHero(String heroId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public Hero addHero(Hero hero, Contact contact, Address address) {
+
+        String addressId;
+
+        if (contact != null) {
+            if (address == null) {
+                addressId = null;
+            } else {
+                addressDao.addAddress("0", address);
+            }
+            contact.setAddressId(address.getAddressId());
+            contactDao.addContact("0", contact);
+            hero.setContactId(contact.getContactId());
+        } else {
+            hero.setContactId(null);
+        }
+        jdbcTemplate.update(SQL_INSERT_ITEM,
+                hero.getHeroName(), hero.getContactId(), hero.getDescription());
+
+        // query the database for the id that was just assigned to the new
+        // row in the database
+        Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+        // set the new id value on the item object and return it
+        hero.setHeroId(newId.toString());
+        return hero;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public Hero deleteHero(String heroId) {
+        Hero removedHero = getHero(heroId);
+        jdbcTemplate.update(SQL_DELETE_ITEM, heroId);
+        return removedHero;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Hero updateHero(String heroId, Hero hero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_ITEM, hero.getHeroName(), hero.getContactId(), hero.getDescription(), heroId);
+        return getHero(heroId);
     }
 
     @Override
@@ -121,6 +158,7 @@ public class HeroDaoDbImpl implements HeroDao {
             SuperPower sp = new SuperPower();
             Hero hero = new Hero();
             hero.setHeroId(rs.getString("HeroId"));
+            hero.setContactId(rs.getString("ContactId"));
             hero.setHeroName(rs.getString("Name"));
             hero.setDescription(rs.getString("Description"));
             return hero;

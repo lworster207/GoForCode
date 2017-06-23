@@ -57,14 +57,15 @@
     <div class="col-md-6">
         <h2>New Super Hero</h2>
         
-        <form class="form-horizontal" 
+        <sf:form class="form-horizontal" 
               role="form" method="POST"
                modelAttribute="hero"
               action="createSuperHero">
             <div class="form-group">
-                <label for="add-hero-name" class="col-md-4 control-label">Hero Name:</label>
+                <label for="heroName" class="col-md-4 control-label">Hero Name:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-hero-name"  name="add-hero-name" placeholder="Hero Name"/>
+                    <sf:input type="text" class="form-control" path="heroName" id="heroName"  name="heroName" placeholder="Hero Name"/>
+                    <sf:errors path="heroName" cssclass="error"></sf:errors>
                 </div>
             </div>
             <div class="form-group">
@@ -137,7 +138,7 @@
                     <input type="submit" class="btn btn-default" value="Create Super Hero"/>
                 </div>
             </div>
-        </form>
+        </sf:form>
 
     </div> <!-- End col div -->
 

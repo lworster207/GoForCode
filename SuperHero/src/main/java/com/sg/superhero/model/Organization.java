@@ -16,8 +16,8 @@ public class Organization {
     private String organizationId;
     private String name;
     private String description;
-    private Address address;
-    private Contact contact;
+    private String addressId;
+    private String contactId;
 
     public String getOrganizationId() {
         return organizationId;
@@ -43,29 +43,29 @@ public class Organization {
         this.description = description;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
-    public Contact getContact() {
-        return contact;
+    public String getContactId() {
+        return contactId;
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 19 * hash + Objects.hashCode(this.name);
-        hash = 19 * hash + Objects.hashCode(this.description);
-        hash = 19 * hash + Objects.hashCode(this.address);
-        hash = 19 * hash + Objects.hashCode(this.contact);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.description);
+        hash = 53 * hash + Objects.hashCode(this.addressId);
+        hash = 53 * hash + Objects.hashCode(this.contactId);
         return hash;
     }
 
@@ -87,10 +87,10 @@ public class Organization {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.address, other.address)) {
+        if (!Objects.equals(this.addressId, other.addressId)) {
             return false;
         }
-        if (!Objects.equals(this.contact, other.contact)) {
+        if (!Objects.equals(this.contactId, other.contactId)) {
             return false;
         }
         return true;
