@@ -37,6 +37,8 @@ public interface SuperHeroServiceLayer {
 
     public Contact deleteContact(String contactId);
 
+    public Contact deleteContactWithAddress(String contactId);
+
     public Contact updateContact(String contactId, Contact contact);
 
     public Contact getContact(String contactId);

@@ -103,12 +103,21 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
 
     @Override
     public Contact deleteContact(String contactId) {
-        Contact contact = contactDao.getContact(contactId);
+        return contactDao.deleteContact(contactId);
+        /* Contact contact = contactDao.getContact(contactId);
         String addressId = contact.getAddressId();
         if (addressId != null) {
-            addressDao.deleteAddress(addressId);
-        }
-        return contactDao.deleteContact(contactId);
+            //addressDao.deleteAddress(addressId);
+            return contactDao.deleteContactWithAddress(contactId);
+        } else {
+            return contactDao.deleteContact(contactId);
+        }*/
+    }
+
+    @Override
+    public Contact deleteContactWithAddress(String contactId) {
+        Contact contact = contactDao.getContact(contactId);
+        return contactDao.deleteContactWithAddress(contactId);
     }
 
     @Override

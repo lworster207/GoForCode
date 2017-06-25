@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -55,13 +56,13 @@
     -->
    <div class="col-md-6">
         <h2>New Organization</h2>
-        <form class="form-horizontal" 
+        <sf:form class="form-horizontal" 
               role="form" method="POST" 
               action="createOrganization">
             <div class="form-group">
                 <label for="add-org-name" class="col-md-4 control-label">Organization Name:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-org-name"  name="add-org-name" placeholder="Organization Name"/>
+                    <sf:input type="text" class="form-control" id="add-org-name"  name="add-org-name" placeholder="Organization Name"/>
                 </div>
             </div>
             <div class="form-group">
@@ -123,7 +124,7 @@
                     <input type="submit" class="btn btn-default" value="Create Organization"/>
                 </div>
             </div>
-        </form>
+        </sf:form>
 
     </div> <!-- End col div -->
 

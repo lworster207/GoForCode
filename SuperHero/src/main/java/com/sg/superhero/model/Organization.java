@@ -14,9 +14,8 @@ import java.util.Objects;
 public class Organization {
 
     private String organizationId;
-    private String name;
-    private String description;
-    private String addressId;
+    private String orgName;
+    private String orgDescription;
     private String contactId;
 
     public String getOrganizationId() {
@@ -28,27 +27,19 @@ public class Organization {
     }
 
     public String getName() {
-        return name;
+        return orgName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.orgName = name;
     }
 
     public String getDescription() {
-        return description;
+        return orgDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
+        this.orgDescription = description;
     }
 
     public String getContactId() {
@@ -62,10 +53,9 @@ public class Organization {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.name);
-        hash = 53 * hash + Objects.hashCode(this.description);
-        hash = 53 * hash + Objects.hashCode(this.addressId);
-        hash = 53 * hash + Objects.hashCode(this.contactId);
+        hash = 29 * hash + Objects.hashCode(this.orgName);
+        hash = 29 * hash + Objects.hashCode(this.orgDescription);
+        hash = 29 * hash + Objects.hashCode(this.contactId);
         return hash;
     }
 
@@ -81,16 +71,10 @@ public class Organization {
             return false;
         }
         final Organization other = (Organization) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.orgName, other.orgName)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.addressId, other.addressId)) {
-            return false;
-        }
-        if (!Objects.equals(this.contactId, other.contactId)) {
+        if (!Objects.equals(this.orgDescription, other.orgDescription)) {
             return false;
         }
         return true;

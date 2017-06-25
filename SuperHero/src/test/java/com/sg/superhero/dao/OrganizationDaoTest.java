@@ -69,7 +69,6 @@ public class OrganizationDaoTest {
 
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddressId(address.getAddressId());
         organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
@@ -101,7 +100,7 @@ public class OrganizationDaoTest {
 
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddressId(address.getAddressId());
+
         organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
@@ -136,7 +135,7 @@ public class OrganizationDaoTest {
 
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddressId(address.getAddressId());
+
         organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
@@ -167,14 +166,14 @@ public class OrganizationDaoTest {
 
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddressId(address.getAddressId());
+
         organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
         String organizationId2 = "2";
         Organization organization2 = new Organization();
-        organization.setAddressId(address.getAddressId());
+
         organization.setContactId(contact.getContactId());
         organization.setDescription("OrganizationII description");
         organization.setName("OrganizationII Name");
@@ -212,14 +211,14 @@ public class OrganizationDaoTest {
 
         String organizationId = "1";
         Organization organization = new Organization();
-        organization.setAddressId(address.getAddressId());
+
         organization.setContactId(contact.getContactId());
         organization.setDescription("Organization description");
         organization.setName("Organization Name");
 
         String organizationId2 = "2";
         Organization organization2 = new Organization();
-        organization.setAddressId(address.getAddressId());
+
         organization.setContactId(contact.getContactId());
         organization.setDescription("OrganizationII description");
         organization.setName("OrganizationII Name");

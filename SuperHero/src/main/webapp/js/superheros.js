@@ -8,29 +8,24 @@ var superheroServiceURL = "http://localhost:8080/SuperHero";
 
 $(document).ready(function () {
 
-    getSuperPowers();
+    $('#cancel').click(function ()  {  
 
-    
+        //window.location = "http://localhost:8080/SuperHero/heros.jsp";
+        history.back();
+    });
+});
 
-    
-    
-}
-
-    
-function getSuperPowers() {
+function goBack() {
        $.ajax ({
         type: 'GET',
-        url:  superheroServiceURL + "/superpowers/1",
+        url:  superheroServiceURL + "/displaySuperHeros",
         success: function (data, status) {
-
-            alert(data.superPowerId + " " + data.description);
-           $('#add-city').val(data.superPowerId);
+    
             
         },
         error: function(jqXHR) {
             var errMsg = jqXHR.responseText.split('"');
-            alert("error");
-            //message.val(errMsg[3]);
+            message.val(errMsg[3]);
         }
     });
 }

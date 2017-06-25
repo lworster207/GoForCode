@@ -18,6 +18,8 @@ public interface ContactDao {
 
     public Contact deleteContact(String contactId);
 
+    public Contact deleteContactWithAddress(String ContactId);
+
     public Contact updateContact(String contactId, Contact contact);
 
     public Contact getContact(String contactId);

@@ -74,7 +74,7 @@ public class HeroController {
                 }
             }
         }
-
+        model.addAttribute("cancelPage", "displayHerosPage");
         model.addAttribute("hero", hero);
         model.addAttribute("powersList", powersList);
         model.addAttribute("heroPowersList", heroPowersList);
@@ -176,7 +176,7 @@ public class HeroController {
             // newHero.setSuperpower(service.getSuperPower(request.getParameter("add-super-power")));
             // newHero.setContact(newContact);
 
-            service.addHero("1", newHero);
+            service.updateHero("1", newHero);
             //model.put("message", "Hello from the controller");
         }
         return "redirect:displayHerosPage";

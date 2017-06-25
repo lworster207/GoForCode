@@ -145,7 +145,7 @@
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                     <input type="submit" class="btn btn-default" value="Update Super Hero"/>
-                    <input type="button" class="btn btn-default" value="Cancel"/>
+                    <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>
         </form>

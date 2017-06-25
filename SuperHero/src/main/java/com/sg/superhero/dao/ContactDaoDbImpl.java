@@ -31,6 +31,11 @@ public class ContactDaoDbImpl implements ContactDao {
 
     private static final String SQL_DELETE_ITEM
             = "delete from Contact where ContactId = ?";
+    private static final String SQL_DELETE_ITEM_WITH_ADDRESS
+            = "delete c, a "
+            + "from Contact c "
+            + "join Address a on c.AddressId = a.AddressId "
+            + " where ContactId = ?";
 
     private static final String SQL_SELECT_ITEM
             = "select * from Contact where ContactId = ?";
@@ -77,6 +82,13 @@ public class ContactDaoDbImpl implements ContactDao {
     public Contact deleteContact(String contactId) {
         Contact removedContact = getContact(contactId);
         jdbcTemplate.update(SQL_DELETE_ITEM, contactId);
+        return removedContact;
+    }
+
+    @Override
+    public Contact deleteContactWithAddress(String contactId) {
+        Contact removedContact = getContact(contactId);
+        jdbcTemplate.update(SQL_DELETE_ITEM_WITH_ADDRESS, contactId);
         return removedContact;
     }
 
