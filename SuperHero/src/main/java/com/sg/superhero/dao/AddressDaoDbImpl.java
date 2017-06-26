@@ -32,9 +32,9 @@ public class AddressDaoDbImpl implements AddressDao {
 
     private static final String SQL_UPDATE_ADDRESS
             = "update Address set "
-            + "StreetAddress = ? "
-            + "City = ? "
-            + "State = ? "
+            + "StreetAddress = ?, "
+            + "City = ?, "
+            + "State = ?, "
             + "PostCode = ? "
             + "where AddressId = ?";
 
@@ -61,7 +61,7 @@ public class AddressDaoDbImpl implements AddressDao {
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         // set the new id value on the item object and return it
         address.setAddressId(newId.toString());
-        return getAddress(newId.toString());
+        return getAddress(address.getAddressId());
 
     }
 

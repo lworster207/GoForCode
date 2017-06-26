@@ -70,8 +70,8 @@ public class OrganizationDaoTest {
         String organizationId = "1";
         Organization organization = new Organization();
         organization.setContactId(contact.getContactId());
-        organization.setDescription("Organization description");
-        organization.setName("Organization Name");
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
         Organization expOrg = dao.addOrganization(organizationId, organization);
         Organization resultOrg = dao.getOrganization(organizationId);
@@ -102,8 +102,8 @@ public class OrganizationDaoTest {
         Organization organization = new Organization();
 
         organization.setContactId(contact.getContactId());
-        organization.setDescription("Organization description");
-        organization.setName("Organization Name");
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
         Organization expOrg = dao.addOrganization(organizationId, organization);
         Organization resultOrg = dao.getOrganization(organizationId);
@@ -137,8 +137,8 @@ public class OrganizationDaoTest {
         Organization organization = new Organization();
 
         organization.setContactId(contact.getContactId());
-        organization.setDescription("Organization description");
-        organization.setName("Organization Name");
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
         Organization expOrg = dao.addOrganization(organizationId, organization);
         Organization resultOrg = dao.getOrganization(organizationId);
@@ -168,15 +168,15 @@ public class OrganizationDaoTest {
         Organization organization = new Organization();
 
         organization.setContactId(contact.getContactId());
-        organization.setDescription("Organization description");
-        organization.setName("Organization Name");
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
         String organizationId2 = "2";
         Organization organization2 = new Organization();
 
         organization.setContactId(contact.getContactId());
-        organization.setDescription("OrganizationII description");
-        organization.setName("OrganizationII Name");
+        organization.setOrgDescription("OrganizationII description");
+        organization.setOrgName("OrganizationII Name");
 
         Organization expOrg = dao.addOrganization(organizationId, organization);
         Organization resultOrg = dao.getOrganization(organizationId);
@@ -213,15 +213,15 @@ public class OrganizationDaoTest {
         Organization organization = new Organization();
 
         organization.setContactId(contact.getContactId());
-        organization.setDescription("Organization description");
-        organization.setName("Organization Name");
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
         String organizationId2 = "2";
         Organization organization2 = new Organization();
 
         organization.setContactId(contact.getContactId());
-        organization.setDescription("OrganizationII description");
-        organization.setName("OrganizationII Name");
+        organization.setOrgDescription("OrganizationII description");
+        organization.setOrgName("OrganizationII Name");
         Organization expOrg = dao.addOrganization(organizationId2, organization2);
         Organization resultOrg = dao.getOrganization(organizationId2);
         assertEquals(expOrg, resultOrg);

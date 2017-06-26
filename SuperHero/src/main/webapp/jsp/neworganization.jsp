@@ -58,29 +58,20 @@
         <h2>New Organization</h2>
         <sf:form class="form-horizontal" 
               role="form" method="POST" 
+              modelAttribute="organization"
               action="createOrganization">
             <div class="form-group">
-                <label for="add-org-name" class="col-md-4 control-label">Organization Name:</label>
+                <label for="orgName" class="col-md-4 control-label">Organization Name:</label>
                 <div class="col-md-8">
-                    <sf:input type="text" class="form-control" id="add-org-name"  name="add-org-name" placeholder="Organization Name"/>
+                    <sf:input type="text" class="form-control" id="orgName"  name="orgName"   path="orgName"  placeholder="Organization Name"/>
+                    <sf:errors path="orgName" cssclass="error"></sf:errors>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-org-description" class="col-md-4 control-label">Description:</label>
+                <label for="orgDescription" class="col-md-4 control-label">Description:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-org-description" name="add-org-description" placeholder="Description"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-first-name" class="col-md-4 control-label">First Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-first-name" name="add-first-name" placeholder="First Name"/>
-                </div>
-            </div>            
-            <div class="form-group">
-                <label for="add-last-name" class="col-md-4 control-label">Last Name:</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-last-name" name="add-last-name" placeholder="Last Name"/>
+                    <sf:input type="text" class="form-control" id="orgDescription" name="orgDescription" path="orgDescription"  placeholder="Description"/>
+                    <sf:errors path="orgDescription" cssclass="error"></sf:errors>
                 </div>
             </div>
             <div class="form-group">
@@ -96,7 +87,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-state" class="col-md-4 control-label">State:</label>
+                <label for="add-state" class="col-md-4 control-label">State/Province:</label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province"/>
                 </div>
@@ -108,20 +99,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-email" class="col-md-4 control-label">Email:</label>
-                <div class="col-md-8">
-                    <input type="email" class="form-control" id="add-email" name="add-email" placeholder="Email"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="add-phone" class="col-md-4 control-label">Phone:</label>
-                <div class="col-md-8">
-                    <input type="tel" class="form-control" id="add-phone" name="add-phone" placeholder="Phone"/>
-                </div>
-            </div>
-            <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                     <input type="submit" class="btn btn-default" value="Create Organization"/>
+                    <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>
         </sf:form>
@@ -134,6 +114,7 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
 
     </body>
 </html>

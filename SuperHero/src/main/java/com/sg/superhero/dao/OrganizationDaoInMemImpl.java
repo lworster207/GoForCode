@@ -36,8 +36,8 @@ public class OrganizationDaoInMemImpl implements OrganizationDao {
     @Override
     public Organization updateOrganization(String organizationId, Organization organization) {
         organizations.get(organizationId).setContactId(organization.getContactId());
-        organizations.get(organizationId).setDescription(organization.getDescription());
-        organizations.get(organizationId).setName(organization.getName());
+        organizations.get(organizationId).setOrgDescription(organization.getOrgDescription());
+        organizations.get(organizationId).setOrgName(organization.getOrgName());
         return organizations.get(organizationId);
     }
 

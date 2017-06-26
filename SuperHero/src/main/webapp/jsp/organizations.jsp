@@ -58,23 +58,23 @@
         <th width="15%"></th>
         <th width="15%"></th>
     </tr>
-<c:forEach var="currentContact" items="${contactList}">
+<c:forEach var="currentOrganization" items="${orgsList}">
     <tr>
         <td>
-            <a href="displayContactDetails?contactId=${currentContact.contactId}">
-            <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+            <a href="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
+            <c:out value="${currentOrganization.orgName}"/>
             </a>
         </td>
         <td>
-            <c:out value="${currentContact.company}"/>
+            <c:out value="${currentOrganization.orgDescription}"/>
         </td>
         <td>
-            <a href="displayEditContactForm?contactId=${currentContact.contactId}">
+            <a href="displayEditOrganizationForm?organizationId=${currentOrganization.organizationId}">
             Edit
             </a>
         </td>
         <td>
-            <a href="deleteContact?contactId=${currentContact.contactId}">
+            <a href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
             Delete
             </a>
         </td>

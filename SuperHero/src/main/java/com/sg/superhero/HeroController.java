@@ -74,7 +74,7 @@ public class HeroController {
                 }
             }
         }
-        model.addAttribute("cancelPage", "displayHerosPage");
+
         model.addAttribute("hero", hero);
         model.addAttribute("powersList", powersList);
         model.addAttribute("heroPowersList", heroPowersList);
@@ -140,45 +140,48 @@ public class HeroController {
     }
 
     @RequestMapping(value = "/updateSuperHero", method = RequestMethod.POST)
-    public String updateSuperHero(HttpServletRequest request, Model model) {
-        Address newAddress;
-        Contact newContact;
+    public String updateSuperHero(@Valid @ModelAttribute("hero") Hero hero, BindingResult result,
+            HttpServletRequest request, Model model) {
+        Address newAddress = null;
+        Contact newContact = null;
 
-        if (request.getParameter("add-address") == null
-                || request.getParameter("add-city") == null
-                || request.getParameter("add-state") == null
-                || request.getParameter("add-postcode") == null) {
-            newAddress = null;
-        } else {
-            newAddress = new Address(
-                    "noId",
-                    request.getParameter("add-address"),
-                    request.getParameter("add-city"),
-                    request.getParameter("add-state"),
-                    request.getParameter("add-postcode")
-            );
+        if (result.hasErrors()) {
+            List<SuperPower> powersList = service.getAllSuperPowers();
+            model.addAttribute("powersList", powersList);
+            return "edithero?heroId=" + hero.getHeroId();
+        }
 
-            if (request.getParameter("add-first-name") == null || request.getParameter("add-phone") == null) {
-                newContact = null;
-            } else {
-                newContact = new Contact();
-                newContact.setFirstName(request.getParameter("add-first-name"));
-                newContact.setLastName(request.getParameter("add-last-name"));
-                newContact.setAddressId(newAddress.getAddressId());
-                newContact.setPhone(request.getParameter("add-phone"));
-                newContact.setEmail(request.getParameter("add-email"));
+        if (request.getParameter("add-first-name") != null && request.getParameter("add-phone") != null) {
+            if (request.getParameter("add-address") != null
+                    && request.getParameter("add-city") != null
+                    && request.getParameter("add-state") != null
+                    && request.getParameter("add-postcode") != null) {
+                newAddress = new Address(
+                        "noId",
+                        request.getParameter("add-address"),
+                        request.getParameter("add-city"),
+                        request.getParameter("add-state"),
+                        request.getParameter("add-postcode")
+                );
             }
 
-            SuperPower newSuperPower = new SuperPower();
-            Hero newHero = new Hero();
-            newHero.setHeroName(request.getParameter("add-hero-name"));
-            newHero.setDescription(request.getParameter("add-description"));
-            // newHero.setSuperpower(service.getSuperPower(request.getParameter("add-super-power")));
-            // newHero.setContact(newContact);
-
-            service.updateHero("1", newHero);
-            //model.put("message", "Hello from the controller");
+            newContact = new Contact();
+            newContact.setFirstName(request.getParameter("add-first-name"));
+            newContact.setLastName(request.getParameter("add-last-name"));
+            newContact.setAddressId(null);
+            newContact.setPhone(request.getParameter("add-phone"));
+            newContact.setEmail(request.getParameter("add-email"));
         }
+
+        // SuperPower newSuperPower = new SuperPower();
+        // Hero newHero = new Hero();
+        // newHero.setHeroName(request.getParameter("add-hero-name"));
+        // newHero.setDescription(request.getParameter("add-description"));
+        // newHero.setSuperpower(service.getSuperPower(request.getParameter("add-super-power")));
+        // newHero.setContact(newContact);
+        service.updateHero(hero.getHeroId(), hero, newContact, newAddress);
+        //model.put("message", "Hello from the controller");
+
         return "redirect:displayHerosPage";
     }
 

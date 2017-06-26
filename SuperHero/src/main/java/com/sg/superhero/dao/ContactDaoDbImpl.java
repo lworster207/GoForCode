@@ -42,10 +42,10 @@ public class ContactDaoDbImpl implements ContactDao {
 
     private static final String SQL_UPDATE_ITEM
             = "update Contact set "
-            + "FirstName = ? "
-            + "LastName = ? "
-            + "Phone = ? "
-            + "Email = ? "
+            + "FirstName = ?, "
+            + "LastName = ?, "
+            + "Phone = ?, "
+            + "Email = ?, "
             + "AddressId = ? "
             + "where ContactId = ?";
 
@@ -99,7 +99,8 @@ public class ContactDaoDbImpl implements ContactDao {
                 contact.getLastName(),
                 contact.getPhone(),
                 contact.getEmail(),
-                contact.getAddressId());
+                contact.getAddressId(),
+                contactId);
         return getContact(contactId);
     }
 

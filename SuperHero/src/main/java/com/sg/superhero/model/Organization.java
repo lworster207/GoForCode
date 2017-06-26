@@ -6,6 +6,8 @@
 package com.sg.superhero.model;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -14,9 +16,12 @@ import java.util.Objects;
 public class Organization {
 
     private String organizationId;
+    @NotEmpty(message = "You must supply a value for Organization Name.")
+    @Length(max = 50, message = "Organization Name must be no more than 30 characters in length.")
     private String orgName;
     private String orgDescription;
     private String contactId;
+    private String addressId;
 
     public String getOrganizationId() {
         return organizationId;
@@ -26,20 +31,20 @@ public class Organization {
         this.organizationId = organizationId;
     }
 
-    public String getName() {
+    public String getOrgName() {
         return orgName;
     }
 
-    public void setName(String name) {
-        this.orgName = name;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
-    public String getDescription() {
+    public String getOrgDescription() {
         return orgDescription;
     }
 
-    public void setDescription(String description) {
-        this.orgDescription = description;
+    public void setOrgDescription(String orgDescription) {
+        this.orgDescription = orgDescription;
     }
 
     public String getContactId() {
@@ -50,12 +55,21 @@ public class Organization {
         this.contactId = contactId;
     }
 
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.orgName);
-        hash = 29 * hash + Objects.hashCode(this.orgDescription);
-        hash = 29 * hash + Objects.hashCode(this.contactId);
+        hash = 41 * hash + Objects.hashCode(this.orgName);
+        hash = 41 * hash + Objects.hashCode(this.orgDescription);
+        hash = 41 * hash + Objects.hashCode(this.contactId);
+        hash = 41 * hash + Objects.hashCode(this.addressId);
         return hash;
     }
 
@@ -75,6 +89,12 @@ public class Organization {
             return false;
         }
         if (!Objects.equals(this.orgDescription, other.orgDescription)) {
+            return false;
+        }
+        if (!Objects.equals(this.contactId, other.contactId)) {
+            return false;
+        }
+        if (!Objects.equals(this.addressId, other.addressId)) {
             return false;
         }
         return true;

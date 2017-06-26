@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Create New Super Hero</title>
+        <title>Edit Super Hero</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
                 
@@ -58,7 +58,7 @@
     <div class="col-md-6">
         <h2>Edit Super Hero</h2>
         
-        <form class="form-horizontal" 
+        <sf:form class="form-horizontal" 
               role="form" method="POST"
                modelAttribute="hero"
               action="updateSuperHero">
@@ -68,8 +68,12 @@
                     <input type="hidden" id="add-hero-id" value="<c:out value='${hero.heroId}' />" />
                     <input type="hidden" id="add-hero-contactid" value="<c:out value='${hero.contactId}' />" />    
                     <input type="hidden" id="add-hero-addressid" value="<c:out value='${address.addressId}' />" /> 
-                    <input type="text" class="form-control" id="add-hero-name"  name="add-hero-name" placeholder="Hero Name" value="<c:out value='${hero.heroName}' />"/>
+                    <sf:hidden path="contactId" id="contactId" name="contactId" value="${hero.contactId}" />
+                    <sf:hidden path="heroId" id="heroId" name="heroId" value="${hero.heroId}" />
+                    <sf:input type="text" class="form-control" path="heroName" id="heroName"  name="heroName" placeholder="Hero Name"/>
+                    <sf:errors path="heroName" cssclass="error"></sf:errors>
                 </div>
+                
             </div>
             <div class="form-group">
                 <label for="add-super-power" class="col-md-4 control-label">Super Power:</label>
@@ -91,7 +95,8 @@
             <div class="form-group">
                 <label for="add-description" class="col-md-4 control-label">Description:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-description" name="add-description" placeholder="First Name" value="<c:out value='${hero.description}' />">
+                    
+                    <sf:input type="text" class="form-control" path="description" id="description" name="description" placeholder="Description" value="${hero.description}"/>
                 </div>
             </div>                        
             <div class="form-group">
@@ -148,7 +153,7 @@
                     <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>
-        </form>
+        </sf:form>
 
     </div> <!-- End col div -->
 

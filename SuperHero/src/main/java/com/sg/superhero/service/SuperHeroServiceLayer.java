@@ -25,7 +25,7 @@ public interface SuperHeroServiceLayer {
 
     public Hero deleteHero(String heroId);
 
-    public Hero updateHero(String heroId, Hero hero);
+    public Hero updateHero(String heroId, Hero hero, Contact contact, Address address);
 
     public Hero getHero(String heroId);
 
@@ -33,13 +33,13 @@ public interface SuperHeroServiceLayer {
 
     public List<HeroPower> getAllHeroesAndPowers();
 
-    public Contact addContact(String contactId, Contact contact);
+    public Contact addContact(String contactId, Contact contact, Address address);
 
     public Contact deleteContact(String contactId);
 
     public Contact deleteContactWithAddress(String contactId);
 
-    public Contact updateContact(String contactId, Contact contact);
+    public Contact updateContact(String contactId, Contact contact, Address address);
 
     public Contact getContact(String contactId);
 

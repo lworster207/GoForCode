@@ -136,6 +136,7 @@
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                     <input type="submit" class="btn btn-default" value="Create Super Hero"/>
+                     <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>
         </sf:form>
@@ -148,6 +149,7 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
 
     </body>
 </html>

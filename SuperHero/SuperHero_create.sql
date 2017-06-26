@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `Organization` (
     `Name` varchar(30) not null,
 	`Description` varchar(50) null,
     `ContactId` int(11) null,
+    `AddressId` int(11) null,
     PRIMARY KEY (`OrganizationId`)
 );
 
@@ -81,6 +82,9 @@ ALTER TABLE `Organization`
  ADD CONSTRAINT `fkOrganizationContact` FOREIGN KEY (`ContactId`) REFERENCES `Contact`
 (`ContactId`) ON DELETE NO ACTION;  
 
+ALTER TABLE `Organization`
+ ADD CONSTRAINT `fkOrganizationAddress` FOREIGN KEY (`AddressId`) REFERENCES `Address`
+(`AddressId`) ON DELETE NO ACTION;  
 
 CREATE TABLE IF NOT EXISTS `HeroSuperPower` (
 	`HeroId` int(11) not null,

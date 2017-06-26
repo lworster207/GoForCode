@@ -77,8 +77,23 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Hero updateHero(String heroId, Hero hero) {
-        return heroDao.updateHero(heroId, hero);
+    public Hero updateHero(String heroId, Hero hero, Contact contact, Address address) {
+        if (contact != null) {
+            if (hero.getContactId() == null) {
+                // adding a new contact
+                if (contact != null) {
+                    hero.setContactId(addContact(contact.getContactId(), contact, address).getContactId());
+                }
+            } else {
+                // updating a contact
+                contact.setContactId(hero.getContactId());
+                updateContact(contact.getContactId(), contact, address);
+            }
+
+        } else {
+            hero.setContactId(null);
+        }
+        return heroDao.updateHero(hero.getHeroId(), hero);
     }
 
     @Override
@@ -97,7 +112,12 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact addContact(String contactId, Contact contact) {
+    public Contact addContact(String contactId, Contact contact, Address address) {
+        if (address != null) {
+            contact.setAddressId(addAddress(address.getAddressId(), address).getAddressId());
+        } else {
+            contact.setAddressId(null);
+        }
         return contactDao.addContact(contactId, contact);
     }
 
@@ -121,7 +141,20 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact updateContact(String contactId, Contact contact) {
+    public Contact updateContact(String contactId, Contact contact, Address address) {
+        if (address == null) {
+            // need to add check to see if was previously set in case the address was deleted.
+            contact.setAddressId(null);
+        } else {
+
+            if (contact.getAddressId() == null) {
+                contact.setAddressId(addressDao.addAddress("0", address).getAddressId());
+            } else {
+                address.setAddressId(contact.getAddressId());
+                addressDao.updateAddress(address.getAddressId(), address);
+            }
+        }
+
         return contactDao.updateContact(contactId, contact);
     }
 
