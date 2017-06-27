@@ -144,11 +144,17 @@ public class HeroController {
             HttpServletRequest request, Model model) {
         Address newAddress = null;
         Contact newContact = null;
+        String addressId = null;
 
         if (result.hasErrors()) {
             List<SuperPower> powersList = service.getAllSuperPowers();
             model.addAttribute("powersList", powersList);
             return "edithero?heroId=" + hero.getHeroId();
+        }
+
+        if (hero.getContactId() != null) {
+
+            addressId = service.getContact(hero.getContactId()).getAddressId();
         }
 
         if (request.getParameter("add-first-name") != null && request.getParameter("add-phone") != null) {
@@ -157,7 +163,7 @@ public class HeroController {
                     && request.getParameter("add-state") != null
                     && request.getParameter("add-postcode") != null) {
                 newAddress = new Address(
-                        "noId",
+                        addressId,
                         request.getParameter("add-address"),
                         request.getParameter("add-city"),
                         request.getParameter("add-state"),
@@ -166,9 +172,10 @@ public class HeroController {
             }
 
             newContact = new Contact();
+            newContact.setContactId(hero.getContactId());
             newContact.setFirstName(request.getParameter("add-first-name"));
             newContact.setLastName(request.getParameter("add-last-name"));
-            newContact.setAddressId(null);
+            newContact.setAddressId(addressId);
             newContact.setPhone(request.getParameter("add-phone"));
             newContact.setEmail(request.getParameter("add-email"));
         }

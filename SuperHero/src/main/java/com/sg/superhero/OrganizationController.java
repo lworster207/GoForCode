@@ -122,24 +122,16 @@ public class OrganizationController {
         Address newAddress;
         String addressId;
 
-        if (request.getParameter("add-address").equals("")
-                || request.getParameter("add-city").equals("")
-                || request.getParameter("add-state").equals("")
-                || request.getParameter("add-postcode").equals("")) {
-            newAddress = null;
-        } else {
-            newAddress = new Address(
-                    "noId",
-                    request.getParameter("add-address"),
-                    request.getParameter("add-city"),
-                    request.getParameter("add-state"),
-                    request.getParameter("add-postcode")
-            );
-            service.addAddress(newAddress.getAddressId(), newAddress);
-            organization.setAddressId(newAddress.getAddressId());
+        addressId = organization.getAddressId();
+        newAddress = new Address(
+                addressId,
+                request.getParameter("add-address"),
+                request.getParameter("add-city"),
+                request.getParameter("add-state"),
+                request.getParameter("add-postcode")
+        );
 
-        }
-        service.addOrganization("noId", organization);
+        service.updateOrganization(organization.getOrganizationId(), organization, newAddress);
         List<Organization> orgsList = service.getAllOrganizations();
 
         if (orgsList != null) {

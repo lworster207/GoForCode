@@ -61,7 +61,7 @@ public interface SuperHeroServiceLayer {
 
     public Organization deleteOrganization(String organizationId);
 
-    public Organization updateOrganization(String organizationId, Organization organization);
+    public Organization updateOrganization(String organizationId, Organization organization, Address address);
 
     public Organization getOrganization(String organizationId);
 

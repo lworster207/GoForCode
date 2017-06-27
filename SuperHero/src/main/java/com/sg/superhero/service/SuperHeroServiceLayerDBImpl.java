@@ -81,17 +81,21 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
         if (contact != null) {
             if (hero.getContactId() == null) {
                 // adding a new contact
-                if (contact != null) {
-                    hero.setContactId(addContact(contact.getContactId(), contact, address).getContactId());
-                }
+
+                hero.setContactId(addContact(contact.getContactId(), contact, address).getContactId());
+
             } else {
                 // updating a contact
                 contact.setContactId(hero.getContactId());
+                address.setAddressId(contactDao.getContact(contact.getContactId()).getAddressId());
                 updateContact(contact.getContactId(), contact, address);
             }
 
         } else {
-            hero.setContactId(null);
+            if (hero.getContactId() != null) {
+                // need to remove the contact.
+            }
+
         }
         return heroDao.updateHero(hero.getHeroId(), hero);
     }
@@ -213,7 +217,19 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Organization updateOrganization(String organizationId, Organization organization) {
+    public Organization updateOrganization(String organizationId, Organization organization, Address address) {
+        if (address == null) {
+            // need to add check to see if was previously set in case the address was deleted.
+            organization.setAddressId(null);
+        } else {
+
+            if (organization.getAddressId() == null) {
+                organization.setAddressId(addressDao.addAddress("0", address).getAddressId());
+            } else {
+                address.setAddressId(organization.getAddressId());
+                addressDao.updateAddress(address.getAddressId(), address);
+            }
+        }
         return organizationDao.updateOrganization(organizationId, organization);
     }
 

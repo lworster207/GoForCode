@@ -66,7 +66,10 @@
         <sf:form class="form-horizontal" 
               role="form" method="POST" 
               modelAttribute="organization"
-              action="createOrganization">        
+              action="updateOrganization"> 
+             <sf:hidden id="organizationId" name="organizationId"  path="organizationId" value="${organization.organizationId}" />
+             <sf:hidden id="addressId" name="addressId"  path="addressId" value="${organization.addressId}" />
+             <sf:hidden id="contactId" name="contactId"  path="contactId" value="${organization.addressId}" />
             <div class="form-group">
                 <label for="orgName" class="col-md-4 control-label">Organization Name:</label>
                 <div class="col-md-8">
