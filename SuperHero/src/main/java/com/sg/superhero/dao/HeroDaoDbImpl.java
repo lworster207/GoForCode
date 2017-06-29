@@ -9,7 +9,6 @@ import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.HeroPower;
-import com.sg.superhero.model.SuperPower;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -151,11 +150,10 @@ public class HeroDaoDbImpl implements HeroDao {
 
     }
 
-    private static final class HeroMapper implements RowMapper<Hero> {
+    public static final class HeroMapper implements RowMapper<Hero> {
 
         public Hero mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            SuperPower sp = new SuperPower();
             Hero hero = new Hero();
             hero.setHeroId(rs.getString("HeroId"));
             hero.setContactId(rs.getString("ContactId"));

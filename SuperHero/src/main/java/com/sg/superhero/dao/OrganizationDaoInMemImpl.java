@@ -5,6 +5,7 @@
  */
 package com.sg.superhero.dao;
 
+import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,6 +51,18 @@ public class OrganizationDaoInMemImpl implements OrganizationDao {
     public List<Organization> getAllOrganizations() {
         Collection<Organization> c = organizations.values();
         return new ArrayList(c);
+    }
+
+    @Override
+    public List<Organization> getAllOrganizationsByHero(String heroId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Collection<Organization> c = organizations.values().stream().filter(organizations->heroId == heroId).collect(collector);
+
+    }
+
+    @Override
+    public List<Hero> getAllHerosByOrganization(String organizationId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

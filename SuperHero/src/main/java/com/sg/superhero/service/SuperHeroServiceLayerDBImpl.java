@@ -8,6 +8,7 @@ package com.sg.superhero.service;
 import com.sg.superhero.dao.AddressDao;
 import com.sg.superhero.dao.ContactDao;
 import com.sg.superhero.dao.HeroDao;
+import com.sg.superhero.dao.OrgMemberDao;
 import com.sg.superhero.dao.OrganizationDao;
 import com.sg.superhero.dao.SuperPowerDao;
 import com.sg.superhero.model.Address;
@@ -29,13 +30,15 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     AddressDao addressDao;
     OrganizationDao organizationDao;
     SuperPowerDao superpowerDao;
+    OrgMemberDao orgMemberDao;
 
-    public SuperHeroServiceLayerDBImpl(HeroDao heroDao, ContactDao contactDao, AddressDao addressDao, OrganizationDao organizationDao, SuperPowerDao superpowerDao) {
+    public SuperHeroServiceLayerDBImpl(HeroDao heroDao, ContactDao contactDao, AddressDao addressDao, OrganizationDao organizationDao, SuperPowerDao superpowerDao, OrgMemberDao orgMemberDao) {
         this.heroDao = heroDao;
         this.contactDao = contactDao;
         this.addressDao = addressDao;
         this.organizationDao = organizationDao;
         this.superpowerDao = superpowerDao;
+        this.orgMemberDao = orgMemberDao;
 
     }
 

@@ -5,6 +5,7 @@
  */
 package com.sg.superhero.dao;
 
+import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
 import java.util.List;
 
@@ -23,5 +24,9 @@ public interface OrganizationDao {
     public Organization getOrganization(String organizationId);
 
     public List<Organization> getAllOrganizations();
+
+    public List<Organization> getAllOrganizationsByHero(String heroId);
+
+    public List<Hero> getAllHerosByOrganization(String organizationId);
 
 }

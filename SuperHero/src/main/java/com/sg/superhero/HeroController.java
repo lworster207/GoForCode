@@ -55,7 +55,10 @@ public class HeroController {
     @RequestMapping(value = "/editHero", method = RequestMethod.GET)
     public String editHero(HttpServletRequest request, Model model) {
         String heroId = request.getParameter("heroId");
+
         List<SuperPower> powersList = service.getAllSuperPowers();
+        //List<Organization> organizationsList = service.get
+
         Contact contact;
         Address address;
 

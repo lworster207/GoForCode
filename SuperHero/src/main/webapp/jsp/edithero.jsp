@@ -80,13 +80,20 @@
                 <div class="col-md-8">
                      
                     <select multiple class="form-control" id="add-super-power" name="add-super-power">
-                        <c:forEach var="currentPower" items="${powersList}">
+                        <c:forEach var="currentPower" items="${heroPowersList}">
+                            <option value="${currentPower.superPowerId}" name="selOpt${currentPower.superPowerId}" id="selOpt${currentPower.superPowerId}" selected="${currentPower.selected}">${currentPower.description}</option>
+                       
+                           
  
+                        </c:forEach> 
+                        <c:forEach var="currentPower" items="${powersList}">
+                            
                                 
-                                    <option value="${currentPower.superPowerId}" id="selOpt${currentPower.superPowerId}" selected="selected">${currentPower.description}</option>
+                                    <option value="${currentPower.superPowerId}" name="selOpt${currentPower.superPowerId}" id="selOpt${currentPower.superPowerId}" >${currentPower.description}</option>
 
  
-                        </c:forEach>                          
+                        </c:forEach>
+                                   
                     </select>
 
                 </div>

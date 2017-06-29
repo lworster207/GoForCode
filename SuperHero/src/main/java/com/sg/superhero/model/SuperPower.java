@@ -15,6 +15,7 @@ public class SuperPower {
 
     private String superPowerId;
     private String description;
+    private String selected;
 
     public String getSuperPowerId() {
         return superPowerId;
@@ -30,6 +31,14 @@ public class SuperPower {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
     }
 
     @Override

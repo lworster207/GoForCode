@@ -56,6 +56,10 @@
       class="com.sg.superhero.dao.OrganizationDaoDbImpl">
       <property name="jdbcTemplate" ref="jdbcTemplate" />   
     </bean>  
+    <bean id="orgMemberDao"
+      class="com.sg.superhero.dao.OrgMemberDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean>     
     <bean id="serviceLayer"
        class="com.sg.superhero.service.SuperHeroServiceLayerDBImpl">
         <constructor-arg ref="heroDao"/>
@@ -63,6 +67,7 @@
         <constructor-arg ref="addressDao"/>
         <constructor-arg ref="organizationDao"/>  
         <constructor-arg ref="superpowerDao"/>  
+        <constructor-arg ref="orgMemberDao"/> 
     </bean>      
     <bean id="heroController" class="com.sg.superhero.HeroController">
         <constructor-arg ref="serviceLayer"/>

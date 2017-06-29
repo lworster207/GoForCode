@@ -65,7 +65,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     public List<SuperPower> getSuperPowersByHero(String heroId) {
         try {
             return jdbcTemplate.query(SQL_SELECT_SUPERPOWERS_BY_HERO,
-                    new SuperPowerMapper(), heroId);
+                    new SuperPowerHeroMapper(), heroId);
         } catch (EmptyResultDataAccessException ex) {
             // there were no results for the given item id - we just
             // want to return null in this case
@@ -125,8 +125,23 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             SuperPower superPower = new SuperPower();
             superPower.setSuperPowerId(rs.getString("SuperPowerId"));
             superPower.setDescription(rs.getString("Description"));
+            superPower.setSelected("");
             return superPower;
         }
 
     }
+
+    private static final class SuperPowerHeroMapper implements RowMapper<SuperPower> {
+
+        public SuperPower mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            SuperPower superPower = new SuperPower();
+            superPower.setSuperPowerId(rs.getString("SuperPowerId"));
+            superPower.setDescription(rs.getString("Description"));
+            superPower.setSelected("selected");
+            return superPower;
+        }
+
+    }
+
 }
