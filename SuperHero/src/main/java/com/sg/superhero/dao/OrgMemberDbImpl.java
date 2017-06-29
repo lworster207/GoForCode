@@ -37,9 +37,9 @@ public class OrgMemberDbImpl implements OrgMemberDao {
             = "delete from OrgMembers where HeroId = ?";
 
     private static final String SQL_SELECT_ORGMEMBERS_BY_ORGANIZATION
-            = "select * from Hero h "
-            + "join OrgMembers o on h.HeroId = o.HeroId "
-            + "where o.OrganizationId = ?";
+            = "select * from Hero "
+            + "join OrgMembers on Hero.HeroId = OrgMembers.HeroId "
+            + "where OrgMembers.OrganizationId = ?";
 
     private static final String SQL_SELECT_ORGMEMBERS_BY_HERO
             = "select * from Organization org "
@@ -114,13 +114,13 @@ public class OrgMemberDbImpl implements OrgMemberDao {
     @Override
     public List<Hero> getHerosByOrganization(String organizationId) {
         return jdbcTemplate.query(SQL_SELECT_ORGMEMBERS_BY_ORGANIZATION,
-                new HeroDaoDbImpl.HeroMapper());
+                new HeroDaoDbImpl.HeroMapper(), organizationId);
     }
 
     @Override
     public List<Organization> getOrganizationsByHero(String heroId) {
-        return jdbcTemplate.query(SQL_SELECT_ORGMEMBERS_BY_ORGANIZATION,
-                new OrganizationDaoDbImpl.OrganizationMapper());
+        return jdbcTemplate.query(SQL_SELECT_ORGMEMBERS_BY_HERO,
+                new OrganizationDaoDbImpl.OrganizationMapper(), heroId);
     }
 
     @Override
