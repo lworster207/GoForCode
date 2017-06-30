@@ -60,7 +60,12 @@
     <bean id="orgMemberDao"
       class="com.sg.superhero.dao.OrgMemberDbImpl"> 
       <property name="jdbcTemplate" ref="jdbcTemplate" /> 
-    </bean>     
+    </bean>  
+    <bean id="heroSuperpowerDao"
+      class="com.sg.superhero.dao.HeroSuperpowerDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean>      
+          
     <bean id="serviceLayer"
        class="com.sg.superhero.service.SuperHeroServiceLayerDBImpl">
         <constructor-arg ref="heroDao"/>

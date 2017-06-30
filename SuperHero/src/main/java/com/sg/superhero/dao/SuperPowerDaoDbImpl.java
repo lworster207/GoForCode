@@ -38,9 +38,9 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             = "select * from SuperPower";
 
     private static final String SQL_SELECT_SUPERPOWERS_BY_HERO
-            = "select sp.SuperPowerId, sp.Description from HeroSuperPower hsp "
-            + "join SuperPower sp on sp.SuperPowerId = hsp.SuperPowerId "
-            + "where hsp.HeroId = ?";
+            = "select SuperPower.SuperPowerId, SuperPower.Description from SuperPower "
+            + "join SuperPower on SuperPower.SuperPowerId = HeroSuperPower.SuperPowerId "
+            + "where HeroSuperPower.HeroId = ?";
 
     private JdbcTemplate jdbcTemplate;
 
