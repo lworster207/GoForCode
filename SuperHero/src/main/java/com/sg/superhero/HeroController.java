@@ -3,9 +3,13 @@ package com.sg.superhero;
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
+import com.sg.superhero.model.Organization;
 import com.sg.superhero.model.SuperPower;
 import com.sg.superhero.service.SuperHeroServiceLayer;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,7 +43,9 @@ public class HeroController {
     public String createNewHero(Model model) {
         Hero hero = new Hero();
         List<SuperPower> powersList = service.getAllSuperPowers();
+        List<Organization> organizationsList = service.getAllOrganizations();
 
+        model.addAttribute("organizationsList", organizationsList);
         model.addAttribute("powersList", powersList);
         model.addAttribute("hero", hero);
         return "newhero";
@@ -48,22 +54,45 @@ public class HeroController {
     @RequestMapping(value = "/deleteHero", method = RequestMethod.GET)
     public String deleteHero(HttpServletRequest request, Model model) {
         String heroId = request.getParameter("heroId");
-        service.deleteHero(heroId);
-        return heroId;
+        String contactId = request.getParameter("contactId");
+
+        service.deleteHero(heroId, contactId);
+        return "redirect:displayHerosPage";
     }
 
     @RequestMapping(value = "/editHero", method = RequestMethod.GET)
     public String editHero(HttpServletRequest request, Model model) {
-        String heroId = request.getParameter("heroId");
-
-        List<SuperPower> powersList = service.getAllSuperPowers();
-        //List<Organization> organizationsList = service.get
 
         Contact contact;
         Address address;
 
+        String heroId = request.getParameter("heroId");
         Hero hero = service.getHero(heroId);
-        List<SuperPower> heroPowersList = service.getSuperPowersByHero(heroId);
+
+        Map<String, SuperPower> powersList = new HashMap<>();
+        Map<String, Organization> organizationsList = new HashMap<>();
+
+        List<SuperPower> allSuperpowers = service.getAllSuperPowers();
+        List<SuperPower> heroSuperPowers = service.getSuperPowersByHero(heroId);
+
+        for (SuperPower superPower : allSuperpowers) {
+            powersList.put(superPower.getSuperPowerId(), superPower);
+        }
+        // set the current super powers to selected
+        for (SuperPower superPower : heroSuperPowers) {
+            powersList.get(superPower.getSuperPowerId()).setSelected("selected='selected'");
+        }
+
+        List<Organization> allOrganizationsList = service.getAllOrganizations();
+        List<Organization> heroOrganizationList = service.getOrganizationsByHero(heroId);
+
+        for (Organization organization : allOrganizationsList) {
+            organizationsList.put(organization.getOrganizationId(), organization);
+        }
+
+        for (Organization organization : heroOrganizationList) {
+            organizationsList.get(organization.getOrganizationId()).setSelected("selected='selected'");
+        }
 
         contact = service.getContact(hero.getContactId());
         if (contact != null) {
@@ -79,8 +108,8 @@ public class HeroController {
         }
 
         model.addAttribute("hero", hero);
-        model.addAttribute("powersList", powersList);
-        model.addAttribute("heroPowersList", heroPowersList);
+        model.addAttribute("powersList", powersList.values());
+        model.addAttribute("organizationsList", organizationsList.values());
         return "edithero";
     }
 
@@ -128,15 +157,17 @@ public class HeroController {
             newContact.setEmail(request.getParameter("add-email"));
         }
 
-        SuperPower newSuperPower = new SuperPower();
-        Hero newHero = new Hero();
-        newHero.setHeroName(request.getParameter("heroName"));
-        newHero.setDescription(request.getParameter("add-description"));
-
         //           newHero.setSuperpower(service.getSuperPower(request.getParameter("add-super-power")));
         //newHero.setContact(newContact);
-        service.addHero(newHero, newContact, newAddress);
-        //model.put("message", "Hello from the controller");
+        service.addHero(hero, newContact, newAddress);
+
+        String[] superPowersSelected = request.getParameterValues("add-super-power");
+        List<String> superpowerIdList = new ArrayList();
+
+        for (String superpowerId : superPowersSelected) {
+            superpowerIdList.add(superpowerId);
+        }
+        service.updateSuperpowersForHeroBySuperpowerIds(hero.getHeroId(), superpowerIdList);
 
         return "redirect:displayHerosPage";
 
@@ -155,7 +186,7 @@ public class HeroController {
             return "edithero?heroId=" + hero.getHeroId();
         }
 
-        if (hero.getContactId() != null) {
+        if (hero.getContactId() != "" && hero.getContactId() != null) {
 
             addressId = service.getContact(hero.getContactId()).getAddressId();
         }
@@ -183,12 +214,21 @@ public class HeroController {
             newContact.setEmail(request.getParameter("add-email"));
         }
 
-        // SuperPower newSuperPower = new SuperPower();
-        // Hero newHero = new Hero();
-        // newHero.setHeroName(request.getParameter("add-hero-name"));
-        // newHero.setDescription(request.getParameter("add-description"));
-        // newHero.setSuperpower(service.getSuperPower(request.getParameter("add-super-power")));
-        // newHero.setContact(newContact);
+        String[] superPowersSelected = request.getParameterValues("add-super-power");
+        List<String> superpowerIdList = new ArrayList();
+
+        for (String superpowerId : superPowersSelected) {
+            superpowerIdList.add(superpowerId);
+        }
+        service.updateSuperpowersForHeroBySuperpowerIds(hero.getHeroId(), superpowerIdList);
+
+        String[] organizationsSelected = request.getParameterValues("add-organizations");
+        List<String> organizationIdList = new ArrayList();
+
+        for (String organizationId : organizationsSelected) {
+            organizationIdList.add(organizationId);
+        }
+        service.updateOrganizationsForHeroByOrganizationIds(hero.getHeroId(), organizationIdList);
         service.updateHero(hero.getHeroId(), hero, newContact, newAddress);
         //model.put("message", "Hello from the controller");
 

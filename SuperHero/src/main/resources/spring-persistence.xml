@@ -57,9 +57,21 @@
       <property name="jdbcTemplate" ref="jdbcTemplate" />   
     </bean>  
     <bean id="orgMemberDao"
-      class="com.sg.superhero.dao.OrgMemberDaoDbImpl"> 
+      class="com.sg.superhero.dao.OrgMemberDbImpl"> 
       <property name="jdbcTemplate" ref="jdbcTemplate" /> 
-    </bean>     
+    </bean>  
+    <bean id="heroSuperpowerDao"
+      class="com.sg.superhero.dao.HeroSuperpowerDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean>   
+    <bean id="locationDao"
+      class="com.sg.superhero.dao.LocationDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean> 
+        <bean id="sightingDao"
+      class="com.sg.superhero.dao.SightingsDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean> 
     <bean id="serviceLayer"
        class="com.sg.superhero.service.SuperHeroServiceLayerDBImpl">
         <constructor-arg ref="heroDao"/>
@@ -68,6 +80,9 @@
         <constructor-arg ref="organizationDao"/>  
         <constructor-arg ref="superpowerDao"/>  
         <constructor-arg ref="orgMemberDao"/> 
+        <constructor-arg ref="heroSuperpowerDao"/>
+        <constructor-arg ref="locationDao"/> 
+        <constructor-arg ref="sightingDao"/>  
     </bean>      
     <bean id="heroController" class="com.sg.superhero.HeroController">
         <constructor-arg ref="serviceLayer"/>

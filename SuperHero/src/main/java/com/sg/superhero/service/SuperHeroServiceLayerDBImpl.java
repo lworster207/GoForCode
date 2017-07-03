@@ -8,16 +8,22 @@ package com.sg.superhero.service;
 import com.sg.superhero.dao.AddressDao;
 import com.sg.superhero.dao.ContactDao;
 import com.sg.superhero.dao.HeroDao;
+import com.sg.superhero.dao.HeroSuperpowerDao;
+import com.sg.superhero.dao.LocationDao;
 import com.sg.superhero.dao.OrgMemberDao;
 import com.sg.superhero.dao.OrganizationDao;
+import com.sg.superhero.dao.SightingsDao;
 import com.sg.superhero.dao.SuperPowerDao;
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.HeroPower;
+import com.sg.superhero.model.Location;
 import com.sg.superhero.model.Organization;
+import com.sg.superhero.model.Sighting;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  *
@@ -31,15 +37,49 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     OrganizationDao organizationDao;
     SuperPowerDao superpowerDao;
     OrgMemberDao orgMemberDao;
+    HeroSuperpowerDao heroSuperPowerDao;
+    LocationDao locationDao;
+    SightingsDao sightingDao;
 
-    public SuperHeroServiceLayerDBImpl(HeroDao heroDao, ContactDao contactDao, AddressDao addressDao, OrganizationDao organizationDao, SuperPowerDao superpowerDao, OrgMemberDao orgMemberDao) {
+    public SuperHeroServiceLayerDBImpl(HeroDao heroDao, ContactDao contactDao, AddressDao addressDao, OrganizationDao organizationDao, SuperPowerDao superpowerDao, OrgMemberDao orgMemberDao, HeroSuperpowerDao heroSuperpowerDao, LocationDao locationDao, SightingsDao sightingDao) {
         this.heroDao = heroDao;
         this.contactDao = contactDao;
         this.addressDao = addressDao;
         this.organizationDao = organizationDao;
         this.superpowerDao = superpowerDao;
         this.orgMemberDao = orgMemberDao;
+        this.heroSuperPowerDao = heroSuperpowerDao;
+        this.locationDao = locationDao;
+        this.sightingDao = sightingDao;
+    }
 
+    @Override
+    public Sighting addSighting(String sightingId, Sighting sighting) {
+        return sightingDao.addSighting(sightingId, sighting);
+    }
+
+    @Override
+    public List<Sighting> getAllSightings() {
+        return sightingDao.getAllSightings();
+    }
+
+    @Override
+    public Location addLocation(String locationId, Location location, Address address) {
+        String addressId;
+
+        if (address == null) {
+            addressId = null;
+            location.setAddressId(null);
+        } else {
+            addAddress("0", address);
+            location.setAddressId(address.getAddressId());
+        }
+        return locationDao.addLocation(locationId, location);
+    }
+
+    @Override
+    public List<Location> getAllLocations() {
+        return locationDao.getAllLocations();
     }
 
     @Override
@@ -69,20 +109,22 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Hero deleteHero(String heroId) {
-        Hero hero = heroDao.getHero(heroId);
+    public Hero deleteHero(String heroId, String contactId) {
 
-        if (hero.getContactId() != null) {
-            deleteContact(hero.getContactId());
+        Hero removedHero = heroDao.deleteHero(heroId);
+
+        if (contactId != null && !contactId.equals("")) {
+            deleteContact(contactId, getContact(contactId).getAddressId());
+        } else {
+            deleteContact(contactId, null);
         }
-
-        return heroDao.deleteHero(heroId);
+        return removedHero;
     }
 
     @Override
     public Hero updateHero(String heroId, Hero hero, Contact contact, Address address) {
         if (contact != null) {
-            if (hero.getContactId() == null) {
+            if (hero.getContactId() == null || hero.getContactId().equals("")) {
                 // adding a new contact
 
                 hero.setContactId(addContact(contact.getContactId(), contact, address).getContactId());
@@ -129,26 +171,28 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact deleteContact(String contactId) {
-        return contactDao.deleteContact(contactId);
-        /* Contact contact = contactDao.getContact(contactId);
-        String addressId = contact.getAddressId();
-        if (addressId != null) {
-            //addressDao.deleteAddress(addressId);
-            return contactDao.deleteContactWithAddress(contactId);
-        } else {
-            return contactDao.deleteContact(contactId);
-        }*/
+    public Contact deleteContact(String contactId, String addressId) {
+        Contact removedContact = getContact(contactId);
+        try {
+            removedContact = contactDao.deleteContact(contactId);
+            deleteAddress(addressId);
+        } catch (DataIntegrityViolationException e) {
+            // shared data. cannot delete.
+        }
+        return removedContact;
     }
 
     @Override
-    public Contact deleteContactWithAddress(String contactId) {
+    public Contact deleteContactWithAddress(String contactId
+    ) {
         Contact contact = contactDao.getContact(contactId);
         return contactDao.deleteContactWithAddress(contactId);
     }
 
     @Override
-    public Contact updateContact(String contactId, Contact contact, Address address) {
+    public Contact updateContact(String contactId, Contact contact,
+            Address address
+    ) {
         if (address == null) {
             // need to add check to see if was previously set in case the address was deleted.
             contact.setAddressId(null);
@@ -166,7 +210,8 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact getContact(String contactId) {
+    public Contact getContact(String contactId
+    ) {
         if (contactId != null) {
             return contactDao.getContact(contactId);
         } else {
@@ -180,27 +225,32 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Address addAddress(String addressId, Address address) {
+    public Address addAddress(String addressId, Address address
+    ) {
         return addressDao.addAddress(addressId, address);
     }
 
     @Override
-    public Address deleteAddress(String addressId) {
+    public Address deleteAddress(String addressId
+    ) {
         return addressDao.deleteAddress(addressId);
     }
 
     @Override
-    public Address updateAddress(String addressId, Address address) {
+    public Address updateAddress(String addressId, Address address
+    ) {
         return addressDao.updateAddress(addressId, address);
     }
 
     @Override
-    public Address getAddress(String addressId) {
+    public Address getAddress(String addressId
+    ) {
         return addressDao.getAddress(addressId);
     }
 
     @Override
-    public Address findAddress(Address address) {
+    public Address findAddress(Address address
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -210,17 +260,22 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Organization addOrganization(String organizationId, Organization organization) {
+    public Organization addOrganization(String organizationId, Organization organization
+    ) {
         return organizationDao.addOrganization(organizationId, organization);
     }
 
     @Override
     public Organization deleteOrganization(String organizationId) {
+
         return organizationDao.deleteOrganization(organizationId);
+
     }
 
     @Override
-    public Organization updateOrganization(String organizationId, Organization organization, Address address) {
+    public Organization updateOrganization(String organizationId, Organization organization,
+            Address address
+    ) {
         if (address == null) {
             // need to add check to see if was previously set in case the address was deleted.
             organization.setAddressId(null);
@@ -237,7 +292,26 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Organization getOrganization(String organizationId) {
+    public List<Organization> updateOrganizationsForHeroByOrganizationIds(String heroId, List<String> organizationIds
+    ) {
+        return orgMemberDao.updateOrganizationsForHeroByOrganizationIds(heroId, organizationIds);
+    }
+
+    @Override
+    public List<Hero> getHerosByOrganization(String organizationId
+    ) {
+        return orgMemberDao.getHerosByOrganization(organizationId);
+    }
+
+    @Override
+    public List<Organization> getOrganizationsByHero(String heroId
+    ) {
+        return orgMemberDao.getOrganizationsByHero(heroId);
+    }
+
+    @Override
+    public Organization getOrganization(String organizationId
+    ) {
         return organizationDao.getOrganization(organizationId);
     }
 
@@ -247,22 +321,26 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public SuperPower getSuperPower(String superPowerId) {
+    public SuperPower getSuperPower(String superPowerId
+    ) {
         return superpowerDao.getSuperPower(superPowerId);
     }
 
     @Override
-    public SuperPower addSuperPower(String superPowerId, SuperPower superPower) {
+    public SuperPower addSuperPower(String superPowerId, SuperPower superPower
+    ) {
         return superpowerDao.addSuperPower(superPowerId, superPower);
     }
 
     @Override
-    public SuperPower deleteSuperPower(String superPowerId) {
+    public SuperPower deleteSuperPower(String superPowerId
+    ) {
         return superpowerDao.deleteSuperPower(superPowerId);
     }
 
     @Override
-    public SuperPower updateSuperPower(String superPowerId, SuperPower superPower) {
+    public SuperPower updateSuperPower(String superPowerId, SuperPower superPower
+    ) {
         return superpowerDao.updateSuperPower(superPowerId, superPower);
     }
 
@@ -272,8 +350,21 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public List<SuperPower> getSuperPowersByHero(String heroId) {
+    public List<SuperPower> getSuperPowersByHero(String heroId
+    ) {
         return superpowerDao.getSuperPowersByHero(heroId);
+    }
+
+    @Override
+    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers
+    ) {
+        return heroSuperPowerDao.updateSuperpowersForHero(heroId, superPowers);
+    }
+
+    @Override
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds
+    ) {
+        return heroSuperPowerDao.updateSuperpowersForHeroBySuperpowerIds(heroId, superPowerIds);
     }
 
 }

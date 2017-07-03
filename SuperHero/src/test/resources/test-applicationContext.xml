@@ -23,7 +23,7 @@
       class="org.apache.commons.dbcp2.BasicDataSource">
     <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
     <property name="url" 
-              value="jdbc:mysql://localhost:3306/SuperHeroSightings" />
+              value="jdbc:mysql://localhost:3306/SuperHeroSightingsTest" />
     <property name="username" value="root" />
     <property name="password" value="root" />
     <property name="initialSize" value="5" />
@@ -65,16 +65,26 @@
       class="com.sg.superhero.dao.HeroSuperpowerDaoDbImpl"> 
       <property name="jdbcTemplate" ref="jdbcTemplate" /> 
     </bean>      
-          
+    <bean id="locationDao"
+      class="com.sg.superhero.dao.LocationDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean> 
+        <bean id="sightingDao"
+      class="com.sg.superhero.dao.SightingsDaoDbImpl"> 
+      <property name="jdbcTemplate" ref="jdbcTemplate" /> 
+    </bean> 
     <bean id="serviceLayer"
        class="com.sg.superhero.service.SuperHeroServiceLayerDBImpl">
         <constructor-arg ref="heroDao"/>
         <constructor-arg ref="contactDao"/>
         <constructor-arg ref="addressDao"/>
         <constructor-arg ref="organizationDao"/>  
-        <constructor-arg ref="superpowerDao"/>
-        <constructor-arg ref="orgMemberDao"/>  
-    </bean>      
+        <constructor-arg ref="superpowerDao"/>  
+        <constructor-arg ref="orgMemberDao"/> 
+        <constructor-arg ref="heroSuperpowerDao"/>
+        <constructor-arg ref="locationDao"/> 
+        <constructor-arg ref="sightingDao"/>  
+    </bean>        
     <bean id="heroController" class="com.sg.superhero.HeroController">
         <constructor-arg ref="serviceLayer"/>
     </bean> 

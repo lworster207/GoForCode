@@ -59,9 +59,9 @@ public class HeroSuperpowerDaoDbImpl implements HeroSuperpowerDao {
 
     @Override
     public List<SuperPower> getSuperpowersByHero(String heroId) {
-        List<SuperPower> spList = jdbcTemplate.query(SQL_SELECT_SUPERPOWERS_BY_HERO,
+        return jdbcTemplate.query(SQL_SELECT_SUPERPOWERS_BY_HERO,
                 new SuperPowerMapper(), heroId);
-        return spList;
+
     }
 
     @Override
@@ -72,10 +72,22 @@ public class HeroSuperpowerDaoDbImpl implements HeroSuperpowerDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void addSuperpowersForHero(String heroId, List<SuperPower> superPowers) {
+    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers) {
+        deleteByHero(heroId);
         for (SuperPower superpower : superPowers) {
             addSuperPowerForHero(heroId, superpower.getSuperPowerId());
         }
+        return getSuperpowersByHero(heroId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds) {
+        deleteByHero(heroId);
+        for (String superpowerId : superPowerIds) {
+            addSuperPowerForHero(heroId, superpowerId);
+        }
+        return getSuperpowersByHero(heroId);
     }
 
     private void addSuperPowerForHero(String heroId, String superpowerId) {

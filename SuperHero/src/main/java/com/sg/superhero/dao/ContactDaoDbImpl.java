@@ -10,6 +10,7 @@ import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ContactDaoDbImpl implements ContactDao {
 
     private static SuperHeroServiceLayer service;
+    AddressDao addressDao = new AddressDaoDbImpl();
 
     private static final String SQL_INSERT_ITEM
             = "insert into Contact "
@@ -80,8 +82,19 @@ public class ContactDaoDbImpl implements ContactDao {
 
     @Override
     public Contact deleteContact(String contactId) {
-        Contact removedContact = getContact(contactId);
-        jdbcTemplate.update(SQL_DELETE_ITEM, contactId);
+        Contact removedContact = null;
+
+        if (contactId != null && !contactId.equals("")) {
+            removedContact = getContact(contactId);
+            removedContact.setContactId(null);
+            updateContact(contactId, removedContact);
+            try {
+                jdbcTemplate.update(SQL_DELETE_ITEM, contactId);
+            } catch (DataIntegrityViolationException e) {
+                // shared contact. cannot delete.
+            }
+        }
+
         return removedContact;
     }
 
@@ -118,7 +131,14 @@ public class ContactDaoDbImpl implements ContactDao {
 
     @Override
     public List<Contact> getAllContacts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return jdbcTemplate.query(SQL_SELECT_ALL_ITEMS,
+                    new ContactMapper());
+        } catch (EmptyResultDataAccessException ex) {
+            // there were no results for the given item id - we just
+            // want to return null in this case
+            return null;
+        }
     }
 
     private static final class ContactMapper implements RowMapper<Contact> {

@@ -67,8 +67,11 @@ public class AddressDaoDbImpl implements AddressDao {
 
     @Override
     public Address deleteAddress(String addressId) {
-        Address removedItem = getAddress(addressId);
-        jdbcTemplate.update(SQL_DELETE_ADDRESS, addressId);
+        Address removedItem = null;
+        if (addressId != null && !addressId.equals("")) {
+            removedItem = getAddress(addressId);
+            jdbcTemplate.update(SQL_DELETE_ADDRESS, addressId);
+        }
         return removedItem;
     }
 
@@ -86,12 +89,16 @@ public class AddressDaoDbImpl implements AddressDao {
 
     @Override
     public Address getAddress(String addressId) {
-        try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_ADDRESS,
-                    new AddressMapper(), addressId);
-        } catch (EmptyResultDataAccessException ex) {
-            // there were no results for the given item id - we just
-            // want to return null in this case
+        if (addressId != null && !addressId.equals("")) {
+            try {
+                return jdbcTemplate.queryForObject(SQL_SELECT_ADDRESS,
+                        new AddressMapper(), addressId);
+            } catch (EmptyResultDataAccessException ex) {
+                // there were no results for the given item id - we just
+                // want to return null in this case
+                return null;
+            }
+        } else {
             return null;
         }
     }

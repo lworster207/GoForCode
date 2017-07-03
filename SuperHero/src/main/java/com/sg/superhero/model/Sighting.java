@@ -5,7 +5,6 @@
  */
 package com.sg.superhero.model;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -17,7 +16,7 @@ public class Sighting {
     private String sightingId;
     private String locationId;
     private String heroId;
-    private LocalDate date;
+    private String date;
 
     public String getSightingId() {
         return sightingId;
@@ -43,11 +42,11 @@ public class Sighting {
         this.heroId = heroId;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -9,7 +9,9 @@ import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.HeroPower;
+import com.sg.superhero.model.Location;
 import com.sg.superhero.model.Organization;
+import com.sg.superhero.model.Sighting;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
 
@@ -19,11 +21,19 @@ import java.util.List;
  */
 public interface SuperHeroServiceLayer {
 
+    public Sighting addSighting(String sightingId, Sighting sighting);
+
+    public List<Sighting> getAllSightings();
+
+    public Location addLocation(String locationId, Location location, Address address);
+
+    public List<Location> getAllLocations();
+
     public Hero addHero(String heroId, Hero hero);
 
     public Hero addHero(Hero hero, Contact contact, Address address);
 
-    public Hero deleteHero(String heroId);
+    public Hero deleteHero(String heroId, String contactId);
 
     public Hero updateHero(String heroId, Hero hero, Contact contact, Address address);
 
@@ -35,7 +45,7 @@ public interface SuperHeroServiceLayer {
 
     public Contact addContact(String contactId, Contact contact, Address address);
 
-    public Contact deleteContact(String contactId);
+    public Contact deleteContact(String contactId, String addressId);
 
     public Contact deleteContactWithAddress(String contactId);
 
@@ -65,7 +75,13 @@ public interface SuperHeroServiceLayer {
 
     public Organization getOrganization(String organizationId);
 
+    public List<Hero> getHerosByOrganization(String organizationId);
+
+    public List<Organization> getOrganizationsByHero(String heroId);
+
     public List<Organization> getAllOrganizations();
+
+    public List<Organization> updateOrganizationsForHeroByOrganizationIds(String heroId, List<String> organizationIds);
 
     public SuperPower getSuperPower(String superPowerId);
 
@@ -78,4 +94,9 @@ public interface SuperHeroServiceLayer {
     public List<SuperPower> getAllSuperPowers();
 
     public List<SuperPower> getSuperPowersByHero(String heroId);
+
+    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers);
+
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds);
+
 }

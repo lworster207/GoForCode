@@ -6,6 +6,7 @@
 package com.sg.superhero.model;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -14,10 +15,13 @@ import java.util.Objects;
 public class Location {
 
     private String locationId;
-    private String name;
-    private String description;
-    private Address address;
+    @NotEmpty(message = "You must supply a value for Location Name.")
+    private String locationName;
+    private String locationDescription;
+    private String addressId;
+
     private double latitude;
+
     private double longitude;
 
     public String getLocationId() {
@@ -28,28 +32,28 @@ public class Location {
         this.locationId = locationId;
     }
 
-    public String getName() {
-        return name;
+    public String getLocationName() {
+        return locationName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLocationDescription() {
+        return locationDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     public double getLatitude() {
@@ -70,12 +74,12 @@ public class Location {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.name);
-        hash = 89 * hash + Objects.hashCode(this.description);
-        hash = 89 * hash + Objects.hashCode(this.address);
-        hash = 89 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
-        hash = 89 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.locationName);
+        hash = 43 * hash + Objects.hashCode(this.locationDescription);
+        hash = 43 * hash + Objects.hashCode(this.addressId);
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
         return hash;
     }
 
@@ -97,13 +101,13 @@ public class Location {
         if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.locationName, other.locationName)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description)) {
+        if (!Objects.equals(this.locationDescription, other.locationDescription)) {
             return false;
         }
-        if (!Objects.equals(this.address, other.address)) {
+        if (!Objects.equals(this.addressId, other.addressId)) {
             return false;
         }
         return true;

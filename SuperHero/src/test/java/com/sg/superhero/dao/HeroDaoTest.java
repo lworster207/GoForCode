@@ -47,12 +47,23 @@ public class HeroDaoTest {
         dao = ctx.getBean("heroDao", HeroDao.class);
         contactDao = ctx.getBean("contactDao", ContactDao.class);
         addressDao = ctx.getBean("addressDao", AddressDao.class);
-        /*
+
         List<Hero> heroList = dao.getAllHeroes();
         for (Hero hero : heroList) {
+            //hero.setContactId("");
             dao.deleteHero(hero.getHeroId());
         }
-         */
+
+        List<Contact> contactList = contactDao.getAllContacts();
+        for (Contact contact : contactList) {
+            //contact.setAddressId("");
+            contactDao.deleteContact(contact.getContactId());
+        }
+
+        List<Address> addressList = addressDao.getAllAddresses();
+        for (Address address : addressList) {
+            addressDao.deleteAddress(address.getAddressId());
+        }
     }
 
     @After
@@ -63,7 +74,17 @@ public class HeroDaoTest {
      * Test of addHero method, of class HeroDao.
      */
     @Test
-    public void testAddHero() {
+    public void testAddHeroNoContact() {
+
+        Hero hero = new Hero("heroName", null, "super hero description");
+
+        Hero result = dao.addHero("1", hero);
+        Hero expected = dao.getHero(result.getHeroId());
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testAddHeroWithContact() {
         SuperPower superpower = new SuperPower();
         superpower.setDescription("Invisibility");
         superpower.setSuperPowerId("1");
@@ -75,13 +96,17 @@ public class HeroDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        address = addressDao.addAddress(address.getAddressId(), address);
+
         Contact contact = new Contact();
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
+        contact.setPhone("1112223333");
         contact.setAddressId(address.getAddressId());
+        contact = contactDao.addContact(contact.getContactId(), contact);
 
-        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero = new Hero("heroName", contact.getContactId(), "super hero description");
 
         Hero result = dao.addHero("1", hero);
         Hero expected = dao.getHero(result.getHeroId());
@@ -108,6 +133,7 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
+        contact.setPhone("1112223333");
         contact.setAddressId(address.getAddressId());
 
         Hero hero = new Hero("heroName", null, "super hero description");
@@ -120,6 +146,40 @@ public class HeroDaoTest {
         dao.deleteHero(result.getHeroId());
         try {
             expected = dao.getHero(result.getHeroId());
+            assertEquals(1, 0);
+        } catch (EmptyResultDataAccessException e) {
+            assertEquals(1, 1);
+        }
+
+    }
+
+    @Test
+    public void testDeleteHeroWithContact() {
+
+        Address address = new Address();
+        address.setAddressId("1");
+        address.setStreetAddress("123 Elm Street");
+        address.setCity("Portland");
+        address.setStateProvince("Maine");
+        address.setPostCode("04101");
+
+        address = addressDao.addAddress(address.getAddressId(), address);
+
+        Contact contact = new Contact();
+        contact.setContactId("1");
+        contact.setFirstName("Peter");
+        contact.setLastName("Parker");
+        contact.setPhone("1112223333");
+        contact.setAddressId(address.getAddressId());
+        contact = contactDao.addContact(contact.getContactId(), contact);
+
+        Hero result = new Hero("heroName", contact.getContactId(), "super hero description");
+        dao.addHero("1", result);
+        dao.deleteHero(result.getHeroId());
+        //assertEquals(expected, result);
+
+        try {
+            dao.getHero(result.getHeroId());
             assertEquals(1, 0);
         } catch (EmptyResultDataAccessException e) {
             assertEquals(1, 1);
@@ -147,6 +207,7 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
+        contact.setPhone("1112223333");
         contact.setAddressId(address.getAddressId());
 
         Hero hero = new Hero("heroName", null, "super hero description");
@@ -182,6 +243,7 @@ public class HeroDaoTest {
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
+        contact.setPhone("1112223333");
         contact.setAddressId(address.getAddressId());
 
         Hero hero = new Hero("heroName", null, "super hero description");
@@ -198,9 +260,6 @@ public class HeroDaoTest {
      */
     @Test
     public void testGetAllHeroes() {
-        SuperPower superpower = new SuperPower();
-        superpower.setDescription("Invisibility");
-        superpower.setSuperPowerId("1");
 
         Address address = new Address();
         address.setAddressId("1");
@@ -209,13 +268,18 @@ public class HeroDaoTest {
         address.setStateProvince("Maine");
         address.setPostCode("04101");
 
+        addressDao.addAddress(address.getAddressId(), address);
+
         Contact contact = new Contact();
         contact.setContactId("1");
         contact.setFirstName("Peter");
         contact.setLastName("Parker");
+        contact.setPhone("1112223333");
         contact.setAddressId(address.getAddressId());
+        contactDao.addContact(contact.getContactId(), contact);
 
         Hero hero = new Hero("heroName", contact.getContactId(), "super hero description");
+        dao.addHero("1", hero);
 
         hero.setHeroId("1");
         List<Hero> allHeroes = dao.getAllHeroes();

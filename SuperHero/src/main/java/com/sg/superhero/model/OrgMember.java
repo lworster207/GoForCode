@@ -13,17 +13,9 @@ import java.util.Objects;
  */
 public class OrgMember {
 
-    String orgMemberId;
     String heroId;
     String organizationId;
-
-    public String getOrgMemberId() {
-        return orgMemberId;
-    }
-
-    public void setOrgMemberId(String orgMemberId) {
-        this.orgMemberId = orgMemberId;
-    }
+    String selected;
 
     public String getHeroId() {
         return heroId;
@@ -41,11 +33,19 @@ public class OrgMember {
         this.organizationId = organizationId;
     }
 
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.heroId);
-        hash = 67 * hash + Objects.hashCode(this.organizationId);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.organizationId);
+        hash = 53 * hash + Objects.hashCode(this.selected);
         return hash;
     }
 
@@ -61,10 +61,10 @@ public class OrgMember {
             return false;
         }
         final OrgMember other = (OrgMember) obj;
-        if (!Objects.equals(this.heroId, other.heroId)) {
+        if (!Objects.equals(this.organizationId, other.organizationId)) {
             return false;
         }
-        if (!Objects.equals(this.organizationId, other.organizationId)) {
+        if (!Objects.equals(this.selected, other.selected)) {
             return false;
         }
         return true;

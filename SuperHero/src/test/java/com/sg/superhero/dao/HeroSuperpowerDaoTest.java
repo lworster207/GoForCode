@@ -26,6 +26,7 @@ public class HeroSuperpowerDaoTest {
 
     HeroSuperpowerDao hspDao;
     HeroDao heroDao;
+    SuperPowerDao superpowerDao;
 
     public HeroSuperpowerDaoTest() {
     }
@@ -43,7 +44,9 @@ public class HeroSuperpowerDaoTest {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
         hspDao = ctx.getBean("heroSuperpowerDao", HeroSuperpowerDao.class);
         heroDao = ctx.getBean("heroDao", HeroDao.class);
+        superpowerDao = ctx.getBean("superpowerDao", SuperPowerDao.class);
         hspDao.truncateHeroSuperPower();
+
     }
 
     @After
@@ -65,29 +68,30 @@ public class HeroSuperpowerDaoTest {
         SuperPower sp3 = new SuperPower();
         sp3.setSuperPowerId("3");
         sp3.setDescription("3 description");
+
+        superpowerDao.addSuperPower(sp.getSuperPowerId(), sp);
+        superpowerDao.addSuperPower(sp2.getSuperPowerId(), sp2);
+        superpowerDao.addSuperPower(sp3.getSuperPowerId(), sp3);
+
         hspList.add(sp);
         hspList.add(sp2);
 
-        hspDao.addSuperpowersForHero("1", hspList);
-        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero("1");
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
+
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
+
+        hspDao.updateSuperpowersForHero(hero.getHeroId(), hspList);
+        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero(hero.getHeroId());
         assertEquals(heroSuperpowerList.size(), 2);
 
         hspList.add(sp3);
-        hspDao.addSuperpowersForHero("2", hspList);
-        heroSuperpowerList = hspDao.getSuperpowersByHero("2");
+        hspDao.updateSuperpowersForHero(hero2.getHeroId(), hspList);
+        heroSuperpowerList = hspDao.getSuperpowersByHero(hero2.getHeroId());
         assertEquals(heroSuperpowerList.size(), 3);
-
-        Hero hero = new Hero("heroName", null, "super hero description");
-
-        hero.setHeroId("1");
-
-        Hero result = heroDao.addHero("1", hero);
-
-        hero.setHeroId("2");
-        Hero result2 = heroDao.addHero("2", hero);
-
-        List<SuperPower> heroList = hspDao.getSuperpowersByHero("1");
-        assertEquals(heroList.size(), 2);
 
     }
 
@@ -109,18 +113,30 @@ public class HeroSuperpowerDaoTest {
         hspList.add(sp);
         hspList.add(sp2);
 
-        hspDao.addSuperpowersForHero("1", hspList);
-        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero("1");
+        superpowerDao.addSuperPower(sp.getSuperPowerId(), sp);
+        superpowerDao.addSuperPower(sp2.getSuperPowerId(), sp2);
+        superpowerDao.addSuperPower(sp3.getSuperPowerId(), sp3);
+
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
+
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
+
+        hspDao.updateSuperpowersForHero(hero.getHeroId(), hspList);
+        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero(hero.getHeroId());
         assertEquals(heroSuperpowerList.size(), 2);
 
         hspList.add(sp3);
-        hspDao.addSuperpowersForHero("2", hspList);
-        heroSuperpowerList = hspDao.getSuperpowersByHero("2");
+        hspDao.updateSuperpowersForHero(hero2.getHeroId(), hspList);
+        heroSuperpowerList = hspDao.getSuperpowersByHero(hero2.getHeroId());
         assertEquals(heroSuperpowerList.size(), 3);
     }
 
     /**
-     * Test of addSuperpowersForHero method, of class HeroSuperpowerDao.
+     * Test of updateSuperpowersForHero method, of class HeroSuperpowerDao.
      */
     @Test
     public void testAddSuperpowersForHero() {
@@ -137,13 +153,25 @@ public class HeroSuperpowerDaoTest {
         hspList.add(sp);
         hspList.add(sp2);
 
-        hspDao.addSuperpowersForHero("1", hspList);
-        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero("1");
+        superpowerDao.addSuperPower(sp.getSuperPowerId(), sp);
+        superpowerDao.addSuperPower(sp2.getSuperPowerId(), sp2);
+        superpowerDao.addSuperPower(sp3.getSuperPowerId(), sp3);
+
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
+
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
+
+        hspDao.updateSuperpowersForHero(hero.getHeroId(), hspList);
+        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero(hero.getHeroId());
         assertEquals(heroSuperpowerList.size(), 2);
 
         hspList.add(sp3);
-        hspDao.addSuperpowersForHero("2", hspList);
-        heroSuperpowerList = hspDao.getSuperpowersByHero("2");
+        hspDao.updateSuperpowersForHero(hero2.getHeroId(), hspList);
+        heroSuperpowerList = hspDao.getSuperpowersByHero(hero2.getHeroId());
         assertEquals(heroSuperpowerList.size(), 3);
 
     }
@@ -163,17 +191,29 @@ public class HeroSuperpowerDaoTest {
         hspList.add(sp);
         hspList.add(sp2);
 
-        hspDao.addSuperpowersForHero("1", hspList);
-        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero("1");
+        superpowerDao.addSuperPower(sp.getSuperPowerId(), sp);
+        superpowerDao.addSuperPower(sp2.getSuperPowerId(), sp2);
+        superpowerDao.addSuperPower(sp3.getSuperPowerId(), sp3);
+
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
+
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
+
+        hspDao.updateSuperpowersForHero(hero.getHeroId(), hspList);
+        List<SuperPower> heroSuperpowerList = hspDao.getSuperpowersByHero(hero.getHeroId());
         assertEquals(heroSuperpowerList.size(), 2);
 
         hspList.add(sp3);
-        hspDao.addSuperpowersForHero("2", hspList);
-        heroSuperpowerList = hspDao.getSuperpowersByHero("2");
+        hspDao.updateSuperpowersForHero(hero2.getHeroId(), hspList);
+        heroSuperpowerList = hspDao.getSuperpowersByHero(hero2.getHeroId());
         assertEquals(heroSuperpowerList.size(), 3);
 
-        hspDao.deleteByHero("1");
-        heroSuperpowerList = hspDao.getSuperpowersByHero("1");
+        hspDao.deleteByHero(hero.getHeroId());
+        heroSuperpowerList = hspDao.getSuperpowersByHero(hero.getHeroId());
         assertEquals(heroSuperpowerList.size(), 0);
     }
 }

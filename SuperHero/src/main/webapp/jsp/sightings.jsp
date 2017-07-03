@@ -51,7 +51,7 @@
     -->
     <div class="col-md-10">
         <h2>Sightings</h2>
-<table id="contactTable" class="table table-hover">
+<table id="sightingTable" class="table table-hover">
     <tr>
         <th width="30%">Super Hero</th>
         <th width="30%">Location</th>
@@ -59,26 +59,26 @@
         <th width="10%"></th>
         <th width="10%"></th>
     </tr>
-<c:forEach var="currentContact" items="${contactList}">
+<c:forEach var="currentSighting" items="${sightingsList}">
     <tr>
         <td>
-            <a href="displayContactDetails?contactId=${currentContact.contactId}">
-            <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+            <a href="displaySightingDetails?sightingId=${currentSighting.sightingId}">
+            <c:out value="${currentSighting.heroId}"/>
             </a>
         </td>
         <td>
-            <c:out value="${currentContact.company}"/>
+            <c:out value="${currentSighting.locationId}"/>
         </td>
         <td>
-            <c:out value="${currentContact.date}"/>
+            <c:out value="${currentSighting.date}"/>
         </td>
         <td>
-            <a href="displayEditContactForm?contactId=${currentContact.contactId}">
+            <a href="displayEditSightingForm?sightingId=${currentSighting.sightingId}">
             Edit
             </a>
         </td>
         <td>
-            <a href="deleteContact?contactId=${currentContact.contactId}">
+            <a href="deleteSighting?sightingId=${currentSighting.sightingId}">
             Delete
             </a>
         </td>
@@ -87,7 +87,7 @@
 </table>                   
     </div> <!-- End col div -->
     <!-- 
-        Add col to hold the new contact form - have it take up the other 
+        Add col to hold the new sighting form - have it take up the other 
         half of the row
     -->
     <div class="col-md-2">

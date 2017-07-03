@@ -38,8 +38,8 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             = "select * from SuperPower";
 
     private static final String SQL_SELECT_SUPERPOWERS_BY_HERO
-            = "select SuperPower.SuperPowerId, SuperPower.Description from SuperPower "
-            + "join SuperPower on SuperPower.SuperPowerId = HeroSuperPower.SuperPowerId "
+            = "select s.SuperPowerId, s.Description from SuperPower s "
+            + "join HeroSuperPower on s.SuperPowerId = HeroSuperPower.SuperPowerId "
             + "where HeroSuperPower.HeroId = ?";
 
     private JdbcTemplate jdbcTemplate;
@@ -113,9 +113,9 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
 
     @Override
     public List<SuperPower> getAllSuperPowers() {
-
         return jdbcTemplate.query(SQL_SELECT_ALL_ITEMS,
                 new SuperPowerMapper());
+
     }
 
     private static final class SuperPowerMapper implements RowMapper<SuperPower> {
@@ -126,6 +126,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             superPower.setSuperPowerId(rs.getString("SuperPowerId"));
             superPower.setDescription(rs.getString("Description"));
             superPower.setSelected("");
+
             return superPower;
         }
 

@@ -80,7 +80,7 @@
             </a>
         </td>
         <td>
-            <a href="deleteHero?heroId=${currentHero.heroId}">
+            <a href="deleteHero?heroId=${currentHero.heroId}&contactId=${currentHero.contactId}">
             Delete
             </a>
         </td>

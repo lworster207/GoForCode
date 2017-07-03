@@ -26,6 +26,8 @@ public class OrgMemberDbImpl implements OrgMemberDao {
             = "insert into OrgMembers "
             + "(HeroId, OrganizationId) "
             + "values (?,?)";
+    private static final String SQL_SELECT_GETALL_ORGMEMBERS
+            = "select * from OrgMembers";
 
     private static final String SQL_SELECT_ORGMEMBER
             = "select * from OrgMembers where OrgMembersId = ?";
@@ -66,23 +68,9 @@ public class OrgMemberDbImpl implements OrgMemberDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public OrgMember addOrgMember(String orgMemberId, OrgMember orgMember) {
-        jdbcTemplate.update(SQL_INSERT_ORGMEMBER,
-                orgMember.getHeroId(), orgMember.getOrganizationId());
+    public void deleteMembersByHero(String heroId) {
 
-        // query the database for the id that was just assigned to the new
-        // row in the database
-        Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
-        // set the new id value on the item object and return it
-        orgMember.setOrgMemberId(newId.toString());
-
-        return orgMember;
-    }
-
-    @Override
-    public OrgMember deleteOrgMember(String orgMemberId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_DELETE_ORGMEMBERS_BY_HERO, heroId);
     }
 
     @Override
@@ -94,21 +82,10 @@ public class OrgMemberDbImpl implements OrgMemberDao {
     }
 
     @Override
-    public OrgMember updateOrgMember(String orgMemberId, OrgMember orgMember) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public OrgMember getOrgMember(String orgMemberId) {
-
-        return jdbcTemplate.queryForObject(SQL_SELECT_ORGMEMBER,
-                new OrgMemberMapper(), orgMemberId);
-
-    }
-
-    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public List<OrgMember> getAllOrgMembers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        return jdbcTemplate.query(SQL_SELECT_GETALL_ORGMEMBERS, new OrgMemberMapper());
     }
 
     @Override
@@ -124,6 +101,21 @@ public class OrgMemberDbImpl implements OrgMemberDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public List<Organization> updateOrganizationsForHeroByOrganizationIds(String heroId, List<String> organizationIds) {
+        deleteMembersByHero(heroId);
+        for (String organizationId : organizationIds) {
+            addOrgMemberForHero(heroId, organizationId);
+        }
+        return getOrganizationsByHero(heroId);
+    }
+
+    private void addOrgMemberForHero(String heroId, String organizationId) {
+        jdbcTemplate.update(SQL_INSERT_ORGMEMBER,
+                heroId, organizationId);
+    }
+
+    @Override
     public void truncateOrgMembers() {
 
         jdbcTemplate.execute(SQL_TRUNCATE_ORGMEMBERS);
@@ -134,7 +126,6 @@ public class OrgMemberDbImpl implements OrgMemberDao {
         public OrgMember mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             OrgMember orgMember = new OrgMember();
-            orgMember.setOrgMemberId(rs.getString("OrgMembersId"));
             orgMember.setHeroId(rs.getString("HeroId"));
             orgMember.setOrganizationId(rs.getString("OrganizationId"));
             return orgMember;

@@ -78,7 +78,16 @@
                     </select>
                 </div>
             </div>           
-         
+            <div class="form-group">
+                <label for="add-organizations" class="col-md-4 control-label">Organizations:</label>
+                <div class="col-md-8">
+                    <select multiple class="form-control" id="add-organizations" name="add-organizations">
+                        <c:forEach var="currentOrg" items="${organizationsList}"> 
+                            <option value="${currentOrg.organizationId}">${currentOrg.orgName}</option>
+                        </c:forEach>                          
+                    </select>
+                </div>
+            </div>          
             <div class="form-group">
                 <label for="add-description" class="col-md-4 control-label">Description:</label>
                 <div class="col-md-8">

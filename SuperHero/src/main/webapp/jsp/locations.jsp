@@ -51,7 +51,7 @@
     -->
     <div class="col-md-10">
         <h2>Locations</h2>
-<table id="contactTable" class="table table-hover">
+<table id="locationTable" class="table table-hover">
     <tr>
         <th width="20%">Name</th>
         <th width="20%">Description</th>
@@ -61,32 +61,32 @@
         <th width="5%"></th>
         <th width="5%"></th>
     </tr>
-<c:forEach var="currentContact" items="${contactList}">
+<c:forEach var="currentLocation" items="${locationList}">
     <tr>
         <td>
-            <a href="displayContactDetails?contactId=${currentContact.contactId}">
-            <c:out value="${currentContact.firstName}"/> <c:out value="${currentContact.lastName}"/>
+            <a href="displayLocationDetails?locationId=${currentLocation.locationId}">
+            <c:out value="${currentLocation.locationName}"/>
             </a>
         </td>
         <td>
-            <c:out value="${currentContact.description}"/>
+            <c:out value="${currentLocation.locationDescription}"/>
         </td>
         <td>
-            <c:out value="${currentContact.address}"/>
+            <c:out value="${currentLocation.addressId}"/>
         </td>
         <td>
-            <c:out value="${currentContact.latitude}"/>
+            <c:out value="${currentLocation.latitude}"/>
         </td>
         <td>
-            <c:out value="${currentContact.longitude}"/>
+            <c:out value="${currentLocation.longitude}"/>
         </td>
         <td>
-            <a href="displayEditContactForm?contactId=${currentContact.contactId}">
+            <a href="displayEditLocationForm?locationId=${currentLocation.locationId}">
             Edit
             </a>
         </td>
         <td>
-            <a href="deleteContact?contactId=${currentContact.contactId}">
+            <a href="deleteLocation?locationId=${currentLocation.locationId}">
             Delete
             </a>
         </td>
@@ -95,7 +95,7 @@
 </table>                   
     </div> <!-- End col div -->
     <!-- 
-        Add col to hold the new contact form - have it take up the other 
+        Add col to hold the new location form - have it take up the other 
         half of the row
     -->
     <div class="col-md-2">
@@ -109,6 +109,6 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
     </body>
 </html>

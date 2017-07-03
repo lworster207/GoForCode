@@ -31,6 +31,15 @@ public class OrganizationController {
         this.service = service;
     }
 
+    @RequestMapping(value = "/deleteOrganization", method = RequestMethod.GET)
+    public String deleteOrganization(HttpServletRequest request, Model model) {
+        String organizationId = request.getParameter("organizationId");
+        String addressId = request.getParameter("addressId");
+
+        // service.deleteOrganization(organizationId,addressId);
+        return "redirect:displayOrganizations";
+    }
+
     @RequestMapping(value = "/displayOrganizations", method = RequestMethod.GET)
     public String displayOrganizations(Model model) {
         //model.put("message", "Hello from the controller");

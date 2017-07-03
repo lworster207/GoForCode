@@ -5,20 +5,20 @@
  */
 package com.sg.superhero.dao;
 
+import static com.sg.superhero.dao.OrganizationDaoTest.dao;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.OrgMember;
 import com.sg.superhero.model.Organization;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
@@ -51,6 +51,15 @@ public class OrgMemberDaoTest {
 
         orgMemberDao.truncateOrgMembers();
 
+        List<Organization> orgList = organizationDao.getAllOrganizations();
+        for (Organization org : orgList) {
+            organizationDao.deleteOrganization(org.getOrganizationId());
+        }
+
+        List<Hero> heroList = heroDao.getAllHeroes();
+        for (Hero hero : heroList) {
+            heroDao.deleteHero(hero.getHeroId());
+        }
     }
 
     @After
@@ -58,76 +67,51 @@ public class OrgMemberDaoTest {
     }
 
     /**
-     * Test of addOrgMember method, of class OrgMemberDao.
-     */
-    @Test
-    public void testAddOrgMember() {
-        OrgMember orgMember = new OrgMember();
-        orgMember.setOrgMemberId("1");
-        orgMember.setHeroId("2");
-        orgMember.setOrganizationId("1");
-        orgMember = orgMemberDao.addOrgMember("1", orgMember);
-
-        OrgMember expected = orgMemberDao.getOrgMember(orgMember.getOrgMemberId());
-        assertEquals(orgMember, expected);
-
-    }
-
-    /**
      * Test of deleteMembersByOrganization method, of class OrgMemberDao.
      */
     @Test
     public void testDeleteMembersByOrganization() {
-        OrgMember orgMember = new OrgMember();
-        orgMember.setOrgMemberId("1");
-        orgMember.setHeroId("2");
-        orgMember.setOrganizationId("1");
-        orgMember = orgMemberDao.addOrgMember("1", orgMember);
-
-        OrgMember orgMember2 = new OrgMember();
-        orgMember2.setOrgMemberId("2");
-        orgMember2.setHeroId("2");
-        orgMember2.setOrganizationId("2");
-        orgMember2 = orgMemberDao.addOrgMember("2", orgMember2);
-
-        OrgMember orgMember3 = new OrgMember();
-        orgMember3.setOrgMemberId("2");
-        orgMember3.setHeroId("2");
-        orgMember3.setOrganizationId("2");
-        orgMember3 = orgMemberDao.addOrgMember("2", orgMember3);
-
-        orgMemberDao.deleteMembersByOrganization("2");
-        OrgMember expected = orgMemberDao.getOrgMember(orgMember.getOrgMemberId());
-
-        assertEquals(expected, orgMember);
-
-        try {
-            expected = orgMemberDao.getOrgMember(orgMember2.getOrgMemberId());
-            fail();
-        } catch (EmptyResultDataAccessException e) {
-            assertEquals(1, 1);
-        }
-
-        try {
-            expected = orgMemberDao.getOrgMember(orgMember3.getOrgMemberId());
-            fail();
-        } catch (EmptyResultDataAccessException e) {
-            assertEquals(1, 1);
-        }
     }
 
     /**
-     * Test of updateOrgMember method, of class OrgMemberDao.
+     * Test of deleteMembersByHero method, of class OrgMemberDao.
      */
     @Test
-    public void testUpdateOrgMember() {
-    }
+    public void testDeleteMembersByHero() {
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
 
-    /**
-     * Test of getOrgMember method, of class OrgMemberDao.
-     */
-    @Test
-    public void testGetOrgMember() {
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
+
+        String organizationId = "1";
+        Organization organization = new Organization();
+
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
+
+        String organizationId2 = "2";
+        Organization organization2 = new Organization();
+
+        organization2.setOrgDescription("OrganizationII description");
+        organization2.setOrgName("OrganizationII Name");
+        Organization expOrg = organizationDao.addOrganization(organization2.getOrganizationId(), organization2);
+        expOrg = organizationDao.addOrganization(organization.getOrganizationId(), organization);
+
+        List<String> orgs = new ArrayList();
+
+        orgs.add(organization.getOrganizationId());
+        orgs.add(organization2.getOrganizationId());
+
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero2.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero3.getHeroId(), orgs);
+
+        orgMemberDao.deleteMembersByHero(hero.getHeroId());
+        List<OrgMember> orgMembers = orgMemberDao.getAllOrgMembers();
+        assertEquals(4, orgMembers.size());
     }
 
     /**
@@ -135,6 +119,40 @@ public class OrgMemberDaoTest {
      */
     @Test
     public void testGetAllOrgMembers() {
+
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
+
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
+
+        String organizationId = "1";
+        Organization organization = new Organization();
+
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
+
+        String organizationId2 = "2";
+        Organization organization2 = new Organization();
+
+        organization2.setOrgDescription("OrganizationII description");
+        organization2.setOrgName("OrganizationII Name");
+        Organization expOrg = organizationDao.addOrganization(organization2.getOrganizationId(), organization2);
+        expOrg = organizationDao.addOrganization(organization.getOrganizationId(), organization);
+
+        List<String> orgs = new ArrayList();
+
+        orgs.add(organization.getOrganizationId());
+        orgs.add(organization2.getOrganizationId());
+
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero2.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero3.getHeroId(), orgs);
+
+        List<OrgMember> orgMembers = orgMemberDao.getAllOrgMembers();
+        assertEquals(orgMembers.size(), 6);
     }
 
     /**
@@ -142,32 +160,43 @@ public class OrgMemberDaoTest {
      */
     @Test
     public void testGetHerosByOrganization() {
-        OrgMember orgMember = new OrgMember();
-        orgMember.setOrgMemberId("1");
-        orgMember.setHeroId("2");
-        orgMember.setOrganizationId("1");
-        orgMember = orgMemberDao.addOrgMember("1", orgMember);
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
 
-        OrgMember orgMember2 = new OrgMember();
-        orgMember2.setOrgMemberId("2");
-        orgMember2.setHeroId("2");
-        orgMember2.setOrganizationId("2");
-        orgMember2 = orgMemberDao.addOrgMember("2", orgMember2);
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
 
-        OrgMember orgMember3 = new OrgMember();
-        orgMember3.setOrgMemberId("2");
-        orgMember3.setHeroId("3");
-        orgMember3.setOrganizationId("2");
-        orgMember3 = orgMemberDao.addOrgMember("2", orgMember3);
+        String organizationId = "1";
+        Organization organization = new Organization();
 
-        // org 1 should return 1 member
-        List<Hero> heroList = orgMemberDao.getHerosByOrganization("1");
-        assertEquals(heroList.size(), 1);
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
-        heroList = orgMemberDao.getHerosByOrganization("2");
-        assertEquals(heroList.size(), 2);
+        String organizationId2 = "2";
+        Organization organization2 = new Organization();
 
-        // org 2 should return 2 members
+        organization2.setOrgDescription("OrganizationII description");
+        organization2.setOrgName("OrganizationII Name");
+        Organization expOrg = organizationDao.addOrganization(organization2.getOrganizationId(), organization2);
+        expOrg = organizationDao.addOrganization(organization.getOrganizationId(), organization);
+
+        List<String> orgs = new ArrayList();
+
+        orgs.add(organization.getOrganizationId());
+        orgs.add(organization2.getOrganizationId());
+
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero2.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero3.getHeroId(), orgs);
+
+        List<OrgMember> orgMembers = orgMemberDao.getAllOrgMembers();
+        assertEquals(6, orgMembers.size());
+
+        List<Hero> heros = orgMemberDao.getHerosByOrganization(organization2.getOrganizationId());
+        assertEquals(3, heros.size());
+
     }
 
     /**
@@ -175,29 +204,81 @@ public class OrgMemberDaoTest {
      */
     @Test
     public void testGetOrganizationsByHero() {
-        OrgMember orgMember = new OrgMember();
-        orgMember.setOrgMemberId("1");
-        orgMember.setHeroId("2");
-        orgMember.setOrganizationId("1");
-        orgMember = orgMemberDao.addOrgMember("1", orgMember);
+        Hero hero = new Hero("heroName", null, "super hero description");
+        Hero hero2 = new Hero("heroName", null, "super hero description");
+        Hero hero3 = new Hero("heroName", null, "super hero description");
 
-        OrgMember orgMember2 = new OrgMember();
-        orgMember2.setOrgMemberId("2");
-        orgMember2.setHeroId("2");
-        orgMember2.setOrganizationId("2");
-        orgMember2 = orgMemberDao.addOrgMember("2", orgMember2);
+        hero = heroDao.addHero("1", hero);
+        hero2 = heroDao.addHero("2", hero2);
+        hero3 = heroDao.addHero("3", hero3);
 
-        OrgMember orgMember3 = new OrgMember();
-        orgMember3.setOrgMemberId("2");
-        orgMember3.setHeroId("3");
-        orgMember3.setOrganizationId("2");
-        orgMember3 = orgMemberDao.addOrgMember("2", orgMember3);
+        String organizationId = "1";
+        Organization organization = new Organization();
 
-        List<Organization> orgList = orgMemberDao.getOrganizationsByHero("2");
-        assertEquals(orgList.size(), 2);
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
 
-        orgList = orgMemberDao.getOrganizationsByHero("3");
-        assertEquals(orgList.size(), 1);
+        String organizationId2 = "2";
+        Organization organization2 = new Organization();
+
+        organization2.setOrgDescription("OrganizationII description");
+        organization2.setOrgName("OrganizationII Name");
+        Organization expOrg = organizationDao.addOrganization(organization2.getOrganizationId(), organization2);
+        expOrg = organizationDao.addOrganization(organization.getOrganizationId(), organization);
+
+        List<String> orgs = new ArrayList();
+
+        orgs.add(organization.getOrganizationId());
+        orgs.add(organization2.getOrganizationId());
+
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero2.getHeroId(), orgs);
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds(hero3.getHeroId(), orgs);
+
+        List<Organization> orgList = orgMemberDao.getOrganizationsByHero(hero.getHeroId());
+        assertEquals(2, orgList.size());
+
+    }
+
+    /**
+     * Test of truncateOrgMembers method, of class OrgMemberDao.
+     */
+    @Test
+    public void testTruncateOrgMembers() {
+    }
+
+    /**
+     * Test of updateOrganizationsForHeroByOrganizationIds method, of class
+     * OrgMemberDao.
+     */
+    @Test
+    public void testUpdateOrganizationsForHeroByOrganizationIds() {
+        Hero hero = new Hero("heroName", null, "super hero description");
+
+        Hero result = heroDao.addHero("1", hero);
+
+        String organizationId = "1";
+        Organization organization = new Organization();
+
+        organization.setOrgDescription("Organization description");
+        organization.setOrgName("Organization Name");
+
+        String organizationId2 = "2";
+        Organization organization2 = new Organization();
+
+        organization2.setOrgDescription("OrganizationII description");
+        organization2.setOrgName("OrganizationII Name");
+        Organization expOrg = dao.addOrganization(organizationId2, organization2);
+        expOrg = dao.addOrganization(organizationId, organization);
+
+        List<String> orgs = new ArrayList();
+
+        orgs.add("1");
+        orgs.add("2");
+
+        orgMemberDao.updateOrganizationsForHeroByOrganizationIds("1", orgs);
+        List<OrgMember> orgMembers = orgMemberDao.getAllOrgMembers();
+        assertEquals(orgMembers.size(), 2);
 
     }
 

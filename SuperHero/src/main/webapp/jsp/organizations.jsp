@@ -74,7 +74,7 @@
             </a>
         </td>
         <td>
-            <a href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
+            <a href="deleteOrganization?organizationId=${currentOrganization.organizationId}&addressId=${currentOrganization.addressId}">
             Delete
             </a>
         </td>

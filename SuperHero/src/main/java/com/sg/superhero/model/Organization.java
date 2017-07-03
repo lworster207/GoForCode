@@ -22,6 +22,7 @@ public class Organization {
     private String orgDescription;
     private String contactId;
     private String addressId;
+    private String selected;
 
     public String getOrganizationId() {
         return organizationId;
@@ -63,13 +64,22 @@ public class Organization {
         this.addressId = addressId;
     }
 
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.orgName);
-        hash = 41 * hash + Objects.hashCode(this.orgDescription);
-        hash = 41 * hash + Objects.hashCode(this.contactId);
-        hash = 41 * hash + Objects.hashCode(this.addressId);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.orgName);
+        hash = 17 * hash + Objects.hashCode(this.orgDescription);
+        hash = 17 * hash + Objects.hashCode(this.contactId);
+        hash = 17 * hash + Objects.hashCode(this.addressId);
+        hash = 17 * hash + Objects.hashCode(this.selected);
         return hash;
     }
 
@@ -95,6 +105,9 @@ public class Organization {
             return false;
         }
         if (!Objects.equals(this.addressId, other.addressId)) {
+            return false;
+        }
+        if (!Objects.equals(this.selected, other.selected)) {
             return false;
         }
         return true;

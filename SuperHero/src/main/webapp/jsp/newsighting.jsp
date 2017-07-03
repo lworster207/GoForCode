@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Create New Super Hero</title>
+        <title>Create New Sighting</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
     </head>
@@ -55,26 +56,39 @@
     -->
     <div class="col-md-6">
         <h2>New Sighting</h2>
-        <form class="form-horizontal" 
+        <sf:form class="form-horizontal" 
               role="form" method="POST" 
+               modelAttribute="sighting"
               action="createSighting">
             <div class="form-group">
-                <label for="add-hero-id" class="col-md-4 control-label">Hero Name:</label>
+                <label for="heroId" class="col-md-4 control-label">Hero:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" name="add-hero-id" placeholder="Hero Name"/>
-                </div>
+                    
+                    <sf:select id="heroId" name="heroId" path="heroId">
+                        <c:forEach var="currentHero" items="${herosList}"> 
+                            <option value="${currentHero.heroId}">${currentHero.heroName}</option>
+                        </c:forEach>  
+                    </sf:select>
+                    
+                </div>              
             </div>
             <div class="form-group">
-                <label for="add-location-id" class="col-md-4 control-label">Location:</label>
+                <label for="locationId" class="col-md-4 control-label">Location:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" name="add-location-id" placeholder="Location"/>
+                    <sf:select id="locationId" name="locationId" path="locationId">
+                        <c:forEach var="currentLocation" items="${locationsList}"> 
+                            <option value="${currentLocation.locationId}">${currentLocation.locationName}</option>
+                        </c:forEach>  
+                                                 
+                    </sf:select>
+                   
                 </div>
             </div>
             
             <div class="form-group">
-                <label for="add-date" class="col-md-4 control-label">Date:</label>
+                <label for="date" class="col-md-4 control-label">Date:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" name="add-date" placeholder="Date"/>
+                    <sf:input type="text" name="date" path="date" placeholder="Date"/>
                 </div>
             </div>            
  
@@ -83,7 +97,7 @@
                     <input type="submit" class="btn btn-default" value="Add Sighting"/>
                 </div>
             </div>
-        </form>
+        </sf:form>
 
     </div> <!-- End col div -->
 

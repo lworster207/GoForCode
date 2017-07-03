@@ -29,7 +29,7 @@ public class HeroDaoDbImpl implements HeroDao {
     private static final String SQL_INSERT_ITEM
             = "insert into Hero "
             + "(Name, ContactId, Description) "
-            + "values (?,?, ?)";
+            + "values (?,?,?)";
 
     private static final String SQL_DELETE_ITEM
             = "delete from Hero where HeroId = ?";
@@ -107,6 +107,9 @@ public class HeroDaoDbImpl implements HeroDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Hero deleteHero(String heroId) {
         Hero removedHero = getHero(heroId);
+        removedHero.setContactId(null);
+        updateHero(heroId, removedHero);
+
         jdbcTemplate.update(SQL_DELETE_ITEM, heroId);
         return removedHero;
     }

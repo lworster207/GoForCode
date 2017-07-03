@@ -19,7 +19,9 @@ public interface HeroSuperpowerDao {
 
     public List<SuperPower> getSuperpowersByHero(String heroId);
 
-    void addSuperpowersForHero(String heroId, List<SuperPower> superPowers);
+    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers);
+
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds);
 
     void deleteByHero(String heroId);
 

@@ -16,15 +16,9 @@ import java.util.List;
  */
 public interface OrgMemberDao {
 
-    public OrgMember addOrgMember(String orgMemberId, OrgMember orgMember);
-
     public void deleteMembersByOrganization(String organizationId);
 
-    public OrgMember updateOrgMember(String orgMemberId, OrgMember orgMember);
-
-    public OrgMember getOrgMember(String orgMemberId);
-
-    public OrgMember deleteOrgMember(String orgMemberId);
+    public void deleteMembersByHero(String heroId);
 
     public List<OrgMember> getAllOrgMembers();
 
@@ -33,5 +27,7 @@ public interface OrgMemberDao {
     public List<Organization> getOrganizationsByHero(String heroId);
 
     public void truncateOrgMembers();
+
+    public List<Organization> updateOrganizationsForHeroByOrganizationIds(String heroId, List<String> organizationIds);
 
 }

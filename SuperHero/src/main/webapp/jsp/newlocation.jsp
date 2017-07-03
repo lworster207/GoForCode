@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -55,19 +56,23 @@
     -->
      <div class="col-md-6">
         <h2>New Location</h2>
-        <form class="form-horizontal" 
+
+<sf:form class="form-horizontal" 
               role="form" method="POST" 
+              modelAttribute="location"
               action="createLocation">
-             <div class="form-group">
-                <label for="add-loc-name" class="col-md-4 control-label">Location Name:</label>
+            <div class="form-group">
+                <label for="locationName" class="col-md-4 control-label">Location Name:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-loc-name"  name="add-loc-name" placeholder="Location Name"/>
+                    <sf:input type="text" class="form-control" id="locationName"  name="locationName"   path="locationName"  placeholder="Organization Name"/>
+                    <sf:errors path="locationName" cssclass="error"></sf:errors>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-loc-description" class="col-md-4 control-label">Description:</label>
+                <label for="locationDescription" class="col-md-4 control-label">Description:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-loc-description" name="add-loc-description" placeholder="Description"/>
+                    <sf:input type="text" class="form-control" id="locationDescription" name="locationDescription" path="locationDescription"  placeholder="Description"/>
+                    <sf:errors path="locationDescription" cssclass="error"></sf:errors>
                 </div>
             </div>
             <div class="form-group">
@@ -83,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-state" class="col-md-4 control-label">State:</label>
+                <label for="add-state" class="col-md-4 control-label">State/Province:</label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province"/>
                 </div>
@@ -94,14 +99,27 @@
                     <input type="text" class="form-control" id="add-postcode" name="add-postcode" placeholder="PostCode"/>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label for="latitude" class="col-md-4 control-label">Latitude:</label>
+                <div class="col-md-8">
+                    <sf:input type="text" class="form-control" id="latitude" name="latitude" path="latitude" placeholder="Latitude"/>
+                    <sf:errors path="latitude" cssclass="error"></sf:errors>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="longitude" class="col-md-4 control-label">Longitude:</label>
+                <div class="col-md-8">
+                    <sf:input type="text" class="form-control" id="longitude" name="longitude" path="longitude" placeholder="Longitude"/>
+                    <sf:errors path="longitude" cssclass="error"></sf:errors>
+                </div>
+            </div>    
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                     <input type="submit" class="btn btn-default" value="Add Location"/>
-                    
+                     <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>
-        </form>
+        </sf:form>
 
     </div> <!-- End col div -->
 
