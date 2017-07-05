@@ -33,4 +33,8 @@ public interface SightingsDao {
 
     public List<SightingLocationHero> getAllSightingsDetailed();
 
+    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId);
+
+    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId);
+
 }

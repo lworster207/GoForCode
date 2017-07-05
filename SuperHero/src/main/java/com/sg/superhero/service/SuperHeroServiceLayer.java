@@ -22,6 +22,10 @@ import java.util.List;
  */
 public interface SuperHeroServiceLayer {
 
+    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId);
+
+    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId);
+
     public List<SightingLocationHero> getAllSightingsDetailed();
 
     public List<Sighting> getSightingByLocation(String locationId);

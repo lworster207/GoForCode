@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Super Heros - Locations</title>
+        <title>Index Page</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
     </head>
@@ -15,11 +15,12 @@
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                  <li role="presentation">
+                  <li role="presentation" 
+                      class="active">
                         <a href="${pageContext.request.contextPath}/home">
                             Home
                         </a>
-                  </li>
+                  </li>                
                   <li role="presentation">
                       <a href="${pageContext.request.contextPath}/displayHerosPage">
                           Heros
@@ -36,75 +37,62 @@
                           Sightings
                       </a>
                   </li>
-                  <li role="presentation"  class="active">
+                  <li role="presentation">
                       <a href="${pageContext.request.contextPath}/displayLocations">
                           Locations
                       </a>
                   </li>
                 </ul>    
             </div>
-     <!--   </div> -->
-            <!-- Main Page Content Start -->
+                          <div class=""row>
+                              Welcome to the handy-dandy SuperHero Sightings site.<br>
+                              This site is currently tracking <c:out value="${totalSightings}"/> sightings of <c:out value="${totalHeros}"/> heros seen at <c:out value="${totalLocations}"/> locations.
+                          </div>
+                          <hr>
 <div class="row">
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
     -->
     <div class="col-md-10">
-        <h2>Locations</h2>
-<table id="locationTable" class="table table-hover">
+        <h2>Sightings</h2>
+<table id="sightingTable" class="table table-hover">
     <tr>
-        <th width="30%">Name</th>
-        <th width="30%">Description</th>
-        <th width="20%">Latitude</th>
-        <th width="20%">Longitude</th>
-        <th width="5%"></th>
-        <th width="5%"></th>
+        <th width="40%">Super Hero</th>
+        <th width="40%">Location</th>
+        <th width="20%">Date</th>
+
     </tr>
-<c:forEach var="currentLocation" items="${locationList}">
+    
+    
+
+<c:forEach var="currentSighting" items="${sightingsList}">
     <tr>
         <td>
-            <a href="editLocation?locationId=${currentLocation.locationId}">
-            <c:out value="${currentLocation.locationName}"/>
+            <a href="editHero?heroId=${currentSighting.heroId}">
+            <c:out value="${currentSighting.heroName}"/>
             </a>
         </td>
         <td>
-            <c:out value="${currentLocation.locationDescription}"/>
+             <a href="editLocation?locationId=${currentSighting.locationId}">          
+             <c:out value="${currentSighting.locationName}"/><c:out value="${currentSighting.locationDescription}"/>
+             </a>
         </td>
         <td>
-            <c:out value="${currentLocation.latitude}"/>
-        </td>
-        <td>
-            <c:out value="${currentLocation.longitude}"/>
-        </td>
-        <td>
-            <a href="editLocation?locationId=${currentLocation.locationId}">
-            Edit
-            </a>
-        </td>
-        <td>
-            <a href="deleteLocation?locationId=${currentLocation.locationId}">
-            Delete
+            <a href="editSighting?sightingId=${currentSighting.sightingId}">
+            <c:out value="${currentSighting.sightingDate}"/>
             </a>
         </td>
     </tr>
 </c:forEach>
 </table>                   
     </div> <!-- End col div -->
-    <!-- 
-        Add col to hold the new location form - have it take up the other 
-        half of the row
-    -->
-    <div class="col-md-2">
-        <a href="createNewLocation">Create New Location</a>
 
-    </div> <!-- End col div -->
 
-</div> <!-- End row div -->   
-        </div>
-            <!-- Main Page Content Stop -->    
-               <!-- Placed at the end of the document so the pages load faster -->
+</div> <!-- End row div -->           </div>
+        <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
+
     </body>
 </html>
+

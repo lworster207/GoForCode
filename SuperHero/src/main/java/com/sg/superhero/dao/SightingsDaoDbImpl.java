@@ -55,6 +55,18 @@ public class SightingsDaoDbImpl implements SightingsDao {
             = "select * from Sighting "
             + "where Date = ?";
 
+    private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_LOCATION
+            = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
+            + "join Hero h on h.HeroId = s.HeroId "
+            + "join Location l on l.LocationId = s.LocationId "
+            + "where l.LocationId = ?";
+
+    private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_HERO
+            = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
+            + "join Hero h on h.HeroId = s.HeroId "
+            + "join Location l on l.LocationId = s.LocationId "
+            + "where h.HeroId = ?";
+
     private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING
             = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
             + "join Hero h on h.HeroId = s.HeroId "
@@ -105,6 +117,18 @@ public class SightingsDaoDbImpl implements SightingsDao {
     public List<SightingLocationHero> getAllSightingsDetailed() {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING,
                 new SightingLocationHeroMapper());
+    }
+
+    @Override
+    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId) {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_HERO,
+                new SightingLocationHeroMapper(), heroId);
+    }
+
+    @Override
+    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId) {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_LOCATION,
+                new SightingLocationHeroMapper(), locationId);
     }
 
     @Override

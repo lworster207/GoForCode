@@ -55,6 +55,16 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
+    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId) {
+        return sightingDao.getSightingsByLocationDetailed(locationId);
+    }
+
+    @Override
+    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId) {
+        return sightingDao.getSightingsByHeroDetailed(heroId);
+    }
+
+    @Override
     public List<SightingLocationHero> getAllSightingsDetailed() {
         return sightingDao.getAllSightingsDetailed();
     }

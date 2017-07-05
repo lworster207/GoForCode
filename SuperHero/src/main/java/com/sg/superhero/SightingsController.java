@@ -35,11 +35,48 @@ public class SightingsController {
         this.service = service;
     }
 
+    @RequestMapping(value = "/displaySightingsByLocation", method = RequestMethod.POST)
+    public String displaySightingsByLocation(HttpServletRequest request, Model model) {
+        String locationId = request.getParameter("locationId");
+
+        List<SightingLocationHero> sightingsList = service.getSightingsByLocationDetailed(locationId);
+        model.addAttribute("sightingsList", sightingsList);
+
+        List<Hero> herosList = service.getAllHeroes();
+        model.addAttribute("herosList", herosList);
+
+        List<Location> locationsList = service.getAllLocations();
+        model.addAttribute("locationsList", locationsList);
+        return "sightings";
+    }
+
+    @RequestMapping(value = "/displaySightingsByHero", method = RequestMethod.POST)
+    public String displaySightingsByHero(HttpServletRequest request, Model model) {
+        String heroId = request.getParameter("heroId");
+
+        List<SightingLocationHero> sightingsList = service.getSightingsByHeroDetailed(heroId);
+        model.addAttribute("sightingsList", sightingsList);
+
+        List<Hero> herosList = service.getAllHeroes();
+        model.addAttribute("herosList", herosList);
+
+        List<Location> locationsList = service.getAllLocations();
+        model.addAttribute("locationsList", locationsList);
+        return "sightings";
+    }
+
     @RequestMapping(value = "/displaySightings", method = RequestMethod.GET)
     public String displaySightings(Model model) {
         //model.put("message", "Hello from the controller");
         List<SightingLocationHero> sightingsList = service.getAllSightingsDetailed();
         model.addAttribute("sightingsList", sightingsList);
+
+        List<Hero> herosList = service.getAllHeroes();
+        model.addAttribute("herosList", herosList);
+
+        List<Location> locationsList = service.getAllLocations();
+        model.addAttribute("locationsList", locationsList);
+
         return "sightings";
     }
 
@@ -75,4 +112,5 @@ public class SightingsController {
         //model.put("message", "Hello from the controller");
         return "redirect:displaySightings";
     }
+
 }

@@ -16,7 +16,7 @@
             <div class="navbar">
                 <ul class="nav nav-tabs">
                   <li role="presentation">
-                        <a href="${pageContext.request.contextPath}/index.jsp">
+                        <a href="${pageContext.request.contextPath}/home">
                             Home
                         </a>
                   </li>
@@ -99,7 +99,38 @@
     -->
     <div class="col-md-2">
         <a href="createNewSighting">New Sighting</a>
+        <c:if test="${herosList.size() > 0}"  >
+            <form action="displaySightingsByHero" method="POST">
+            <div class="form-group">
+                <label for="heroFilter" class="col-md-4 control-label">Heros:</label>
+                <div class="col-md-8">
+                    <select class="form-control" id="heroId" name="heroId">
+                        <c:forEach var="currentHero" items="${herosList}"> 
+                            <option value="${currentHero.heroId}">${currentHero.heroName}</option>
+                        </c:forEach>                          
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-default" value="Filter By Hero"/>
+            </div> 
+            </form>
+        </c:if>
 
+        <c:if test="${locationsList.size() > 0}"  >
+            <form action="displaySightingsByLocation" method="POST">
+            <div class="form-group">
+                <label for="heroFilter" class="col-md-4 control-label">Heros:</label>
+                <div class="col-md-8">
+                    <select class="form-control" id="locationId" name="locationId">
+                        <c:forEach var="currentLocation" items="${locationsList}"> 
+                            <option value="${currentLocation.locationId}">${currentLocation.locationName}(${currentLocation.locationDescription})</option>
+                        </c:forEach>                          
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-default" value="Filter By Location"/>
+            </div> 
+            </form>
+        </c:if>
+        
     </div> <!-- End col div -->
 
 </div> <!-- End row div -->   
