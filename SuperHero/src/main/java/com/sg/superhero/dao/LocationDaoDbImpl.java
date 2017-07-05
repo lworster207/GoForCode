@@ -78,7 +78,8 @@ public class LocationDaoDbImpl implements LocationDao {
 
     @Override
     public Location getLocation(String locationId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.queryForObject(SQL_SELECT_LOCATION,
+                new LocationMapper(), locationId);
     }
 
     @Override

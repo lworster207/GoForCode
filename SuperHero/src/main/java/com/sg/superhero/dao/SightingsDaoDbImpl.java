@@ -6,6 +6,8 @@
 package com.sg.superhero.dao;
 
 import com.sg.superhero.model.Sighting;
+import com.sg.superhero.model.SightingLocationHero;
+import com.sg.superhero.model.SightingLocationHero.SightingLocationHeroMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -41,6 +43,22 @@ public class SightingsDaoDbImpl implements SightingsDao {
 
     private static final String SQL_SELECT_ALL_SIGHTINGS
             = "select * from Sighting";
+
+    private static final String SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION
+            = "select * from Sighting "
+            + "where SightingId = ?";
+
+    private static final String SQL_SELECT_ALL_SIGHTINGS_BY_HERO
+            = "select * from Sighting "
+            + "where HeroId = ?";
+    private static final String SQL_SELECT_ALL_SIGHTINGS_BY_DATE
+            = "select * from Sighting "
+            + "where Date = ?";
+
+    private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING
+            = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
+            + "join Hero h on h.HeroId = s.HeroId "
+            + "join Location l on l.LocationId = s.LocationId ";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -81,6 +99,30 @@ public class SightingsDaoDbImpl implements SightingsDao {
     public List<Sighting> getAllSightings() {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS,
                 new SightingMapper());
+    }
+
+    @Override
+    public List<SightingLocationHero> getAllSightingsDetailed() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING,
+                new SightingLocationHeroMapper());
+    }
+
+    @Override
+    public List<Sighting> getSightingByLocation(String locationId) {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION,
+                new SightingMapper(), locationId);
+    }
+
+    @Override
+    public List<Sighting> getSightingsByHero(String heroId) {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_BY_HERO,
+                new SightingMapper(), heroId);
+    }
+
+    @Override
+    public List<Sighting> getSightingsByDate(String date) {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_BY_DATE,
+                new SightingMapper(), date);
     }
 
     public static final class SightingMapper implements RowMapper<Sighting> {

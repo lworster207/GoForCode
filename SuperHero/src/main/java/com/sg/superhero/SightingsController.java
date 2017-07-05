@@ -8,6 +8,7 @@ package com.sg.superhero;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Location;
 import com.sg.superhero.model.Sighting;
+import com.sg.superhero.model.SightingLocationHero;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,7 @@ public class SightingsController {
     @RequestMapping(value = "/displaySightings", method = RequestMethod.GET)
     public String displaySightings(Model model) {
         //model.put("message", "Hello from the controller");
-        List<Sighting> sightingsList = service.getAllSightings();
+        List<SightingLocationHero> sightingsList = service.getAllSightingsDetailed();
         model.addAttribute("sightingsList", sightingsList);
         return "sightings";
     }

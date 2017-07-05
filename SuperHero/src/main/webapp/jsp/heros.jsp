@@ -55,21 +55,17 @@
         
 <table id="heroTable" class="table table-hover">
     <tr>
-        <th width="20%">Super Hero Name</th>
-        <th width="20%">Super Power</th>
-        <th width="30%">Description</th>       
+        <th width="30%">Super Hero Name</th>
+        <th width="40%">Description</th>       
         <th width="15%"></th>
         <th width="15%"></th>
     </tr>
 <c:forEach var="currentHero" items="${heroList}">
     <tr>
         <td>
-            <a href="viewHero?heroId=${currentHero.heroId}">
+            <a href="editHero?heroId=${currentHero.heroId}">
             <c:out value="${currentHero.heroName}"/>
             </a>
-        </td>
-        <td>
-            <c:out value="${currentHero.heroId}"/>
         </td>
         <td>
             <c:out value="${currentHero.description}"/>

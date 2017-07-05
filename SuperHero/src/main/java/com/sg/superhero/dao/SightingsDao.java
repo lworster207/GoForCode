@@ -6,6 +6,7 @@
 package com.sg.superhero.dao;
 
 import com.sg.superhero.model.Sighting;
+import com.sg.superhero.model.SightingLocationHero;
 import java.util.List;
 
 /**
@@ -23,4 +24,13 @@ public interface SightingsDao {
     public Sighting getSighting(String sightingId);
 
     public List<Sighting> getAllSightings();
+
+    public List<Sighting> getSightingByLocation(String locationId);
+
+    public List<Sighting> getSightingsByHero(String heroId);
+
+    public List<Sighting> getSightingsByDate(String date);
+
+    public List<SightingLocationHero> getAllSightingsDetailed();
+
 }

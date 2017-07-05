@@ -21,6 +21,7 @@ import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Location;
 import com.sg.superhero.model.Organization;
 import com.sg.superhero.model.Sighting;
+import com.sg.superhero.model.SightingLocationHero;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,6 +55,26 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
+    public List<SightingLocationHero> getAllSightingsDetailed() {
+        return sightingDao.getAllSightingsDetailed();
+    }
+
+    @Override
+    public List<Sighting> getSightingByLocation(String locationId) {
+        return sightingDao.getSightingByLocation(locationId);
+    }
+
+    @Override
+    public List<Sighting> getSightingsByHero(String heroId) {
+        return sightingDao.getSightingsByHero(heroId);
+    }
+
+    @Override
+    public List<Sighting> getSightingsByDate(String date) {
+        return sightingDao.getSightingsByDate(date);
+    }
+
+    @Override
     public Sighting addSighting(String sightingId, Sighting sighting) {
         return sightingDao.addSighting(sightingId, sighting);
     }
@@ -75,6 +96,11 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
             location.setAddressId(address.getAddressId());
         }
         return locationDao.addLocation(locationId, location);
+    }
+
+    @Override
+    public Location getLocation(String locationId) {
+        return locationDao.getLocation(locationId);
     }
 
     @Override

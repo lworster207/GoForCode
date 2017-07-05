@@ -12,6 +12,7 @@ import com.sg.superhero.model.HeroPower;
 import com.sg.superhero.model.Location;
 import com.sg.superhero.model.Organization;
 import com.sg.superhero.model.Sighting;
+import com.sg.superhero.model.SightingLocationHero;
 import com.sg.superhero.model.SuperPower;
 import java.util.List;
 
@@ -21,11 +22,21 @@ import java.util.List;
  */
 public interface SuperHeroServiceLayer {
 
+    public List<SightingLocationHero> getAllSightingsDetailed();
+
+    public List<Sighting> getSightingByLocation(String locationId);
+
+    public List<Sighting> getSightingsByHero(String heroId);
+
+    public List<Sighting> getSightingsByDate(String date);
+
     public Sighting addSighting(String sightingId, Sighting sighting);
 
     public List<Sighting> getAllSightings();
 
     public Location addLocation(String locationId, Location location, Address address);
+
+    public Location getLocation(String locationId);
 
     public List<Location> getAllLocations();
 

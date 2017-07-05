@@ -31,6 +31,19 @@ public class LocationController {
         this.service = service;
     }
 
+    @RequestMapping(value = "/editLocation", method = RequestMethod.GET)
+    public String editLocation(HttpServletRequest request, Model model) {
+        Location location = service.getLocation(request.getParameter("locationId"));
+
+        model.addAttribute("location", location);
+        Address address;
+        if (location.getAddressId() != null && !location.getAddressId().equals("")) {
+            address = service.getAddress(location.getAddressId());
+            model.addAttribute("address", address);
+        }
+        return "editlocation";
+    }
+
     @RequestMapping(value = "/displayLocations", method = RequestMethod.GET)
     public String displayLocations(Model model) {
         //model.put("message", "Hello from the controller");

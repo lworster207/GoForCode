@@ -53,26 +53,22 @@
         <h2>Locations</h2>
 <table id="locationTable" class="table table-hover">
     <tr>
-        <th width="20%">Name</th>
-        <th width="20%">Description</th>
-        <th width="40%">Address</th>
-        <th width="10%">Latitude</th>
-        <th width="10%">Longitude</th>
+        <th width="30%">Name</th>
+        <th width="30%">Description</th>
+        <th width="20%">Latitude</th>
+        <th width="20%">Longitude</th>
         <th width="5%"></th>
         <th width="5%"></th>
     </tr>
 <c:forEach var="currentLocation" items="${locationList}">
     <tr>
         <td>
-            <a href="displayLocationDetails?locationId=${currentLocation.locationId}">
+            <a href="editLocation?locationId==${currentLocation.locationId}">
             <c:out value="${currentLocation.locationName}"/>
             </a>
         </td>
         <td>
             <c:out value="${currentLocation.locationDescription}"/>
-        </td>
-        <td>
-            <c:out value="${currentLocation.addressId}"/>
         </td>
         <td>
             <c:out value="${currentLocation.latitude}"/>
@@ -81,7 +77,7 @@
             <c:out value="${currentLocation.longitude}"/>
         </td>
         <td>
-            <a href="displayEditLocationForm?locationId=${currentLocation.locationId}">
+            <a href="editLocation?locationId=${currentLocation.locationId}">
             Edit
             </a>
         </td>

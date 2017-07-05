@@ -4,6 +4,7 @@ import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Contact;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
+import com.sg.superhero.model.Sighting;
 import com.sg.superhero.model.SuperPower;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.ArrayList;
@@ -58,6 +59,57 @@ public class HeroController {
 
         service.deleteHero(heroId, contactId);
         return "redirect:displayHerosPage";
+    }
+
+    @RequestMapping(value = "/viewHero", method = RequestMethod.GET)
+    public String viewHero(HttpServletRequest request, Model model) {
+
+        Contact contact;
+        Address address;
+
+        String heroId = request.getParameter("heroId");
+        Hero hero = service.getHero(heroId);
+
+        Map<String, SuperPower> powersList = new HashMap<>();
+        Map<String, Organization> organizationsList = new HashMap<>();
+        Map<String, Sighting> sightingsList = new HashMap<>();
+
+        List<SuperPower> heroSuperPowers = service.getSuperPowersByHero(heroId);
+
+        for (SuperPower superPower : heroSuperPowers) {
+            powersList.put(superPower.getSuperPowerId(), superPower);
+        }
+        // set the current super powers to selected
+
+        List<Organization> heroOrganizationList = service.getOrganizationsByHero(heroId);
+
+        for (Organization organization : heroOrganizationList) {
+            organizationsList.put(organization.getOrganizationId(), organization);
+        }
+
+        List<Sighting> heroSightingsList = service.getSightingsByHero(heroId);
+        for (Sighting sighting : heroSightingsList) {
+            sightingsList.put(sighting.getSightingId(), sighting);
+        }
+
+        contact = service.getContact(hero.getContactId());
+        if (contact != null) {
+
+            //model.addAttribute("contact", hero.getContact());
+            model.addAttribute("contact", contact);
+            if (contact.getAddressId() != null) {
+                address = service.getAddress(contact.getAddressId());
+                if (address != null) {
+                    model.addAttribute("address", address);
+                }
+            }
+        }
+
+        model.addAttribute("hero", hero);
+        model.addAttribute("powersList", powersList.values());
+        model.addAttribute("organizationsList", organizationsList.values());
+        model.addAttribute("sightingsList", sightingsList.values());
+        return "viewhero";
     }
 
     @RequestMapping(value = "/editHero", method = RequestMethod.GET)

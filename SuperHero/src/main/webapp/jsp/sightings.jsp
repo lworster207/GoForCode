@@ -59,21 +59,28 @@
         <th width="10%"></th>
         <th width="10%"></th>
     </tr>
+    
+    
+
 <c:forEach var="currentSighting" items="${sightingsList}">
     <tr>
         <td>
-            <a href="displaySightingDetails?sightingId=${currentSighting.sightingId}">
-            <c:out value="${currentSighting.heroId}"/>
+            <a href="editHero?heroId=${currentSighting.heroId}">
+            <c:out value="${currentSighting.heroName}"/>
             </a>
         </td>
         <td>
-            <c:out value="${currentSighting.locationId}"/>
+             <a href="editLocation?locationId=${currentSighting.locationId}">          
+             <c:out value="${currentSighting.locationName}"/><c:out value="${currentSighting.locationDescription}"/>
+             </a>
         </td>
         <td>
-            <c:out value="${currentSighting.date}"/>
+            <a href="editSighting?sightingId=${currentSighting.sightingId}">
+            <c:out value="${currentSighting.sightingDate}"/>
+            </a>
         </td>
         <td>
-            <a href="displayEditSightingForm?sightingId=${currentSighting.sightingId}">
+            <a href="editSighting?sightingId=${currentSighting.sightingId}">
             Edit
             </a>
         </td>
