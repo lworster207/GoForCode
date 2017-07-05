@@ -22,6 +22,8 @@ import java.util.List;
  */
 public interface SuperHeroServiceLayer {
 
+    public List<SightingLocationHero> getSightingsByDateDetailed(String date);
+
     public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId);
 
     public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId);
@@ -36,7 +38,11 @@ public interface SuperHeroServiceLayer {
 
     public Sighting addSighting(String sightingId, Sighting sighting);
 
+    public Sighting getSighting(String sightingId);
+
     public List<Sighting> getAllSightings();
+
+    public Sighting updateSighting(String sightingId, Sighting sighting);
 
     public Location addLocation(String locationId, Location location, Address address);
 

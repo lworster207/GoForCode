@@ -24,6 +24,15 @@ public class Location {
 
     private double longitude;
 
+    public Location() {
+
+    }
+
+    public Location(String locationId, String locationName) {
+        this.locationId = locationId;
+        this.locationName = locationName;
+    }
+
     public String getLocationId() {
         return locationId;
     }

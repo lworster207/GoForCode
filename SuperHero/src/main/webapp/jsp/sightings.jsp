@@ -118,7 +118,7 @@
         <c:if test="${locationsList.size() > 0}"  >
             <form action="displaySightingsByLocation" method="POST">
             <div class="form-group">
-                <label for="heroFilter" class="col-md-4 control-label">Heros:</label>
+                <label for="heroFilter" class="col-md-4 control-label">Locations:</label>
                 <div class="col-md-8">
                     <select class="form-control" id="locationId" name="locationId">
                         <c:forEach var="currentLocation" items="${locationsList}"> 
@@ -130,7 +130,26 @@
             </div> 
             </form>
         </c:if>
-        
+        <c:if test="${dateList.size() > 0}"  >
+            <form action="displaySightingsByDate" method="POST">
+            <div class="form-group">
+                <label for="heroFilter" class="col-md-4 control-label">Dates:</label>
+                <div class="col-md-8">
+                    <select class="form-control" id="date" name="date">
+                        <c:forEach var="currentDate" items="${dateList}"> 
+                            <option value="${currentDate}">${currentDate}</option>
+                        </c:forEach>                          
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-default" value="Filter By Date"/>
+            </div> 
+            </form>
+        </c:if> 
+            <form action="displaySightings" method="GET">
+            <div class="form-group">
+                <input type="submit" class="btn btn-default" value="Show All Sightings"/>
+            </div> 
+            </form>
     </div> <!-- End col div -->
 
 </div> <!-- End row div -->   

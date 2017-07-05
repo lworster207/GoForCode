@@ -37,4 +37,6 @@ public interface SightingsDao {
 
     public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId);
 
+    public List<SightingLocationHero> getSightingsByDateDetailed(String date);
+
 }

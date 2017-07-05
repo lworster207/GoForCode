@@ -23,6 +23,11 @@ public class Hero {
 
     private String description;
 
+    public Hero(String heroId, String heroName) {
+        this.heroId = heroId;
+        this.heroName = heroName;
+    }
+
     public Hero(String heroName, String contactId, String description) {
         this.heroName = heroName;
         this.contactId = contactId;

@@ -55,6 +55,11 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
+    public List<SightingLocationHero> getSightingsByDateDetailed(String date) {
+        return sightingDao.getSightingsByDateDetailed(date);
+    }
+
+    @Override
     public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId) {
         return sightingDao.getSightingsByLocationDetailed(locationId);
     }
@@ -90,8 +95,18 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
+    public Sighting getSighting(String sightingId) {
+        return sightingDao.getSighting(sightingId);
+    }
+
+    @Override
     public List<Sighting> getAllSightings() {
         return sightingDao.getAllSightings();
+    }
+
+    @Override
+    public Sighting updateSighting(String sightingId, Sighting sighting) {
+        return sightingDao.updateSighting(sightingId, sighting);
     }
 
     @Override

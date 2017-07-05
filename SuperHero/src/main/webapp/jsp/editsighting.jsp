@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Super Heros</title>
+        <title>Create New Sighting</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
     </head>
@@ -20,7 +21,7 @@
                             Home
                         </a>
                   </li>
-                  <li role="presentation" class="active">
+                  <li role="presentation" >
                       <a href="${pageContext.request.contextPath}/displayHerosPage">
                           Heros
                       </a>
@@ -31,7 +32,7 @@
                           Organizations
                       </a>
                   </li>
-                  <li role="presentation">
+                  <li role="presentation" class="active">
                       <a href="${pageContext.request.contextPath}/displaySightings">
                           Sightings
                       </a>
@@ -49,67 +50,56 @@
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
     -->
-    <div class="col-md-10">
-        <h2>Super Heros</h2>
-        
-        
-<table id="heroTable" class="table table-hover">
-    <tr>
-        <th width="30%">Super Hero Name</th>
-        <th width="40%">Description</th>       
-        <th width="15%"></th>
-        <th width="15%"></th>
-    </tr>
-<c:forEach var="currentHero" items="${heroList}">
-    <tr>
-        <td>
-            <a href="editHero?heroId=${currentHero.heroId}">
-            <c:out value="${currentHero.heroName}"/>
-            </a>
-        </td>
-        <td>
-            <c:out value="${currentHero.description}"/>
-        </td>
-        <td>
-            <a href="editHero?heroId=${currentHero.heroId}">
-            Edit
-            </a>
-        </td>
-        <td>
-            <a href="deleteHero?heroId=${currentHero.heroId}&contactId=${currentHero.contactId}">
-            Delete
-            </a>
-        </td>
-    </tr>
-</c:forEach>
-</table>                   
-    </div> <!-- End col div -->
     <!-- 
-        Add col to hold the new hero form - have it take up the other 
+        Add col to hold the new contact form - have it take up the other 
         half of the row
     -->
-    <div class="col-md-2">
-        <a href="createNewHero">Create New Super Hero</a>
-        <c:if test="${organizationList.size() > 0}"  >
-            <form action="displayHerosByOrganization" method="POST">
+    <div class="col-md-6">
+        <h2>Edit Sighting</h2>
+        <sf:form class="form-horizontal" 
+              role="form" method="POST" 
+               modelAttribute="sighting"
+              action="updateSighting">
+             <sf:hidden path="sightingId" id="sightingId" value="${sighting.sightingId}" />
             <div class="form-group">
-                <label for="heroFilter" class="col-md-4 control-label">Organizations:</label>
+                <label for="heroId" class="col-md-4 control-label">Hero:</label>
                 <div class="col-md-8">
-                    <select class="form-control" id="organizationId" name="organizationId">
-                        <c:forEach var="currentOrganization" items="${organizationList}"> 
-                            <option value="${currentOrganization.organizationId}">${currentOrganization.orgName}</option>
-                        </c:forEach>                          
-                    </select>
-                </div>
-                <input type="submit" class="btn btn-default" value="Filter By Organization"/>
-            </div> 
-            </form>
-        </c:if>
-            <form action="displayHerosPage" method="GET">
+                    
+                    <sf:select id="heroId" name="heroId" path="heroId">
+                        <c:forEach var="currentHero" items="${herosList}"> 
+                            <option value="${currentHero.heroId}" ${currentHero.selected}>${currentHero.heroName}</option>
+                        </c:forEach>  
+                    </sf:select>
+                    
+                </div>              
+            </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-default" value="Show All Heros"/>
-            </div> 
-            </form>
+                <label for="locationId" class="col-md-4 control-label">Location:</label>
+                <div class="col-md-8">
+                    <sf:select id="locationId" name="locationId" path="locationId">
+                        <c:forEach var="currentLocation" items="${locationsList}"> 
+                            <option value="${currentLocation.locationId}" ${currentLocation.selected}>${currentLocation.locationName}</option>
+                        </c:forEach>  
+                                                 
+                    </sf:select>
+                   
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="date" class="col-md-4 control-label">Date:</label>
+                <div class="col-md-8">
+                    <sf:input type="text" name="date" path="date" placeholder="Date"  />
+                </div>
+            </div>            
+ 
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" class="btn btn-default" value="Update Sighting"/>
+                </div>
+            </div>
+        </sf:form>
+
     </div> <!-- End col div -->
 
 </div> <!-- End row div -->   
@@ -118,8 +108,6 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
-        
 
     </body>
 </html>

@@ -37,7 +37,6 @@ public class SightingsDaoDbImpl implements SightingsDao {
             = "update Sighting set "
             + "locationId = ?, "
             + "heroId = ?, "
-            + "AddressId = ?, "
             + "Date = ? "
             + "where SightingId = ?";
 
@@ -66,6 +65,12 @@ public class SightingsDaoDbImpl implements SightingsDao {
             + "join Hero h on h.HeroId = s.HeroId "
             + "join Location l on l.LocationId = s.LocationId "
             + "where h.HeroId = ?";
+
+    private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_DATE
+            = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
+            + "join Hero h on h.HeroId = s.HeroId "
+            + "join Location l on l.LocationId = s.LocationId "
+            + "where s.Date = ?";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING
             = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
@@ -99,12 +104,19 @@ public class SightingsDaoDbImpl implements SightingsDao {
 
     @Override
     public Sighting updateSighting(String sightingId, Sighting sighting) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_SIGHTING,
+                sighting.getLocationId(),
+                sighting.getHeroId(),
+                sighting.getDate(), sighting.getSightingId());
+        return getSighting(sightingId);
     }
 
     @Override
     public Sighting getSighting(String sightingId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        return jdbcTemplate.queryForObject(SQL_SELECT_SIGHTING,
+                new SightingMapper(), sightingId);
+
     }
 
     @Override
@@ -117,6 +129,12 @@ public class SightingsDaoDbImpl implements SightingsDao {
     public List<SightingLocationHero> getAllSightingsDetailed() {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING,
                 new SightingLocationHeroMapper());
+    }
+
+    @Override
+    public List<SightingLocationHero> getSightingsByDateDetailed(String date) {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_DATE,
+                new SightingLocationHeroMapper(), date);
     }
 
     @Override
@@ -154,6 +172,7 @@ public class SightingsDaoDbImpl implements SightingsDao {
         public Sighting mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Sighting sighting = new Sighting();
+            sighting.setSightingId(rs.getString("SightingId"));
             sighting.setLocationId(rs.getString("LocationId"));
             sighting.setHeroId(rs.getString("HeroId"));
             sighting.setDate(rs.getString("Date"));

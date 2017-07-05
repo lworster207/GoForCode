@@ -61,7 +61,7 @@
 <c:forEach var="currentOrganization" items="${orgsList}">
     <tr>
         <td>
-            <a href="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
+            <a href="viewOrganization?organizationId=${currentOrganization.organizationId}">
             <c:out value="${currentOrganization.orgName}"/>
             </a>
         </td>

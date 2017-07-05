@@ -6,6 +6,7 @@
 package com.sg.superhero;
 
 import com.sg.superhero.model.Address;
+import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.List;
@@ -29,6 +30,21 @@ public class OrganizationController {
 
     public OrganizationController(SuperHeroServiceLayer service) {
         this.service = service;
+    }
+
+    @RequestMapping(value = "/viewOrganization", method = RequestMethod.GET)
+    public String viewOrganization(HttpServletRequest request, Model model) {
+        String organizationId = request.getParameter("organizationId");
+
+        Organization organization = service.getOrganization(organizationId);
+        model.addAttribute("organization", organization);
+
+        List<Hero> heroList = service.getHerosByOrganization(organizationId);
+
+        model.addAttribute("heroList", heroList);
+
+        // service.deleteOrganization(organizationId,addressId);
+        return "vieworganization";
     }
 
     @RequestMapping(value = "/deleteOrganization", method = RequestMethod.GET)

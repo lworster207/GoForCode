@@ -32,11 +32,32 @@ public class HeroController {
 
     }
 
+    @RequestMapping(value = "/displayHerosByOrganization", method = RequestMethod.POST)
+    public String displayHerosByOrganization(HttpServletRequest request, Model model) {
+
+        List<Hero> heroList = service.getHerosByOrganization(request.getParameter("organizationId"));
+        // List<HeroPower> heroList = service.getAllHeroesAndPowers();
+        model.addAttribute("heroList", heroList);
+
+        List<Organization> organizationList = service.getAllOrganizations();
+        if (organizationList != null) {
+            model.addAttribute("organizationList", organizationList);
+
+        }
+        return "heros";
+    }
+
     @RequestMapping(value = "/displayHerosPage", method = RequestMethod.GET)
     public String displayHeros(Model model) {
         List<Hero> heroList = service.getAllHeroes();
         // List<HeroPower> heroList = service.getAllHeroesAndPowers();
         model.addAttribute("heroList", heroList);
+
+        List<Organization> organizationList = service.getAllOrganizations();
+        if (organizationList != null) {
+            model.addAttribute("organizationList", organizationList);
+
+        }
         return "heros";
     }
 
