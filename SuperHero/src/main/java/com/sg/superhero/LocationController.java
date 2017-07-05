@@ -91,4 +91,49 @@ public class LocationController {
         service.addLocation("0", location, newAddress);
         return "redirect:displayLocations";
     }
+
+    @RequestMapping(value = "/updateLocation", method = RequestMethod.POST)
+    public String updateLocation(@Valid @ModelAttribute("location") Location location, BindingResult result,
+            HttpServletRequest request, Model model) {
+        //model.put("message", "Hello from the controller");
+
+        if (result.hasErrors()) {
+            model.addAttribute("location", location);
+            return "editLocation";
+        }
+
+        Address newAddress;
+        String addressId;
+
+        if (location.getAddressId() == null || location.getAddressId().equals("")) {
+
+            if (request.getParameter("add-address").equals("")
+                    || request.getParameter("add-city").equals("")
+                    || request.getParameter("add-state").equals("")
+                    || request.getParameter("add-postcode").equals("")) {
+                newAddress = null;
+            } else {
+                newAddress = new Address(
+                        null,
+                        request.getParameter("add-address"),
+                        request.getParameter("add-city"),
+                        request.getParameter("add-state"),
+                        request.getParameter("add-postcode")
+                );
+
+            }
+        } else {
+            newAddress = new Address(
+                    location.getAddressId(),
+                    request.getParameter("add-address"),
+                    request.getParameter("add-city"),
+                    request.getParameter("add-state"),
+                    request.getParameter("add-postcode")
+            );
+        }
+
+        service.updateLocation(location.getLocationId(), location, newAddress);
+        return "redirect:displayLocations";
+    }
+
 }

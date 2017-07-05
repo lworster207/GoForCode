@@ -99,6 +99,21 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
+    public Location updateLocation(String locationId, Location location, Address address) {
+        if (address == null) {
+            location.setAddressId(null);
+        } else {
+            if (address.getAddressId() != null && !address.getAddressId().equals("")) {
+                addressDao.updateAddress(address.getAddressId(), address);
+            } else {
+                addressDao.addAddress("0", address);
+                location.setAddressId(address.getAddressId());
+            }
+        }
+        return locationDao.updateLocation(location.getLocationId(), location);
+    }
+
+    @Override
     public Location getLocation(String locationId) {
         return locationDao.getLocation(locationId);
     }

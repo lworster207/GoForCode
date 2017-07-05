@@ -61,6 +61,8 @@
               role="form" method="POST" 
               modelAttribute="location"
               action="updateLocation">
+     <sf:hidden path="locationId" id="locationId" name="locationId" value="${location.locationId}" />
+       <sf:hidden path="addressId" id="addressId" name="addressId" value="${location.addressId}" />
             <div class="form-group">
                 <label for="locationName" class="col-md-4 control-label">Location Name:</label>
                 <div class="col-md-8">
@@ -115,7 +117,7 @@
             </div>    
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-default" value="Add Location"/>
+                    <input type="submit" class="btn btn-default" value="Update Location"/>
                      <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>

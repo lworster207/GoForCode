@@ -36,6 +36,8 @@ public interface SuperHeroServiceLayer {
 
     public Location addLocation(String locationId, Location location, Address address);
 
+    public Location updateLocation(String locationId, Location location, Address address);
+
     public Location getLocation(String locationId);
 
     public List<Location> getAllLocations();

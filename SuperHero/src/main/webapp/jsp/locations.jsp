@@ -63,7 +63,7 @@
 <c:forEach var="currentLocation" items="${locationList}">
     <tr>
         <td>
-            <a href="editLocation?locationId==${currentLocation.locationId}">
+            <a href="editLocation?locationId=${currentLocation.locationId}">
             <c:out value="${currentLocation.locationName}"/>
             </a>
         </td>

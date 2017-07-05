@@ -68,12 +68,21 @@ public class LocationDaoDbImpl implements LocationDao {
 
     @Override
     public Location deleteLocation(String locationId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Location location = getLocation(locationId);
+        jdbcTemplate.update(SQL_DELETE_LOCATION, locationId);
+        return location;
     }
 
     @Override
     public Location updateLocation(String locationId, Location location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_LOCATION,
+                location.getLocationName(),
+                location.getLocationDescription(),
+                location.getAddressId(),
+                location.getLatitude(),
+                location.getLongitude(),
+                location.getLocationId());
+        return getLocation(locationId);
     }
 
     @Override
