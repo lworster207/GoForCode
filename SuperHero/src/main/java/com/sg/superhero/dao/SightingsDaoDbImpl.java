@@ -99,7 +99,13 @@ public class SightingsDaoDbImpl implements SightingsDao {
 
     @Override
     public Sighting deleteSighting(String sightingId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Sighting removedSighting = getSighting(sightingId);
+        //removedSighting.setHeroId(null);
+        //removedSighting.setLocationId(null);
+        //updateSighting(sightingId, removedSighting);
+
+        jdbcTemplate.update(SQL_DELETE_SIGHTING, sightingId);
+        return removedSighting;
     }
 
     @Override

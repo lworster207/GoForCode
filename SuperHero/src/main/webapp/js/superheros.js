@@ -13,6 +13,15 @@ $(document).ready(function () {
         //window.location = "http://localhost:8080/SuperHero/heros.jsp";
         history.back();
     });
+    
+    $('#submit').click(function ()  {  
+        $('#date').value($('#datepick').value());
+        alert($('#datepick').value());
+        //window.location = "http://localhost:8080/SuperHero/heros.jsp";
+       
+    });
+        
+    
 });
 
 function goBack() {
@@ -29,3 +38,4 @@ function goBack() {
         }
     });
 }
+

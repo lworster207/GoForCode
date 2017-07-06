@@ -8,9 +8,13 @@
     <head>
         <title>Create New Sighting</title>
         <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">  
+ 
+       
     </head>
     <body>
+        
+        
         <div class="container">
             <h1>Superhero Sightings </h1>
             <hr/>
@@ -86,19 +90,22 @@
             </div>
             
             <div class="form-group">
-                <label for="date" class="col-md-4 control-label">Date:</label>
-                <div class="col-md-8">
-                    <sf:input type="text" name="date" path="date" placeholder="Date"/>
-                </div>
+                <label for="datepick" class="col-md-4 control-label">Date:</label>
+                <sf:hidden id="date" name="date" path="date" />
+                <input type="date" class="form-control" id="datepick" name="datepick" path="datepick"  placeholder="date">
+                
             </div>            
  
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-default" value="Add Sighting"/>
+                    <input type="submit" class="btn btn-default" id="submit" name="submit" value="Add Sighting"/>
                 </div>
             </div>
         </sf:form>
+        <form>
 
+           
+        </form>
     </div> <!-- End col div -->
 
 </div> <!-- End row div -->   
@@ -107,6 +114,7 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
 
     </body>
 </html>

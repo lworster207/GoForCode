@@ -9,6 +9,7 @@ import com.sg.superhero.model.Location;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
@@ -86,7 +87,7 @@ public class LocationDaoDbImpl implements LocationDao {
     }
 
     @Override
-    public Location getLocation(String locationId) {
+    public Location getLocation(String locationId) throws EmptyResultDataAccessException {
         return jdbcTemplate.queryForObject(SQL_SELECT_LOCATION,
                 new LocationMapper(), locationId);
     }

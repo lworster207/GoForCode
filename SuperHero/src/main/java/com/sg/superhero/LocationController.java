@@ -7,10 +7,13 @@ package com.sg.superhero;
 
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Location;
+import com.sg.superhero.service.LocationServiceLayer;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,13 +30,29 @@ public class LocationController {
 
     private SuperHeroServiceLayer service;
 
+    @Inject
+    private LocationServiceLayer locationService;
+
     public LocationController(SuperHeroServiceLayer service) {
         this.service = service;
     }
 
+    @RequestMapping(value = "/deleteLocation", method = RequestMethod.GET)
+    public String deleteLocation(HttpServletRequest request, Model model) {
+        try {
+            locationService.deleteLocation(request.getParameter("locationId"));
+            return "redirect:displayLocations";
+        } catch (DataIntegrityViolationException e) {
+            List<Location> locationList = locationService.getAllLocations();
+            model.addAttribute("locationList", locationList);
+            model.addAttribute("error", "Location is referenced in one or more sightings and cannot be deleted. Please contact your site administrator for more details.");
+            return "locations";
+        }
+    }
+
     @RequestMapping(value = "/editLocation", method = RequestMethod.GET)
     public String editLocation(HttpServletRequest request, Model model) {
-        Location location = service.getLocation(request.getParameter("locationId"));
+        Location location = locationService.getLocation(request.getParameter("locationId"));
 
         model.addAttribute("location", location);
         Address address;
@@ -47,7 +66,7 @@ public class LocationController {
     @RequestMapping(value = "/displayLocations", method = RequestMethod.GET)
     public String displayLocations(Model model) {
         //model.put("message", "Hello from the controller");
-        List<Location> locationList = service.getAllLocations();
+        List<Location> locationList = locationService.getAllLocations();
         model.addAttribute("locationList", locationList);
         return "locations";
     }
@@ -88,7 +107,7 @@ public class LocationController {
 
         }
 
-        service.addLocation("0", location, newAddress);
+        locationService.addLocation("", location, newAddress);
         return "redirect:displayLocations";
     }
 
@@ -132,7 +151,7 @@ public class LocationController {
             );
         }
 
-        service.updateLocation(location.getLocationId(), location, newAddress);
+        locationService.updateLocation(location.getLocationId(), location, newAddress);
         return "redirect:displayLocations";
     }
 

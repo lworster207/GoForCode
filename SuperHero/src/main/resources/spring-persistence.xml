@@ -71,7 +71,22 @@
         <bean id="sightingDao"
       class="com.sg.superhero.dao.SightingsDaoDbImpl"> 
       <property name="jdbcTemplate" ref="jdbcTemplate" /> 
-    </bean> 
+    </bean>
+    <bean id="heroServiceLayer"
+         class="com.sg.superhero.service.HeroServiceLayerImpl">
+    </bean>  
+    <bean id="organizationServiceLayer"
+         class="com.sg.superhero.service.OrganizationServiceLayerImpl">
+    </bean>
+    <bean id="locationServiceLayer"
+         class="com.sg.superhero.service.LocationServiceLayerImpl">
+    </bean>     
+    <bean id="sightingServiceLayer"
+         class="com.sg.superhero.service.SightingServiceLayerImpl">
+    </bean>
+    <bean id="superPowerServiceLayer"
+         class="com.sg.superhero.service.SuperPowerServiceLayerImpl">
+    </bean>
     <bean id="serviceLayer"
        class="com.sg.superhero.service.SuperHeroServiceLayerDBImpl">
         <constructor-arg ref="heroDao"/>
@@ -95,7 +110,10 @@
     </bean> 
     <bean id="sightingsController" class="com.sg.superhero.SightingsController">
         <constructor-arg ref="serviceLayer"/>
-    </bean>  
+    </bean>
+    <bean id="homeController" class="com.sg.superhero.HomeController">
+        <constructor-arg ref="serviceLayer"/>
+    </bean>      
     <!--  
     <bean id="restController" class="com.sg.superhero.SuperHeroRESTController">
         <constructor-arg ref="heroDao"/>

@@ -7,9 +7,23 @@
     <head>
         <title>Super Heros - Locations</title>
         <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">    
+        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
     </head>
     <body>
+        
+        
+		<c:if test="${not empty error}">
+                    <div class="row">
+                      <div class="col-md-6">  
+                          <div class="alert alert-danger alert-dismissable">
+                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                             <strong>${error}</strong>
+                          </div>  
+                      </div>
+                    </div>
+                </c:if>
+        
         <div class="container">
             <h1>Superhero Sightings </h1>
             <hr/>
@@ -45,6 +59,9 @@
             </div>
      <!--   </div> -->
             <!-- Main Page Content Start -->
+            <c:if test="${error}">
+                
+            </c:if>
 <div class="row">
     <!-- 
         Add a col to hold the summary table - have it take up half the row 
@@ -105,6 +122,6 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
+ 
     </body>
 </html>

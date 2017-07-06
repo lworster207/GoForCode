@@ -101,7 +101,7 @@ ALTER TABLE `HeroSuperPower`
 CREATE TABLE IF NOT EXISTS `OrgMembers` (
 	`OrgMembersId` int(11) not null auto_increment,
     `OrganizationId` int(11) not null,
-    `ContactId` int(11) not null,
+    `HeroId` int(11) not null,
     PRIMARY KEY (`OrgMembersId`)
 );
 
@@ -110,15 +110,15 @@ ALTER TABLE `OrgMembers`
 (`OrganizationId`) ON DELETE NO ACTION;  
 
 ALTER TABLE `OrgMembers`
- ADD CONSTRAINT `fkOrgMembersContact` FOREIGN KEY (`ContactId`) REFERENCES `Contact`
-(`ContactId`) ON DELETE NO ACTION;  
+ ADD CONSTRAINT `fkOrgMembersHero` FOREIGN KEY (`HeroId`) REFERENCES `Hero`
+(`HeroId`) ON DELETE NO ACTION;  
 
 
 CREATE TABLE IF NOT EXISTS `Sighting` (
 	`SightingId` int(11) not null auto_increment,
 	`HeroId` int(11) not null,
     `LocationId` int(11) not null,
-    `Date` date not null,
+    `Date` varchar(30) not null,
 	PRIMARY KEY (`SightingId`)
 );
 

@@ -8,8 +8,10 @@ package com.sg.superhero;
 import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
+import com.sg.superhero.service.OrganizationServiceLayer;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class OrganizationController {
 
     private SuperHeroServiceLayer service;
 
+    @Inject
+    private OrganizationServiceLayer organizationService;
+
     public OrganizationController(SuperHeroServiceLayer service) {
         this.service = service;
     }
@@ -36,10 +41,10 @@ public class OrganizationController {
     public String viewOrganization(HttpServletRequest request, Model model) {
         String organizationId = request.getParameter("organizationId");
 
-        Organization organization = service.getOrganization(organizationId);
+        Organization organization = organizationService.getOrganization(organizationId);
         model.addAttribute("organization", organization);
 
-        List<Hero> heroList = service.getHerosByOrganization(organizationId);
+        List<Hero> heroList = organizationService.getHerosByOrganization(organizationId);
 
         model.addAttribute("heroList", heroList);
 
@@ -52,14 +57,14 @@ public class OrganizationController {
         String organizationId = request.getParameter("organizationId");
         String addressId = request.getParameter("addressId");
 
-        // service.deleteOrganization(organizationId,addressId);
+        organizationService.deleteOrganization(organizationId, addressId);
         return "redirect:displayOrganizations";
     }
 
     @RequestMapping(value = "/displayOrganizations", method = RequestMethod.GET)
     public String displayOrganizations(Model model) {
         //model.put("message", "Hello from the controller");
-        List<Organization> orgsList = service.getAllOrganizations();
+        List<Organization> orgsList = organizationService.getAllOrganizations();
         if (orgsList != null) {
             model.addAttribute("orgsList", orgsList);
         }
@@ -95,7 +100,7 @@ public class OrganizationController {
             newAddress = null;
         } else {
             newAddress = new Address(
-                    "noId",
+                    "",
                     request.getParameter("add-address"),
                     request.getParameter("add-city"),
                     request.getParameter("add-state"),
@@ -105,8 +110,8 @@ public class OrganizationController {
             organization.setAddressId(newAddress.getAddressId());
 
         }
-        service.addOrganization("noId", organization);
-        List<Organization> orgsList = service.getAllOrganizations();
+        organizationService.addOrganization("", organization);
+        List<Organization> orgsList = organizationService.getAllOrganizations();
 
         if (orgsList != null) {
             model.addAttribute("orgsList", orgsList);
@@ -120,7 +125,7 @@ public class OrganizationController {
 
         Address address;
 
-        Organization organization = service.getOrganization(organizationId);
+        Organization organization = organizationService.getOrganization(organizationId);
 
         if (organization.getAddressId() != null) {
             address = service.getAddress(organization.getAddressId());
@@ -156,8 +161,8 @@ public class OrganizationController {
                 request.getParameter("add-postcode")
         );
 
-        service.updateOrganization(organization.getOrganizationId(), organization, newAddress);
-        List<Organization> orgsList = service.getAllOrganizations();
+        organizationService.updateOrganization(organization.getOrganizationId(), organization, newAddress);
+        List<Organization> orgsList = organizationService.getAllOrganizations();
 
         if (orgsList != null) {
             model.addAttribute("orgsList", orgsList);

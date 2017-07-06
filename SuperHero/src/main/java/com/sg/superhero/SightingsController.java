@@ -9,11 +9,17 @@ import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Location;
 import com.sg.superhero.model.Sighting;
 import com.sg.superhero.model.SightingLocationHero;
+import com.sg.superhero.service.HeroServiceLayer;
+import com.sg.superhero.service.LocationServiceLayer;
+import com.sg.superhero.service.SightingServiceLayer;
 import com.sg.superhero.service.SuperHeroServiceLayer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -32,6 +38,15 @@ public class SightingsController {
 
     SuperHeroServiceLayer service;
 
+    @Inject
+    SightingServiceLayer sightingService;
+
+    @Inject
+    HeroServiceLayer heroService;
+
+    @Inject
+    LocationServiceLayer locationService;
+
     public SightingsController(SuperHeroServiceLayer service) {
         this.service = service;
     }
@@ -39,31 +54,31 @@ public class SightingsController {
     @RequestMapping(value = "/updateSighting", method = RequestMethod.POST)
     public String updateSighting(@Valid @ModelAttribute("sighting") Sighting sighting, BindingResult result,
             HttpServletRequest request, Model model) {
-        service.updateSighting(sighting.getSightingId(), sighting);
+        sightingService.updateSighting(sighting.getSightingId(), sighting);
         return "redirect:displaySightings";
     }
 
     @RequestMapping(value = "/displaySightingsByLocation", method = RequestMethod.POST)
     public String displaySightingsByLocation(HttpServletRequest request, Model model) {
-        List<SightingLocationHero> sightingsList = service.getAllSightingsDetailed();
+        List<SightingLocationHero> sightingsList = sightingService.getAllSightingsDetailed();
 
-        Map<String, String> dateMap = new HashMap<>();
+        Set<String> dateMap = new HashSet<>();
         if (sightingsList != null) {
             for (SightingLocationHero slh : sightingsList) {
-                dateMap.put(slh.getSightingDate(), slh.getSightingDate());
+                dateMap.add(slh.getSightingDate());
             }
-            model.addAttribute("dateList", dateMap.keySet());
+            model.addAttribute("dateList", dateMap);
         }
 
         String locationId = request.getParameter("locationId");
 
-        sightingsList = service.getSightingsByLocationDetailed(locationId);
+        sightingsList = sightingService.getSightingsByLocationDetailed(locationId);
         model.addAttribute("sightingsList", sightingsList);
 
-        List<Hero> herosList = service.getAllHeroes();
+        List<Hero> herosList = heroService.getAllHeroes();
         model.addAttribute("herosList", herosList);
 
-        List<Location> locationsList = service.getAllLocations();
+        List<Location> locationsList = locationService.getAllLocations();
         model.addAttribute("locationsList", locationsList);
         return "sightings";
     }
@@ -71,7 +86,7 @@ public class SightingsController {
     @RequestMapping(value = "/displaySightingsByDate", method = RequestMethod.POST)
     public String displaySightingsByDate(HttpServletRequest request, Model model) {
         String date = request.getParameter("date");
-        List<SightingLocationHero> sightingsList = service.getAllSightingsDetailed();
+        List<SightingLocationHero> sightingsList = sightingService.getAllSightingsDetailed();
 
         Map<String, String> dateMap = new HashMap<>();
         if (sightingsList != null) {
@@ -81,13 +96,13 @@ public class SightingsController {
             model.addAttribute("dateList", dateMap.keySet());
         }
 
-        sightingsList = service.getSightingsByDateDetailed(date);
+        sightingsList = sightingService.getSightingsByDateDetailed(date);
         model.addAttribute("sightingsList", sightingsList);
 
-        List<Hero> herosList = service.getAllHeroes();
+        List<Hero> herosList = heroService.getAllHeroes();
         model.addAttribute("herosList", herosList);
 
-        List<Location> locationsList = service.getAllLocations();
+        List<Location> locationsList = locationService.getAllLocations();
         model.addAttribute("locationsList", locationsList);
         return "sightings";
     }
@@ -96,7 +111,7 @@ public class SightingsController {
     public String displaySightingsByHero(HttpServletRequest request, Model model) {
         String heroId = request.getParameter("heroId");
 
-        List<SightingLocationHero> sightingsList = service.getAllSightingsDetailed();
+        List<SightingLocationHero> sightingsList = sightingService.getAllSightingsDetailed();
 
         Map<String, String> dateMap = new HashMap<>();
         if (sightingsList != null) {
@@ -106,13 +121,13 @@ public class SightingsController {
             model.addAttribute("dateList", dateMap.keySet());
         }
 
-        sightingsList = service.getSightingsByHeroDetailed(heroId);
+        sightingsList = sightingService.getSightingsByHeroDetailed(heroId);
         model.addAttribute("sightingsList", sightingsList);
 
-        List<Hero> herosList = service.getAllHeroes();
+        List<Hero> herosList = heroService.getAllHeroes();
         model.addAttribute("herosList", herosList);
 
-        List<Location> locationsList = service.getAllLocations();
+        List<Location> locationsList = locationService.getAllLocations();
         model.addAttribute("locationsList", locationsList);
         return "sightings";
     }
@@ -121,7 +136,7 @@ public class SightingsController {
     public String displaySightings(Model model) {
         //model.put("message", "Hello from the controller");
 
-        List<SightingLocationHero> sightingsList = service.getAllSightingsDetailed();
+        List<SightingLocationHero> sightingsList = sightingService.getAllSightingsDetailed();
         model.addAttribute("sightingsList", sightingsList);
 
         Map<String, String> dateMap = new HashMap<>();
@@ -132,10 +147,10 @@ public class SightingsController {
             model.addAttribute("dateList", dateMap.keySet());
         }
 
-        List<Hero> herosList = service.getAllHeroes();
+        List<Hero> herosList = heroService.getAllHeroes();
         model.addAttribute("herosList", herosList);
 
-        List<Location> locationsList = service.getAllLocations();
+        List<Location> locationsList = locationService.getAllLocations();
         model.addAttribute("locationsList", locationsList);
 
         return "sightings";
@@ -145,9 +160,9 @@ public class SightingsController {
     public String editSighting(HttpServletRequest request, Model model) {
         //model.put("message", "Hello from the controller");
 
-        Sighting sighting = service.getSighting(request.getParameter("sightingId"));
+        Sighting sighting = sightingService.getSighting(request.getParameter("sightingId"));
 
-        List<Hero> allHerosList = service.getAllHeroes();
+        List<Hero> allHerosList = heroService.getAllHeroes();
         List<HeroSelected> herosList = new ArrayList<>();
 
         for (Hero hero : allHerosList) {
@@ -160,7 +175,7 @@ public class SightingsController {
 
         model.addAttribute("herosList", herosList);
 
-        List<Location> allLocationsList = service.getAllLocations();
+        List<Location> allLocationsList = locationService.getAllLocations();
         List<LocationSelected> locationsList = new ArrayList();
         for (Location location : allLocationsList) {
             if (sighting.getLocationId().equals(location.getLocationId())) {
@@ -181,7 +196,7 @@ public class SightingsController {
         //model.put("message", "Hello from the controller");
         Sighting sighting = new Sighting();
 
-        List<Hero> allHerosList = service.getAllHeroes();
+        List<Hero> allHerosList = heroService.getAllHeroes();
 
         // to be removed once the dao is ready.
         Map<String, String> herosList = new HashMap<>();
@@ -190,7 +205,7 @@ public class SightingsController {
         }
         model.addAttribute("herosList", allHerosList);
 
-        List<Location> allLocationsList = service.getAllLocations();
+        List<Location> allLocationsList = locationService.getAllLocations();
         Map<String, String> locationsList = new HashMap<>();
         for (Location location : allLocationsList) {
             locationsList.put(location.getLocationId(), location.getLocationName());
@@ -204,8 +219,14 @@ public class SightingsController {
     @RequestMapping(value = "/createSighting", method = RequestMethod.POST)
     public String createSighting(@Valid @ModelAttribute("sighting") Sighting sighting, BindingResult result,
             HttpServletRequest request, Model model) {
-        service.addSighting("0", sighting);
+        sightingService.addSighting("", sighting);
         //model.put("message", "Hello from the controller");
+        return "redirect:displaySightings";
+    }
+
+    @RequestMapping(value = "/deleteSighting", method = RequestMethod.GET)
+    public String deleteSighting(HttpServletRequest request, Model model) {
+        sightingService.deleteSighting(request.getParameter("sightingId"));
         return "redirect:displaySightings";
     }
 

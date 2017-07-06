@@ -82,7 +82,7 @@
                     <select multiple class="form-control" id="add-super-power" name="add-super-power">
 
                         <c:forEach var="currentPower" items="${powersList}">
-                            
+
                                 
                             <option value="${currentPower.superPowerId}" ${currentPower.selected}>${currentPower.description}</option>
 
@@ -96,6 +96,7 @@
                 <div class="col-md-8">
                     <select multiple class="form-control" id="add-organizations" name="add-organizations">
                         <c:forEach var="currentOrg" items="${organizationsList}"> 
+                          
                             <option value="${currentOrg.organizationId}" ${currentOrg.selected}>${currentOrg.orgName}</option>
                         </c:forEach>                          
                     </select>
