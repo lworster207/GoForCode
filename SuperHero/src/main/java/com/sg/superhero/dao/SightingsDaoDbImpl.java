@@ -41,41 +41,49 @@ public class SightingsDaoDbImpl implements SightingsDao {
             + "where SightingId = ?";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS
-            = "select * from Sighting";
+            = "select * from Sighting "
+            + "order by Date desc";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION
             = "select * from Sighting "
-            + "where SightingId = ?";
+            + "where SightingId = ? "
+            + "order by Date desc";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_BY_HERO
             = "select * from Sighting "
-            + "where HeroId = ?";
+            + "where HeroId = ? "
+            + "order by Date desc";
     private static final String SQL_SELECT_ALL_SIGHTINGS_BY_DATE
             = "select * from Sighting "
-            + "where Date = ?";
+            + "where Date = ? "
+            + "order by Date desc";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_LOCATION
             = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
             + "join Hero h on h.HeroId = s.HeroId "
             + "join Location l on l.LocationId = s.LocationId "
-            + "where l.LocationId = ?";
+            + "where l.LocationId = ? "
+            + "order by Date desc";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_HERO
             = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
             + "join Hero h on h.HeroId = s.HeroId "
             + "join Location l on l.LocationId = s.LocationId "
-            + "where h.HeroId = ?";
+            + "where h.HeroId = ? "
+            + "order by Date desc";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_DATE
             = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
             + "join Hero h on h.HeroId = s.HeroId "
             + "join Location l on l.LocationId = s.LocationId "
-            + "where s.Date = ?";
+            + "where s.Date = ? "
+            + "order by Date desc";
 
     private static final String SQL_SELECT_ALL_SIGHTINGS_DETAIL_STRING
             = "select h.HeroId, h.Name as `HeroName`, s.SightingId, s.Date, l.LocationId, l.Name,l.Description from Sighting s "
             + "join Hero h on h.HeroId = s.HeroId "
-            + "join Location l on l.LocationId = s.LocationId ";
+            + "join Location l on l.LocationId = s.LocationId "
+            + "order by Date desc";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -113,7 +121,8 @@ public class SightingsDaoDbImpl implements SightingsDao {
         jdbcTemplate.update(SQL_UPDATE_SIGHTING,
                 sighting.getLocationId(),
                 sighting.getHeroId(),
-                sighting.getDate(), sighting.getSightingId());
+                sighting.getDate(),
+                sighting.getSightingId());
         return getSighting(sightingId);
     }
 

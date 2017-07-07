@@ -62,6 +62,7 @@
         <h2>New Sighting</h2>
         <sf:form class="form-horizontal" 
               role="form" method="POST" 
+              id="sightingform"
                modelAttribute="sighting"
               action="createSighting">
             <div class="form-group">
@@ -92,13 +93,14 @@
             <div class="form-group">
                 <label for="datepick" class="col-md-4 control-label">Date:</label>
                 <sf:hidden id="date" name="date" path="date" />
-                <input type="date" class="form-control" id="datepick" name="datepick" path="datepick"  placeholder="date">
+                <input type="date"  id="datepick" name="datepick" path="datepick"  placeholder="date">
                 
             </div>            
  
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-default" id="submit" name="submit" value="Add Sighting"/>
+                    <input type="submit" class="btn btn-default" id="submit" name="submit" value="Add Sighting"/>  
+                    <input type="button" class="btn btn-default" id="cancel" name="cancel" value="Cancel" />
                 </div>
             </div>
         </sf:form>
@@ -114,7 +116,7 @@
                <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>
+        <script src="${pageContext.request.contextPath}/js/superheros.js"></script>   
 
     </body>
 </html>

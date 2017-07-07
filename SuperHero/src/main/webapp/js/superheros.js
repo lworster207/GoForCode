@@ -15,8 +15,11 @@ $(document).ready(function () {
     });
     
     $('#submit').click(function ()  {  
-        $('#date').value($('#datepick').value());
-        alert($('#datepick').value());
+           
+        $('#date').val($('#datepick').val());
+        $('#sightingform').submit();
+        return (true);
+       
         //window.location = "http://localhost:8080/SuperHero/heros.jsp";
        
     });
