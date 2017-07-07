@@ -15,25 +15,25 @@ import java.util.List;
  */
 public interface SuperHeroServiceLayer {
 
-    public Contact addContact(String contactId, Contact contact, Address address);
+    public Contact addContact(Integer contactId, Contact contact, Address address);
 
-    public Contact deleteContact(String contactId, String addressId);
+    public Contact deleteContact(Integer contactId, Integer addressId);
 
-    public Contact deleteContactWithAddress(String contactId);
+    public Contact deleteContactWithAddress(Integer contactId);
 
-    public Contact updateContact(String contactId, Contact contact, Address address);
+    public Contact updateContact(Integer contactId, Contact contact, Address address);
 
-    public Contact getContact(String contactId);
+    public Contact getContact(Integer contactId);
 
     public List<Contact> getAllContacts();
 
-    public Address addAddress(String addressId, Address address);
+    public Address addAddress(Integer addressId, Address address);
 
-    public Address deleteAddress(String addressId);
+    public Address deleteAddress(Integer addressId);
 
-    public Address updateAddress(String addressId, Address address);
+    public Address updateAddress(Integer addressId, Address address);
 
-    public Address getAddress(String addressId);
+    public Address getAddress(Integer addressId);
 
     public Address findAddress(Address address);
 

@@ -13,15 +13,15 @@ import java.util.Objects;
  */
 public class SuperPower {
 
-    private String superPowerId;
+    private Integer superPowerId;
     private String description;
     private String selected;
 
-    public String getSuperPowerId() {
+    public Integer getSuperPowerId() {
         return superPowerId;
     }
 
-    public void setSuperPowerId(String superPowerId) {
+    public void setSuperPowerId(Integer superPowerId) {
         this.superPowerId = superPowerId;
     }
 

@@ -15,20 +15,23 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class Organization {
 
-    private String organizationId;
+    private Integer organizationId;
     @NotEmpty(message = "You must supply a value for Organization Name.")
     @Length(max = 50, message = "Organization Name must be no more than 30 characters in length.")
     private String orgName;
     private String orgDescription;
-    private String contactId;
-    private String addressId;
+    private Integer contactId;
+    private String streetAddress;
+    private String city;
+    private String stateProvince;
+    private String postCode;
     private String selected;
 
-    public String getOrganizationId() {
+    public Integer getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(String organizationId) {
+    public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
     }
 
@@ -48,20 +51,44 @@ public class Organization {
         this.orgDescription = orgDescription;
     }
 
-    public String getContactId() {
+    public Integer getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public void setContactId(Integer contactId) {
         this.contactId = contactId;
     }
 
-    public String getAddressId() {
-        return addressId;
+    public String getStreetAddress() {
+        return streetAddress;
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStateProvince() {
+        return stateProvince;
+    }
+
+    public void setStateProvince(String stateProvince) {
+        this.stateProvince = stateProvince;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public String getSelected() {
@@ -74,12 +101,15 @@ public class Organization {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + Objects.hashCode(this.orgName);
-        hash = 17 * hash + Objects.hashCode(this.orgDescription);
-        hash = 17 * hash + Objects.hashCode(this.contactId);
-        hash = 17 * hash + Objects.hashCode(this.addressId);
-        hash = 17 * hash + Objects.hashCode(this.selected);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.orgName);
+        hash = 79 * hash + Objects.hashCode(this.orgDescription);
+        hash = 79 * hash + Objects.hashCode(this.contactId);
+        hash = 79 * hash + Objects.hashCode(this.streetAddress);
+        hash = 79 * hash + Objects.hashCode(this.city);
+        hash = 79 * hash + Objects.hashCode(this.stateProvince);
+        hash = 79 * hash + Objects.hashCode(this.postCode);
+        hash = 79 * hash + Objects.hashCode(this.selected);
         return hash;
     }
 
@@ -104,7 +134,16 @@ public class Organization {
         if (!Objects.equals(this.contactId, other.contactId)) {
             return false;
         }
-        if (!Objects.equals(this.addressId, other.addressId)) {
+        if (!Objects.equals(this.streetAddress, other.streetAddress)) {
+            return false;
+        }
+        if (!Objects.equals(this.city, other.city)) {
+            return false;
+        }
+        if (!Objects.equals(this.stateProvince, other.stateProvince)) {
+            return false;
+        }
+        if (!Objects.equals(this.postCode, other.postCode)) {
             return false;
         }
         if (!Objects.equals(this.selected, other.selected)) {

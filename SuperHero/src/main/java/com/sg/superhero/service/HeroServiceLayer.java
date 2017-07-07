@@ -17,15 +17,15 @@ import java.util.List;
  */
 public interface HeroServiceLayer {
 
-    public Hero addHero(String heroId, Hero hero);
+    public Hero addHero(Integer heroId, Hero hero);
 
     public Hero addHero(Hero hero, Contact contact, Address address);
 
-    public Hero deleteHero(String heroId, String contactId);
+    public Hero deleteHero(Integer heroId, Integer contactId);
 
-    public Hero updateHero(String heroId, Hero hero, Contact contact, Address address);
+    public Hero updateHero(Integer heroId, Hero hero, Contact contact, Address address);
 
-    public Hero getHero(String heroId);
+    public Hero getHero(Integer heroId);
 
     public List<Hero> getAllHeroes();
 

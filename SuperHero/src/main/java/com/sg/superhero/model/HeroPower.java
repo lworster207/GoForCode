@@ -11,17 +11,17 @@ package com.sg.superhero.model;
  */
 public class HeroPower {
 
-    String heroId;
+    Integer heroId;
     String heroName;
-    String contactId;
+    Integer contactId;
     String description;
     String superpower;
 
-    public String getHeroId() {
+    public Integer getHeroId() {
         return heroId;
     }
 
-    public void setHeroId(String heroId) {
+    public void setHeroId(Integer heroId) {
         this.heroId = heroId;
     }
 
@@ -33,11 +33,11 @@ public class HeroPower {
         this.heroName = heroName;
     }
 
-    public String getContactId() {
+    public Integer getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public void setContactId(Integer contactId) {
         this.contactId = contactId;
     }
 

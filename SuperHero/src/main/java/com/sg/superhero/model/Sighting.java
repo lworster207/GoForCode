@@ -13,32 +13,32 @@ import java.util.Objects;
  */
 public class Sighting {
 
-    private String sightingId;
-    private String locationId;
-    private String heroId;
+    private Integer sightingId;
+    private Integer locationId;
+    private Integer heroId;
     private String date;
 
-    public String getSightingId() {
+    public Integer getSightingId() {
         return sightingId;
     }
 
-    public void setSightingId(String sightingId) {
+    public void setSightingId(Integer sightingId) {
         this.sightingId = sightingId;
     }
 
-    public String getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(String locationId) {
+    public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 
-    public String getHeroId() {
+    public Integer getHeroId() {
         return heroId;
     }
 
-    public void setHeroId(String heroId) {
+    public void setHeroId(Integer heroId) {
         this.heroId = heroId;
     }
 

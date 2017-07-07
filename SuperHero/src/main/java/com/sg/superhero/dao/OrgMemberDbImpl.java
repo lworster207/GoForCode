@@ -68,13 +68,13 @@ public class OrgMemberDbImpl implements OrgMemberDao {
     }
 
     @Override
-    public void deleteMembersByHero(String heroId) {
+    public void deleteMembersByHero(Integer heroId) {
 
         jdbcTemplate.update(SQL_DELETE_ORGMEMBERS_BY_HERO, heroId);
     }
 
     @Override
-    public void deleteMembersByOrganization(String organizationId) {
+    public void deleteMembersByOrganization(Integer organizationId) {
 
         //OrgMember removedOrgMember = getOrgMember(organizationId);
         jdbcTemplate.update(SQL_DELETE_ORGMEMBERS_BY_ORGANIZATION, organizationId);
@@ -89,28 +89,28 @@ public class OrgMemberDbImpl implements OrgMemberDao {
     }
 
     @Override
-    public List<Hero> getHerosByOrganization(String organizationId) {
+    public List<Hero> getHerosByOrganization(Integer organizationId) {
         return jdbcTemplate.query(SQL_SELECT_ORGMEMBERS_BY_ORGANIZATION,
                 new HeroDaoDbImpl.HeroMapper(), organizationId);
     }
 
     @Override
-    public List<Organization> getOrganizationsByHero(String heroId) {
+    public List<Organization> getOrganizationsByHero(Integer heroId) {
         return jdbcTemplate.query(SQL_SELECT_ORGMEMBERS_BY_HERO,
                 new OrganizationDaoDbImpl.OrganizationMapper(), heroId);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public List<Organization> updateOrganizationsForHeroByOrganizationIds(String heroId, List<String> organizationIds) {
+    public List<Organization> updateOrganizationsForHeroByOrganizationIds(Integer heroId, List<Integer> organizationIds) {
         deleteMembersByHero(heroId);
-        for (String organizationId : organizationIds) {
+        for (Integer organizationId : organizationIds) {
             addOrgMemberForHero(heroId, organizationId);
         }
         return getOrganizationsByHero(heroId);
     }
 
-    private void addOrgMemberForHero(String heroId, String organizationId) {
+    private void addOrgMemberForHero(Integer heroId, Integer organizationId) {
         jdbcTemplate.update(SQL_INSERT_ORGMEMBER,
                 heroId, organizationId);
     }
@@ -126,8 +126,8 @@ public class OrgMemberDbImpl implements OrgMemberDao {
         public OrgMember mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             OrgMember orgMember = new OrgMember();
-            orgMember.setHeroId(rs.getString("HeroId"));
-            orgMember.setOrganizationId(rs.getString("OrganizationId"));
+            orgMember.setHeroId(rs.getInt("HeroId"));
+            orgMember.setOrganizationId(rs.getInt("OrganizationId"));
             return orgMember;
         }
 

@@ -93,20 +93,20 @@ public class SightingsDaoDbImpl implements SightingsDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public Sighting addSighting(String sightingId, Sighting sighting) {
+    public Sighting addSighting(Integer sightingId, Sighting sighting) {
         jdbcTemplate.update(SQL_INSERT_SIGHTING,
                 sighting.getLocationId(),
                 sighting.getHeroId(),
                 sighting.getDate());
 
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
-        sighting.setSightingId(newId.toString());
+        sighting.setSightingId(newId);
         return sighting;
 
     }
 
     @Override
-    public Sighting deleteSighting(String sightingId) {
+    public Sighting deleteSighting(Integer sightingId) {
         Sighting removedSighting = getSighting(sightingId);
         //removedSighting.setHeroId(null);
         //removedSighting.setLocationId(null);
@@ -117,7 +117,7 @@ public class SightingsDaoDbImpl implements SightingsDao {
     }
 
     @Override
-    public Sighting updateSighting(String sightingId, Sighting sighting) {
+    public Sighting updateSighting(Integer sightingId, Sighting sighting) {
         jdbcTemplate.update(SQL_UPDATE_SIGHTING,
                 sighting.getLocationId(),
                 sighting.getHeroId(),
@@ -127,7 +127,7 @@ public class SightingsDaoDbImpl implements SightingsDao {
     }
 
     @Override
-    public Sighting getSighting(String sightingId) {
+    public Sighting getSighting(Integer sightingId) {
 
         return jdbcTemplate.queryForObject(SQL_SELECT_SIGHTING,
                 new SightingMapper(), sightingId);
@@ -153,25 +153,25 @@ public class SightingsDaoDbImpl implements SightingsDao {
     }
 
     @Override
-    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId) {
+    public List<SightingLocationHero> getSightingsByHeroDetailed(Integer heroId) {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_HERO,
                 new SightingLocationHeroMapper(), heroId);
     }
 
     @Override
-    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId) {
+    public List<SightingLocationHero> getSightingsByLocationDetailed(Integer locationId) {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_DETAIL_BY_LOCATION,
                 new SightingLocationHeroMapper(), locationId);
     }
 
     @Override
-    public List<Sighting> getSightingByLocation(String locationId) {
+    public List<Sighting> getSightingByLocation(Integer locationId) {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION,
                 new SightingMapper(), locationId);
     }
 
     @Override
-    public List<Sighting> getSightingsByHero(String heroId) {
+    public List<Sighting> getSightingsByHero(Integer heroId) {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS_BY_HERO,
                 new SightingMapper(), heroId);
     }
@@ -187,9 +187,9 @@ public class SightingsDaoDbImpl implements SightingsDao {
         public Sighting mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Sighting sighting = new Sighting();
-            sighting.setSightingId(rs.getString("SightingId"));
-            sighting.setLocationId(rs.getString("LocationId"));
-            sighting.setHeroId(rs.getString("HeroId"));
+            sighting.setSightingId(rs.getInt("SightingId"));
+            sighting.setLocationId(rs.getInt("LocationId"));
+            sighting.setHeroId(rs.getInt("HeroId"));
             sighting.setDate(rs.getString("Date"));
             return sighting;
         }

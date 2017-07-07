@@ -14,19 +14,19 @@ import java.util.List;
  */
 public interface SuperPowerServiceLayer {
 
-    public SuperPower getSuperPower(String superPowerId);
+    public SuperPower getSuperPower(Integer superPowerId);
 
-    public SuperPower addSuperPower(String superPowerId, SuperPower superPower);
+    public SuperPower addSuperPower(Integer superPowerId, SuperPower superPower);
 
-    public SuperPower deleteSuperPower(String superPowerId);
+    public SuperPower deleteSuperPower(Integer superPowerId);
 
-    public SuperPower updateSuperPower(String superPowerId, SuperPower superPower);
+    public SuperPower updateSuperPower(Integer superPowerId, SuperPower superPower);
 
     public List<SuperPower> getAllSuperPowers();
 
-    public List<SuperPower> getSuperPowersByHero(String heroId);
+    public List<SuperPower> getSuperPowersByHero(Integer heroId);
 
-    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers);
+    public List<SuperPower> updateSuperpowersForHero(Integer heroId, List<SuperPower> superPowers);
 
-    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds);
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(Integer heroId, List<Integer> superPowerIds);
 }

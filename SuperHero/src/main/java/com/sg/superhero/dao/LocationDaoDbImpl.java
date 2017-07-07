@@ -54,7 +54,7 @@ public class LocationDaoDbImpl implements LocationDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public Location addLocation(String locationId, Location location) {
+    public Location addLocation(Integer locationId, Location location) {
         jdbcTemplate.update(SQL_INSERT_LOCATION,
                 location.getLocationName(),
                 location.getLocationDescription(),
@@ -62,20 +62,20 @@ public class LocationDaoDbImpl implements LocationDao {
                 location.getLatitude(),
                 location.getLongitude());
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
-        location.setLocationId(newId.toString());
+        location.setLocationId(newId);
         return location;
 
     }
 
     @Override
-    public Location deleteLocation(String locationId) {
+    public Location deleteLocation(Integer locationId) {
         Location location = getLocation(locationId);
         jdbcTemplate.update(SQL_DELETE_LOCATION, locationId);
         return location;
     }
 
     @Override
-    public Location updateLocation(String locationId, Location location) {
+    public Location updateLocation(Integer locationId, Location location) {
         jdbcTemplate.update(SQL_UPDATE_LOCATION,
                 location.getLocationName(),
                 location.getLocationDescription(),
@@ -87,7 +87,7 @@ public class LocationDaoDbImpl implements LocationDao {
     }
 
     @Override
-    public Location getLocation(String locationId) throws EmptyResultDataAccessException {
+    public Location getLocation(Integer locationId) throws EmptyResultDataAccessException {
         return jdbcTemplate.queryForObject(SQL_SELECT_LOCATION,
                 new LocationMapper(), locationId);
     }
@@ -103,12 +103,12 @@ public class LocationDaoDbImpl implements LocationDao {
         public Location mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Location location = new Location();
-            location.setLocationId(rs.getString("LocationId"));
+            location.setLocationId(rs.getInt("LocationId"));
             location.setLocationName(rs.getString("Name"));
             location.setLocationDescription(rs.getString("Description"));
             location.setLatitude(rs.getDouble("Latitude"));
             location.setLongitude(rs.getDouble("Longitude"));
-            location.setAddressId(rs.getString("AddressId"));
+            location.setAddressId(rs.getInt("AddressId"));
 
             return location;
         }

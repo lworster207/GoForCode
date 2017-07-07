@@ -15,20 +15,20 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class Hero {
 
-    private String heroId;
-    private String contactId;
+    private Integer heroId;
+    private Integer contactId;
     @NotEmpty(message = "You must supply a value for Hero Name.")
     @Length(max = 50, message = "Hero Name must be no more than 30 characters in length.")
     private String heroName;
 
     private String description;
 
-    public Hero(String heroId, String heroName) {
+    public Hero(Integer heroId, String heroName) {
         this.heroId = heroId;
         this.heroName = heroName;
     }
 
-    public Hero(String heroName, String contactId, String description) {
+    public Hero(String heroName, Integer contactId, String description) {
         this.heroName = heroName;
         this.contactId = contactId;
         this.description = description;
@@ -45,19 +45,19 @@ public class Hero {
         this.heroName = heroName;
     }
 
-    public String getHeroId() {
+    public Integer getHeroId() {
         return heroId;
     }
 
-    public void setHeroId(String heroId) {
+    public void setHeroId(Integer heroId) {
         this.heroId = heroId;
     }
 
-    public String getContactId() {
+    public Integer getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public void setContactId(Integer contactId) {
         this.contactId = contactId;
     }
 

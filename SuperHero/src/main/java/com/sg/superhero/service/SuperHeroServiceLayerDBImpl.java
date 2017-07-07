@@ -37,7 +37,7 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact addContact(String contactId, Contact contact, Address address) {
+    public Contact addContact(Integer contactId, Contact contact, Address address) {
         if (address != null) {
             contact.setAddressId(addAddress(address.getAddressId(), address).getAddressId());
         } else {
@@ -47,7 +47,7 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact deleteContact(String contactId, String addressId) {
+    public Contact deleteContact(Integer contactId, Integer addressId) {
         Contact removedContact = getContact(contactId);
         try {
             removedContact = contactDao.deleteContact(contactId);
@@ -59,14 +59,14 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact deleteContactWithAddress(String contactId
+    public Contact deleteContactWithAddress(Integer contactId
     ) {
         Contact contact = contactDao.getContact(contactId);
         return contactDao.deleteContactWithAddress(contactId);
     }
 
     @Override
-    public Contact updateContact(String contactId, Contact contact,
+    public Contact updateContact(Integer contactId, Contact contact,
             Address address
     ) {
         if (address == null) {
@@ -75,7 +75,7 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
         } else {
 
             if (contact.getAddressId() == null) {
-                contact.setAddressId(addressDao.addAddress("0", address).getAddressId());
+                contact.setAddressId(addressDao.addAddress(0, address).getAddressId());
             } else {
                 address.setAddressId(contact.getAddressId());
                 addressDao.updateAddress(address.getAddressId(), address);
@@ -86,7 +86,7 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Contact getContact(String contactId
+    public Contact getContact(Integer contactId
     ) {
         if (contactId != null) {
             return contactDao.getContact(contactId);
@@ -101,25 +101,25 @@ public class SuperHeroServiceLayerDBImpl implements SuperHeroServiceLayer {
     }
 
     @Override
-    public Address addAddress(String addressId, Address address
+    public Address addAddress(Integer addressId, Address address
     ) {
         return addressDao.addAddress(addressId, address);
     }
 
     @Override
-    public Address deleteAddress(String addressId
+    public Address deleteAddress(Integer addressId
     ) {
         return addressDao.deleteAddress(addressId);
     }
 
     @Override
-    public Address updateAddress(String addressId, Address address
+    public Address updateAddress(Integer addressId, Address address
     ) {
         return addressDao.updateAddress(addressId, address);
     }
 
     @Override
-    public Address getAddress(String addressId
+    public Address getAddress(Integer addressId
     ) {
         return addressDao.getAddress(addressId);
     }

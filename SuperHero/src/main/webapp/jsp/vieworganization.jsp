@@ -75,27 +75,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-address" class="col-md-4 control-label">Address:</label>
+                <label for="streetAddress" class="col-md-4 control-label">Address:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-address" name="add-address" placeholder="Address"/>
+                    <sf:input type="text" class="form-control" id="streetAddress" name="streetAddress" path="streetAddress" placeholder="Address"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-city" class="col-md-4 control-label">City:</label>
+                <label for="city" class="col-md-4 control-label">City:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-city" name="add-city" placeholder="Address"/>
+                    <sf:input type="text" class="form-control" id="city" name="city" path="city" placeholder="City"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-state" class="col-md-4 control-label">State/Province:</label>
+                <label for="stateProvince" class="col-md-4 control-label">State/Province:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province"/>
+                    <sf:input type="text" class="form-control" id="stateProvince" name="stateProvince" path="stateProvince" placeholder="State/Province"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-postcode" class="col-md-4 control-label">Post Code:</label>
+                <label for="postCode" class="col-md-4 control-label">Post Code:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-postcode" name="add-postcode" placeholder="PostCode"/>
+                    <sf:input type="text" class="form-control" id="postCode" name="postCode"  path="postCode"  placeholder="PostCode"/>
                 </div>
             </div>
             <div class="form-group">

@@ -14,15 +14,15 @@ import java.util.List;
  */
 public interface ContactDao {
 
-    public Contact addContact(String contactId, Contact contact);
+    public Contact addContact(Integer contactId, Contact contact);
 
-    public Contact deleteContact(String contactId);
+    public Contact deleteContact(Integer contactId);
 
-    public Contact deleteContactWithAddress(String ContactId);
+    public Contact deleteContactWithAddress(Integer contactId);
 
-    public Contact updateContact(String contactId, Contact contact);
+    public Contact updateContact(Integer contactId, Contact contact);
 
-    public Contact getContact(String contactId);
+    public Contact getContact(Integer contactId);
 
     public List<Contact> getAllContacts();
 }

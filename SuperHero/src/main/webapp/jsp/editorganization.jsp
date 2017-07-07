@@ -68,15 +68,13 @@
               modelAttribute="organization"
               action="updateOrganization"> 
              <sf:hidden id="organizationId" name="organizationId"  path="organizationId" value="${organization.organizationId}" />
-             <sf:hidden id="addressId" name="addressId"  path="addressId" value="${organization.addressId}" />
-             <sf:hidden id="contactId" name="contactId"  path="contactId" value="${organization.addressId}" />
+            
             <div class="form-group">
                 <label for="orgName" class="col-md-4 control-label">Organization Name:</label>
                 <div class="col-md-8">
                    
                     <sf:input type="text" class="form-control"  id="orgName" name="orgName"  path="orgName" placeholder="Organization Name"   value="${organization.orgName}" />
                     <sf:errors path="orgName" cssclass="error"></sf:errors>
-                    <input type="hidden" id="add-org-addressid" value="<c:out value='${address.addressId}' />" /> 
                 </div>
             </div>
             <div class="form-group">
@@ -87,27 +85,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-address" class="col-md-4 control-label">Address:</label>
+                <label for="streetAddress" class="col-md-4 control-label">Address:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-address" name="add-address" placeholder="Address" value="${address.streetAddress}"/>
+                    <sf:input type="text" class="form-control" id="streetAddress" name="streetAddress" path="streetAddress" placeholder="Address"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-city" class="col-md-4 control-label">City:</label>
+                <label for="city" class="col-md-4 control-label">City:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-city" name="add-city" placeholder="City" value="${address.city}"/>
+                    <sf:input type="text" class="form-control" id="city" name="city" path="city" placeholder="City"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-state" class="col-md-4 control-label">State:</label>
+                <label for="stateProvince" class="col-md-4 control-label">State/Province:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-state" name="add-state" placeholder="State/Province" value="${address.stateProvince}"/>
+                    <sf:input type="text" class="form-control" id="stateProvince" name="stateProvince" path="stateProvince" placeholder="State/Province"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="add-postcode" class="col-md-4 control-label">Post Code:</label>
+                <label for="postCode" class="col-md-4 control-label">Post Code:</label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="add-postcode" name="add-postcode" placeholder="PostCode" value="${address.postCode}"/>
+                    <sf:input type="text" class="form-control" id="postCode" name="postCode"  path="postCode"  placeholder="PostCode"/>
                 </div>
             </div>
             <div class="form-group">

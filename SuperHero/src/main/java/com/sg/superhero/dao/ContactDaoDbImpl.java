@@ -62,7 +62,7 @@ public class ContactDaoDbImpl implements ContactDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public Contact addContact(String contactId, Contact contact) {
+    public Contact addContact(Integer contactId, Contact contact) {
 
         jdbcTemplate.update(SQL_INSERT_ITEM,
                 contact.getFirstName(),
@@ -75,16 +75,16 @@ public class ContactDaoDbImpl implements ContactDao {
         // row in the database
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         // set the new id value on the item object and return it
-        contact.setContactId(newId.toString());
+        contact.setContactId(newId);
 
         return contact;
     }
 
     @Override
-    public Contact deleteContact(String contactId) {
+    public Contact deleteContact(Integer contactId) {
         Contact removedContact = null;
 
-        if (contactId != null && !contactId.equals("")) {
+        if (contactId != null) {
             removedContact = getContact(contactId);
             removedContact.setContactId(null);
             updateContact(contactId, removedContact);
@@ -99,14 +99,14 @@ public class ContactDaoDbImpl implements ContactDao {
     }
 
     @Override
-    public Contact deleteContactWithAddress(String contactId) {
+    public Contact deleteContactWithAddress(Integer contactId) {
         Contact removedContact = getContact(contactId);
         jdbcTemplate.update(SQL_DELETE_ITEM_WITH_ADDRESS, contactId);
         return removedContact;
     }
 
     @Override
-    public Contact updateContact(String contactId, Contact contact) {
+    public Contact updateContact(Integer contactId, Contact contact) {
         jdbcTemplate.update(SQL_UPDATE_ITEM,
                 contact.getFirstName(),
                 contact.getLastName(),
@@ -118,7 +118,7 @@ public class ContactDaoDbImpl implements ContactDao {
     }
 
     @Override
-    public Contact getContact(String contactId) {
+    public Contact getContact(Integer contactId) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_ITEM,
                     new ContactMapper(), contactId);
@@ -146,12 +146,12 @@ public class ContactDaoDbImpl implements ContactDao {
         public Contact mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Contact contact = new Contact();
-            contact.setContactId(rs.getString("ContactId"));
+            contact.setContactId(rs.getInt("ContactId"));
             contact.setFirstName(rs.getString("FirstName"));
             contact.setLastName(rs.getString("LastName"));
             contact.setPhone(rs.getString("Phone"));
             contact.setEmail(rs.getString("Email"));
-            contact.setAddressId(rs.getString("AddressId"));
+            contact.setAddressId(rs.getInt("AddressId"));
 
             return contact;
         }

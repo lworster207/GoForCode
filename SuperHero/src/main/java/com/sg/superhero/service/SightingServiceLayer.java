@@ -17,26 +17,26 @@ public interface SightingServiceLayer {
 
     public List<SightingLocationHero> getSightingsByDateDetailed(String date);
 
-    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId);
+    public List<SightingLocationHero> getSightingsByLocationDetailed(Integer locationId);
 
-    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId);
+    public List<SightingLocationHero> getSightingsByHeroDetailed(Integer heroId);
 
     public List<SightingLocationHero> getAllSightingsDetailed();
 
-    public List<Sighting> getSightingByLocation(String locationId);
+    public List<Sighting> getSightingByLocation(Integer locationId);
 
-    public List<Sighting> getSightingsByHero(String heroId);
+    public List<Sighting> getSightingsByHero(Integer heroId);
 
     public List<Sighting> getSightingsByDate(String date);
 
-    public Sighting addSighting(String sightingId, Sighting sighting);
+    public Sighting addSighting(Integer sightingId, Sighting sighting);
 
-    public Sighting deleteSighting(String sightingId);
+    public Sighting deleteSighting(Integer sightingId);
 
-    public Sighting getSighting(String sightingId);
+    public Sighting getSighting(Integer sightingId);
 
     public List<Sighting> getAllSightings();
 
-    public Sighting updateSighting(String sightingId, Sighting sighting);
+    public Sighting updateSighting(Integer sightingId, Sighting sighting);
 
 }

@@ -48,7 +48,7 @@ public class AddressDaoDbImpl implements AddressDao {
     }
 
     @Override
-    public Address addAddress(String addressId, Address address) {
+    public Address addAddress(Integer addressId, Address address) {
 
         jdbcTemplate.update(SQL_INSERT_ADDRESS,
                 address.getStreetAddress(),
@@ -60,15 +60,15 @@ public class AddressDaoDbImpl implements AddressDao {
         // row in the database
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         // set the new id value on the item object and return it
-        address.setAddressId(newId.toString());
+        address.setAddressId(newId);
         return getAddress(address.getAddressId());
 
     }
 
     @Override
-    public Address deleteAddress(String addressId) {
+    public Address deleteAddress(Integer addressId) {
         Address removedItem = null;
-        if (addressId != null && !addressId.equals("")) {
+        if (addressId != null) {
             removedItem = getAddress(addressId);
             jdbcTemplate.update(SQL_DELETE_ADDRESS, addressId);
         }
@@ -76,7 +76,7 @@ public class AddressDaoDbImpl implements AddressDao {
     }
 
     @Override
-    public Address updateAddress(String addressId, Address address) {
+    public Address updateAddress(Integer addressId, Address address) {
         jdbcTemplate.update(SQL_UPDATE_ADDRESS,
                 address.getStreetAddress(),
                 address.getCity(),
@@ -88,7 +88,7 @@ public class AddressDaoDbImpl implements AddressDao {
     }
 
     @Override
-    public Address getAddress(String addressId) {
+    public Address getAddress(Integer addressId) {
         if (addressId != null && !addressId.equals("")) {
             try {
                 return jdbcTemplate.queryForObject(SQL_SELECT_ADDRESS,
@@ -119,7 +119,7 @@ public class AddressDaoDbImpl implements AddressDao {
         public Address mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Address address = new Address();
-            address.setAddressId(rs.getString("AddressId"));
+            address.setAddressId(rs.getInt("AddressId"));
             address.setStreetAddress(rs.getString("StreetAddress"));
             address.setCity(rs.getString("City"));
             address.setStateProvince(rs.getString("State"));

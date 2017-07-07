@@ -13,13 +13,13 @@ import java.util.Objects;
  */
 public class Address {
 
-    private String addressId;
+    private Integer addressId;
     private String streetAddress;
     private String city;
     private String stateProvince;
     private String postCode;
 
-    public Address(String addressId, String streetAddress, String city, String stateProvince, String postCode) {
+    public Address(Integer addressId, String streetAddress, String city, String stateProvince, String postCode) {
         this.addressId = addressId;
         this.streetAddress = streetAddress;
         this.city = city;
@@ -30,11 +30,11 @@ public class Address {
     public Address() {
     }
 
-    public String getAddressId() {
+    public Integer getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(String addressId) {
+    public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
 
@@ -72,11 +72,12 @@ public class Address {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.streetAddress);
-        hash = 89 * hash + Objects.hashCode(this.city);
-        hash = 89 * hash + Objects.hashCode(this.stateProvince);
-        hash = 89 * hash + Objects.hashCode(this.postCode);
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.addressId);
+        hash = 83 * hash + Objects.hashCode(this.streetAddress);
+        hash = 83 * hash + Objects.hashCode(this.city);
+        hash = 83 * hash + Objects.hashCode(this.stateProvince);
+        hash = 83 * hash + Objects.hashCode(this.postCode);
         return hash;
     }
 
@@ -102,6 +103,9 @@ public class Address {
             return false;
         }
         if (!Objects.equals(this.postCode, other.postCode)) {
+            return false;
+        }
+        if (!Objects.equals(this.addressId, other.addressId)) {
             return false;
         }
         return true;

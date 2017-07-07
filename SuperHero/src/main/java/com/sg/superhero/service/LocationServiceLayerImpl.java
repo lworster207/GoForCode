@@ -26,33 +26,33 @@ public class LocationServiceLayerImpl implements LocationServiceLayer {
     AddressDao addressDao;
 
     @Override
-    public Location addLocation(String locationId, Location location, Address address) {
+    public Location addLocation(Integer locationId, Location location, Address address) {
         String addressId;
 
         if (address == null) {
             addressId = null;
             location.setAddressId(null);
         } else {
-            addressDao.addAddress("", address);
+            addressDao.addAddress(0, address);
             location.setAddressId(address.getAddressId());
         }
         return locationDao.addLocation(locationId, location);
     }
 
     @Override
-    public Location deleteLocation(String locationId) throws DataIntegrityViolationException {
+    public Location deleteLocation(Integer locationId) throws DataIntegrityViolationException {
         return locationDao.deleteLocation(locationId);
     }
 
     @Override
-    public Location updateLocation(String locationId, Location location, Address address) {
+    public Location updateLocation(Integer locationId, Location location, Address address) {
         if (address == null) {
             location.setAddressId(null);
         } else {
-            if (address.getAddressId() != null && !address.getAddressId().equals("")) {
+            if (address.getAddressId() > 0) {
                 addressDao.updateAddress(address.getAddressId(), address);
             } else {
-                addressDao.addAddress("0", address);
+                addressDao.addAddress(0, address);
                 location.setAddressId(address.getAddressId());
             }
         }
@@ -60,7 +60,7 @@ public class LocationServiceLayerImpl implements LocationServiceLayer {
     }
 
     @Override
-    public Location getLocation(String locationId) {
+    public Location getLocation(Integer locationId) {
         return locationDao.getLocation(locationId);
     }
 

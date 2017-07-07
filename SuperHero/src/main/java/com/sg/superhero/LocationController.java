@@ -40,7 +40,7 @@ public class LocationController {
     @RequestMapping(value = "/deleteLocation", method = RequestMethod.GET)
     public String deleteLocation(HttpServletRequest request, Model model) {
         try {
-            locationService.deleteLocation(request.getParameter("locationId"));
+            locationService.deleteLocation(Integer.parseInt(request.getParameter("locationId")));
             return "redirect:displayLocations";
         } catch (DataIntegrityViolationException e) {
             List<Location> locationList = locationService.getAllLocations();
@@ -52,11 +52,11 @@ public class LocationController {
 
     @RequestMapping(value = "/editLocation", method = RequestMethod.GET)
     public String editLocation(HttpServletRequest request, Model model) {
-        Location location = locationService.getLocation(request.getParameter("locationId"));
+        Location location = locationService.getLocation(Integer.parseInt(request.getParameter("locationId")));
 
         model.addAttribute("location", location);
         Address address;
-        if (location.getAddressId() != null && !location.getAddressId().equals("")) {
+        if (location.getAddressId() > 0) {
             address = service.getAddress(location.getAddressId());
             model.addAttribute("address", address);
         }
@@ -98,7 +98,7 @@ public class LocationController {
             newAddress = null;
         } else {
             newAddress = new Address(
-                    "noId",
+                    0,
                     request.getParameter("add-address"),
                     request.getParameter("add-city"),
                     request.getParameter("add-state"),
@@ -107,7 +107,7 @@ public class LocationController {
 
         }
 
-        locationService.addLocation("", location, newAddress);
+        locationService.addLocation(0, location, newAddress);
         return "redirect:displayLocations";
     }
 
@@ -124,7 +124,7 @@ public class LocationController {
         Address newAddress;
         String addressId;
 
-        if (location.getAddressId() == null || location.getAddressId().equals("")) {
+        if (location.getAddressId() > 0) {
 
             if (request.getParameter("add-address").equals("")
                     || request.getParameter("add-city").equals("")
@@ -133,7 +133,7 @@ public class LocationController {
                 newAddress = null;
             } else {
                 newAddress = new Address(
-                        null,
+                        0,
                         request.getParameter("add-address"),
                         request.getParameter("add-city"),
                         request.getParameter("add-state"),

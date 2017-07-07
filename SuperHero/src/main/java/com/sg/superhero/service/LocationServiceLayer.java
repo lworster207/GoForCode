@@ -15,13 +15,13 @@ import java.util.List;
  */
 public interface LocationServiceLayer {
 
-    public Location addLocation(String locationId, Location location, Address address);
+    public Location addLocation(Integer locationId, Location location, Address address);
 
-    public Location updateLocation(String locationId, Location location, Address address);
+    public Location updateLocation(Integer locationId, Location location, Address address);
 
-    public Location getLocation(String locationId);
+    public Location getLocation(Integer locationId);
 
-    public Location deleteLocation(String locationId);
+    public Location deleteLocation(Integer locationId);
 
     public List<Location> getAllLocations();
 

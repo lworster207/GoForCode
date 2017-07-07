@@ -5,7 +5,6 @@
  */
 package com.sg.superhero;
 
-import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
 import com.sg.superhero.service.OrganizationServiceLayer;
@@ -39,7 +38,7 @@ public class OrganizationController {
 
     @RequestMapping(value = "/viewOrganization", method = RequestMethod.GET)
     public String viewOrganization(HttpServletRequest request, Model model) {
-        String organizationId = request.getParameter("organizationId");
+        Integer organizationId = Integer.parseInt(request.getParameter("organizationId"));
 
         Organization organization = organizationService.getOrganization(organizationId);
         model.addAttribute("organization", organization);
@@ -54,10 +53,9 @@ public class OrganizationController {
 
     @RequestMapping(value = "/deleteOrganization", method = RequestMethod.GET)
     public String deleteOrganization(HttpServletRequest request, Model model) {
-        String organizationId = request.getParameter("organizationId");
-        String addressId = request.getParameter("addressId");
+        Integer organizationId = Integer.parseInt(request.getParameter("organizationId"));
 
-        organizationService.deleteOrganization(organizationId, addressId);
+        organizationService.deleteOrganization(organizationId);
         return "redirect:displayOrganizations";
     }
 
@@ -90,27 +88,7 @@ public class OrganizationController {
             return "neworganization";
         }
 
-        Address newAddress;
-        String addressId;
-
-        if (request.getParameter("add-address").equals("")
-                || request.getParameter("add-city").equals("")
-                || request.getParameter("add-state").equals("")
-                || request.getParameter("add-postcode").equals("")) {
-            newAddress = null;
-        } else {
-            newAddress = new Address(
-                    "",
-                    request.getParameter("add-address"),
-                    request.getParameter("add-city"),
-                    request.getParameter("add-state"),
-                    request.getParameter("add-postcode")
-            );
-            service.addAddress(newAddress.getAddressId(), newAddress);
-            organization.setAddressId(newAddress.getAddressId());
-
-        }
-        organizationService.addOrganization("", organization);
+        organizationService.addOrganization(0, organization);
         List<Organization> orgsList = organizationService.getAllOrganizations();
 
         if (orgsList != null) {
@@ -121,18 +99,9 @@ public class OrganizationController {
 
     @RequestMapping(value = "/displayEditOrganizationForm", method = RequestMethod.GET)
     public String displayEditOrganizationForm(HttpServletRequest request, Model model) {
-        String organizationId = request.getParameter("organizationId");
-
-        Address address;
+        Integer organizationId = Integer.parseInt(request.getParameter("organizationId"));
 
         Organization organization = organizationService.getOrganization(organizationId);
-
-        if (organization.getAddressId() != null) {
-            address = service.getAddress(organization.getAddressId());
-            if (address != null) {
-                model.addAttribute("address", address);
-            }
-        }
 
         model.addAttribute("organization", organization);
         return "editorganization";
@@ -149,19 +118,7 @@ public class OrganizationController {
             return "editorganization";
         }
 
-        Address newAddress;
-        String addressId;
-
-        addressId = organization.getAddressId();
-        newAddress = new Address(
-                addressId,
-                request.getParameter("add-address"),
-                request.getParameter("add-city"),
-                request.getParameter("add-state"),
-                request.getParameter("add-postcode")
-        );
-
-        organizationService.updateOrganization(organization.getOrganizationId(), organization, newAddress);
+        organizationService.updateOrganization(organization.getOrganizationId(), organization);
         List<Organization> orgsList = organizationService.getAllOrganizations();
 
         if (orgsList != null) {

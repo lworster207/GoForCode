@@ -52,27 +52,27 @@ public class HeroSuperpowerDaoDbImpl implements HeroSuperpowerDao {
     }
 
     @Override
-    public List<Hero> getHerosWithSuperpower(String superpowerId) {
+    public List<Hero> getHerosWithSuperpower(Integer superpowerId) {
         return jdbcTemplate.query(SQL_SELECT_HEROS_BY_SUPERPOWER,
                 new HeroMapper(), superpowerId);
     }
 
     @Override
-    public List<SuperPower> getSuperpowersByHero(String heroId) {
+    public List<SuperPower> getSuperpowersByHero(Integer heroId) {
         return jdbcTemplate.query(SQL_SELECT_SUPERPOWERS_BY_HERO,
                 new SuperPowerMapper(), heroId);
 
     }
 
     @Override
-    public void deleteByHero(String heroId) {
+    public void deleteByHero(Integer heroId) {
 
         jdbcTemplate.update(SQL_DELETE_BY_HERO, heroId);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers) {
+    public List<SuperPower> updateSuperpowersForHero(Integer heroId, List<SuperPower> superPowers) {
         deleteByHero(heroId);
         for (SuperPower superpower : superPowers) {
             addSuperPowerForHero(heroId, superpower.getSuperPowerId());
@@ -82,15 +82,15 @@ public class HeroSuperpowerDaoDbImpl implements HeroSuperpowerDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds) {
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(Integer heroId, List<Integer> superPowerIds) {
         deleteByHero(heroId);
-        for (String superpowerId : superPowerIds) {
+        for (Integer superpowerId : superPowerIds) {
             addSuperPowerForHero(heroId, superpowerId);
         }
         return getSuperpowersByHero(heroId);
     }
 
-    private void addSuperPowerForHero(String heroId, String superpowerId) {
+    private void addSuperPowerForHero(Integer heroId, Integer superpowerId) {
         jdbcTemplate.update(SQL_INSERT_HEROSUPERPOWER,
                 heroId, superpowerId);
     }
@@ -106,7 +106,7 @@ public class HeroSuperpowerDaoDbImpl implements HeroSuperpowerDao {
         public SuperPower mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             SuperPower superPower = new SuperPower();
-            superPower.setSuperPowerId(rs.getString("SuperPowerId"));
+            superPower.setSuperPowerId(rs.getInt("SuperPowerId"));
             superPower.setDescription(rs.getString("Description"));
             superPower.setSelected("selected");
             return superPower;
@@ -119,8 +119,8 @@ public class HeroSuperpowerDaoDbImpl implements HeroSuperpowerDao {
         public Hero mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Hero hero = new Hero();
-            hero.setHeroId(rs.getString("HeroId"));
-            hero.setContactId(rs.getString("ContactId"));
+            hero.setHeroId(rs.getInt("HeroId"));
+            hero.setContactId(rs.getInt("ContactId"));
             hero.setHeroName(rs.getString("Name"));
             hero.setDescription(rs.getString("Description"));
             return hero;

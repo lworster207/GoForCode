@@ -14,11 +14,11 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class Location {
 
-    private String locationId;
+    private Integer locationId;
     @NotEmpty(message = "You must supply a value for Location Name.")
     private String locationName;
     private String locationDescription;
-    private String addressId;
+    private Integer addressId;
 
     private double latitude;
 
@@ -28,16 +28,16 @@ public class Location {
 
     }
 
-    public Location(String locationId, String locationName) {
+    public Location(Integer locationId, String locationName) {
         this.locationId = locationId;
         this.locationName = locationName;
     }
 
-    public String getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(String locationId) {
+    public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 
@@ -57,11 +57,11 @@ public class Location {
         this.locationDescription = locationDescription;
     }
 
-    public String getAddressId() {
+    public Integer getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(String addressId) {
+    public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
 

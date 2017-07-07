@@ -38,7 +38,7 @@ public class HeroServiceLayerImpl implements HeroServiceLayer {
     SuperHeroServiceLayer superHeroService;
 
     @Override
-    public Hero addHero(String heroId, Hero hero) {
+    public Hero addHero(Integer heroId, Hero hero) {
         return heroDao.addHero(heroId, hero);
     }
 
@@ -50,26 +50,26 @@ public class HeroServiceLayerImpl implements HeroServiceLayer {
             if (address == null) {
                 addressId = null;
             } else {
-                addressDao.addAddress("0", address);
+                addressDao.addAddress(0, address);
             }
             contact.setAddressId(address.getAddressId());
-            contactDao.addContact("0", contact);
+            contactDao.addContact(0, contact);
             hero.setContactId(contact.getContactId());
         } else {
             hero.setContactId(null);
         }
 
-        return heroDao.addHero("1", hero);
+        return heroDao.addHero(1, hero);
 
     }
 
     @Override
-    public Hero deleteHero(String heroId, String contactId) {
+    public Hero deleteHero(Integer heroId, Integer contactId) {
 
         heroSuperPowerDao.deleteByHero(heroId);
         Hero removedHero = heroDao.deleteHero(heroId);
 
-        if (contactId != null && !contactId.equals("")) {
+        if (contactId != null) {
             superHeroService.deleteContact(contactId, superHeroService.getContact(contactId).getAddressId());
         } else {
             superHeroService.deleteContact(contactId, null);
@@ -78,9 +78,9 @@ public class HeroServiceLayerImpl implements HeroServiceLayer {
     }
 
     @Override
-    public Hero updateHero(String heroId, Hero hero, Contact contact, Address address) {
+    public Hero updateHero(Integer heroId, Hero hero, Contact contact, Address address) {
         if (contact != null) {
-            if (hero.getContactId() == null || hero.getContactId().equals("")) {
+            if (hero.getContactId() == null) {
                 // adding a new contact
 
                 hero.setContactId(superHeroService.addContact(contact.getContactId(), contact, address).getContactId());
@@ -102,7 +102,7 @@ public class HeroServiceLayerImpl implements HeroServiceLayer {
     }
 
     @Override
-    public Hero getHero(String heroId) {
+    public Hero getHero(Integer heroId) {
         return heroDao.getHero(heroId);
     }
 

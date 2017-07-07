@@ -15,19 +15,19 @@ import org.springframework.jdbc.core.RowMapper;
  */
 public class SightingLocationHero {
 
-    String heroId;
+    Integer heroId;
     String heroName;
-    String sightingId;
+    Integer sightingId;
     String sightingDate;
-    String locationId;
+    Integer locationId;
     String locationName;
     String locationDescription;
 
-    public String getHeroId() {
+    public Integer getHeroId() {
         return heroId;
     }
 
-    public void setHeroId(String heroId) {
+    public void setHeroId(Integer heroId) {
         this.heroId = heroId;
     }
 
@@ -39,11 +39,11 @@ public class SightingLocationHero {
         this.heroName = heroName;
     }
 
-    public String getSightingId() {
+    public Integer getSightingId() {
         return sightingId;
     }
 
-    public void setSightingId(String sightingId) {
+    public void setSightingId(Integer sightingId) {
         this.sightingId = sightingId;
     }
 
@@ -55,11 +55,11 @@ public class SightingLocationHero {
         this.sightingDate = sightingDate;
     }
 
-    public String getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(String locationId) {
+    public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 
@@ -84,11 +84,11 @@ public class SightingLocationHero {
         public SightingLocationHero mapRow(ResultSet rs, int rowNum) throws SQLException {
             SightingLocationHero slh = new SightingLocationHero();
 
-            slh.setSightingId(rs.getString("SightingId"));
-            slh.setLocationId(rs.getString("LocationId"));
+            slh.setSightingId(rs.getInt("SightingId"));
+            slh.setLocationId(rs.getInt("LocationId"));
             slh.setLocationName(rs.getString("Name"));
             slh.setLocationDescription(rs.getString("Description"));
-            slh.setHeroId(rs.getString("HeroId"));
+            slh.setHeroId(rs.getInt("HeroId"));
             slh.setHeroName(rs.getString("HeroName"));
             slh.setSightingDate(rs.getString("Date"));
 

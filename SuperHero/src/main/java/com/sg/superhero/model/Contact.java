@@ -13,14 +13,14 @@ import java.util.Objects;
  */
 public class Contact {
 
-    private String contactId;
+    private Integer contactId;
     private String firstName;
     private String lastName;
-    private String addressId;
+    private Integer addressId;
     private String phone;
     private String email;
 
-    public Contact(String firstName, String lastName, String addressId, String phone, String email) {
+    public Contact(String firstName, String lastName, Integer addressId, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -31,11 +31,11 @@ public class Contact {
     public Contact() {
     }
 
-    public String getContactId() {
+    public Integer getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public void setContactId(Integer contactId) {
         this.contactId = contactId;
     }
 
@@ -55,11 +55,11 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public String getAddressId() {
+    public Integer getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(String addressId) {
+    public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
 

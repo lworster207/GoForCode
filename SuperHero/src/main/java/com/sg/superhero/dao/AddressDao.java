@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface AddressDao {
 
-    public Address addAddress(String addressId, Address address);
+    public Address addAddress(Integer addressId, Address address);
 
-    public Address deleteAddress(String addressId);
+    public Address deleteAddress(Integer addressId);
 
-    public Address updateAddress(String addressId, Address address);
+    public Address updateAddress(Integer addressId, Address address);
 
-    public Address getAddress(String addressId);
+    public Address getAddress(Integer addressId);
 
     public Address findAddress(Address address);
 

@@ -25,6 +25,7 @@ public class HeroDaoDbImpl implements HeroDao {
 
     AddressDao addressDao = new AddressDaoDbImpl();
     ContactDao contactDao = new ContactDaoDbImpl();
+    HeroSuperpowerDao heroSuperPower = new HeroSuperpowerDaoDbImpl();
 
     private static final String SQL_INSERT_ITEM
             = "insert into Hero "
@@ -60,7 +61,7 @@ public class HeroDaoDbImpl implements HeroDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public Hero addHero(String heroId, Hero hero) {
+    public Hero addHero(Integer heroId, Hero hero) {
         jdbcTemplate.update(SQL_INSERT_ITEM,
                 hero.getHeroName(), hero.getContactId(), hero.getDescription());
 
@@ -68,7 +69,7 @@ public class HeroDaoDbImpl implements HeroDao {
         // row in the database
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         // set the new id value on the item object and return it
-        hero.setHeroId(newId.toString());
+        hero.setHeroId(newId);
 
         return hero;
 
@@ -84,10 +85,10 @@ public class HeroDaoDbImpl implements HeroDao {
             if (address == null) {
                 addressId = null;
             } else {
-                addressDao.addAddress("0", address);
+                addressDao.addAddress(0, address);
             }
             contact.setAddressId(address.getAddressId());
-            contactDao.addContact("0", contact);
+            contactDao.addContact(0, contact);
             hero.setContactId(contact.getContactId());
         } else {
             hero.setContactId(null);
@@ -99,14 +100,15 @@ public class HeroDaoDbImpl implements HeroDao {
         // row in the database
         Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
         // set the new id value on the item object and return it
-        hero.setHeroId(newId.toString());
+        hero.setHeroId(newId);
         return hero;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public Hero deleteHero(String heroId) {
+    public Hero deleteHero(Integer heroId) {
         Hero removedHero = getHero(heroId);
+        heroSuperPower.deleteByHero(heroId);
         removedHero.setContactId(null);
         updateHero(heroId, removedHero);
 
@@ -116,13 +118,13 @@ public class HeroDaoDbImpl implements HeroDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public Hero updateHero(String heroId, Hero hero) {
+    public Hero updateHero(Integer heroId, Hero hero) {
         jdbcTemplate.update(SQL_UPDATE_ITEM, hero.getHeroName(), hero.getContactId(), hero.getDescription(), heroId);
         return getHero(heroId);
     }
 
     @Override
-    public Hero getHero(String heroId) {
+    public Hero getHero(Integer heroId) {
         return jdbcTemplate.queryForObject(SQL_SELECT_ITEM,
                 new HeroMapper(), heroId);
     }
@@ -144,7 +146,7 @@ public class HeroDaoDbImpl implements HeroDao {
         public HeroPower mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             HeroPower hp = new HeroPower();
-            hp.setHeroId(rs.getString("HeroId"));
+            hp.setHeroId(rs.getInt("HeroId"));
             hp.setHeroName(rs.getString("HeroName"));
             hp.setHeroDescription(rs.getString("HeroDescription"));
             hp.setSuperPower(rs.getString("SuperPower"));
@@ -158,8 +160,8 @@ public class HeroDaoDbImpl implements HeroDao {
         public Hero mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Hero hero = new Hero();
-            hero.setHeroId(rs.getString("HeroId"));
-            hero.setContactId(rs.getString("ContactId"));
+            hero.setHeroId(rs.getInt("HeroId"));
+            hero.setContactId(rs.getInt("ContactId"));
             hero.setHeroName(rs.getString("Name"));
             hero.setDescription(rs.getString("Description"));
             return hero;

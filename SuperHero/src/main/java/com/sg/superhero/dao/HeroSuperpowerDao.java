@@ -15,15 +15,15 @@ import java.util.List;
  */
 public interface HeroSuperpowerDao {
 
-    public List<Hero> getHerosWithSuperpower(String superpowerId);
+    public List<Hero> getHerosWithSuperpower(Integer superpowerId);
 
-    public List<SuperPower> getSuperpowersByHero(String heroId);
+    public List<SuperPower> getSuperpowersByHero(Integer heroId);
 
-    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers);
+    public List<SuperPower> updateSuperpowersForHero(Integer heroId, List<SuperPower> superPowers);
 
-    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds);
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(Integer heroId, List<Integer> superPowerIds);
 
-    void deleteByHero(String heroId);
+    void deleteByHero(Integer heroId);
 
     void truncateHeroSuperPower();
 

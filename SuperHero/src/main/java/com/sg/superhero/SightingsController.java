@@ -70,7 +70,7 @@ public class SightingsController {
             model.addAttribute("dateList", dateMap);
         }
 
-        String locationId = request.getParameter("locationId");
+        Integer locationId = Integer.parseInt(request.getParameter("locationId"));
 
         sightingsList = sightingService.getSightingsByLocationDetailed(locationId);
         model.addAttribute("sightingsList", sightingsList);
@@ -109,7 +109,7 @@ public class SightingsController {
 
     @RequestMapping(value = "/displaySightingsByHero", method = RequestMethod.POST)
     public String displaySightingsByHero(HttpServletRequest request, Model model) {
-        String heroId = request.getParameter("heroId");
+        Integer heroId = Integer.parseInt(request.getParameter("heroId"));
 
         List<SightingLocationHero> sightingsList = sightingService.getAllSightingsDetailed();
 
@@ -160,7 +160,7 @@ public class SightingsController {
     public String editSighting(HttpServletRequest request, Model model) {
         //model.put("message", "Hello from the controller");
 
-        Sighting sighting = sightingService.getSighting(request.getParameter("sightingId"));
+        Sighting sighting = sightingService.getSighting(Integer.parseInt(request.getParameter("sightingId")));
 
         List<Hero> allHerosList = heroService.getAllHeroes();
         List<HeroSelected> herosList = new ArrayList<>();
@@ -201,14 +201,14 @@ public class SightingsController {
         // to be removed once the dao is ready.
         Map<String, String> herosList = new HashMap<>();
         for (Hero hero : allHerosList) {
-            herosList.put(hero.getHeroId(), hero.getHeroName());
+            herosList.put(hero.getHeroId().toString(), hero.getHeroName());
         }
         model.addAttribute("herosList", allHerosList);
 
         List<Location> allLocationsList = locationService.getAllLocations();
         Map<String, String> locationsList = new HashMap<>();
         for (Location location : allLocationsList) {
-            locationsList.put(location.getLocationId(), location.getLocationName());
+            locationsList.put(location.getLocationId().toString(), location.getLocationName());
 
         }
         model.addAttribute("locationsList", allLocationsList);
@@ -219,14 +219,14 @@ public class SightingsController {
     @RequestMapping(value = "/createSighting", method = RequestMethod.POST)
     public String createSighting(@Valid @ModelAttribute("sighting") Sighting sighting, BindingResult result,
             HttpServletRequest request, Model model) {
-        sightingService.addSighting("", sighting);
+        sightingService.addSighting(0, sighting);
         //model.put("message", "Hello from the controller");
         return "redirect:displaySightings";
     }
 
     @RequestMapping(value = "/deleteSighting", method = RequestMethod.GET)
     public String deleteSighting(HttpServletRequest request, Model model) {
-        sightingService.deleteSighting(request.getParameter("sightingId"));
+        sightingService.deleteSighting(Integer.parseInt(request.getParameter("sightingId")));
         return "redirect:displaySightings";
     }
 
@@ -234,7 +234,7 @@ public class SightingsController {
 
         String selected;
 
-        public HeroSelected(String heroId, String heroName, String selected) {
+        public HeroSelected(Integer heroId, String heroName, String selected) {
             super(heroId, heroName);
             this.selected = selected;
         }
@@ -253,7 +253,7 @@ public class SightingsController {
 
         String selected;
 
-        public LocationSelected(String locationId, String locationName, String selected) {
+        public LocationSelected(Integer locationId, String locationName, String selected) {
             super(locationId, locationName);
             this.selected = selected;
         }

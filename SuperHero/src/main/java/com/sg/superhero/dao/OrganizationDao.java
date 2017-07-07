@@ -15,18 +15,18 @@ import java.util.List;
  */
 public interface OrganizationDao {
 
-    public Organization addOrganization(String organizationId, Organization organization);
+    public Organization addOrganization(Integer organizationId, Organization organization);
 
-    public Organization deleteOrganization(String organizationId);
+    public Organization deleteOrganization(Integer organizationId);
 
-    public Organization updateOrganization(String organizationId, Organization organization);
+    public Organization updateOrganization(Integer organizationId, Organization organization);
 
-    public Organization getOrganization(String organizationId);
+    public Organization getOrganization(Integer organizationId);
 
     public List<Organization> getAllOrganizations();
 
-    public List<Organization> getAllOrganizationsByHero(String heroId);
+    public List<Organization> getAllOrganizationsByHero(Integer heroId);
 
-    public List<Hero> getAllHerosByOrganization(String organizationId);
+    public List<Hero> getAllHerosByOrganization(Integer organizationId);
 
 }

@@ -26,12 +26,12 @@ public class SightingServiceLayerImpl implements SightingServiceLayer {
     }
 
     @Override
-    public List<SightingLocationHero> getSightingsByLocationDetailed(String locationId) {
+    public List<SightingLocationHero> getSightingsByLocationDetailed(Integer locationId) {
         return sightingDao.getSightingsByLocationDetailed(locationId);
     }
 
     @Override
-    public List<SightingLocationHero> getSightingsByHeroDetailed(String heroId) {
+    public List<SightingLocationHero> getSightingsByHeroDetailed(Integer heroId) {
         return sightingDao.getSightingsByHeroDetailed(heroId);
     }
 
@@ -41,12 +41,12 @@ public class SightingServiceLayerImpl implements SightingServiceLayer {
     }
 
     @Override
-    public List<Sighting> getSightingByLocation(String locationId) {
+    public List<Sighting> getSightingByLocation(Integer locationId) {
         return sightingDao.getSightingByLocation(locationId);
     }
 
     @Override
-    public List<Sighting> getSightingsByHero(String heroId) {
+    public List<Sighting> getSightingsByHero(Integer heroId) {
         return sightingDao.getSightingsByHero(heroId);
     }
 
@@ -56,19 +56,19 @@ public class SightingServiceLayerImpl implements SightingServiceLayer {
     }
 
     @Override
-    public Sighting addSighting(String sightingId, Sighting sighting) {
+    public Sighting addSighting(Integer sightingId, Sighting sighting) {
         return sightingDao.addSighting(sightingId, sighting);
     }
 
     @Override
-    public Sighting deleteSighting(String sightingId) {
+    public Sighting deleteSighting(Integer sightingId) {
         Sighting sighting = getSighting(sightingId);
         sightingDao.deleteSighting(sightingId);
         return sighting;
     }
 
     @Override
-    public Sighting getSighting(String sightingId) {
+    public Sighting getSighting(Integer sightingId) {
         return sightingDao.getSighting(sightingId);
     }
 
@@ -78,7 +78,7 @@ public class SightingServiceLayerImpl implements SightingServiceLayer {
     }
 
     @Override
-    public Sighting updateSighting(String sightingId, Sighting sighting) {
+    public Sighting updateSighting(Integer sightingId, Sighting sighting) {
         return sightingDao.updateSighting(sightingId, sighting);
     }
 

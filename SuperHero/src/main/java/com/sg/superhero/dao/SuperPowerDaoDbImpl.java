@@ -49,7 +49,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     }
 
     @Override
-    public SuperPower getSuperPower(String superPowerId) {
+    public SuperPower getSuperPower(Integer superPowerId) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_ITEM,
                     new SuperPowerMapper(), superPowerId);
@@ -62,7 +62,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     }
 
     @Override
-    public List<SuperPower> getSuperPowersByHero(String heroId) {
+    public List<SuperPower> getSuperPowersByHero(Integer heroId) {
         try {
             return jdbcTemplate.query(SQL_SELECT_SUPERPOWERS_BY_HERO,
                     new SuperPowerHeroMapper(), heroId);
@@ -74,7 +74,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     }
 
     @Override
-    public SuperPower addSuperPower(String superPowerId, SuperPower superPower) {
+    public SuperPower addSuperPower(Integer superPowerId, SuperPower superPower) {
         SuperPower newSuperPower = getSuperPower(superPowerId);
         if (newSuperPower == null) {
             jdbcTemplate.update(SQL_INSERT_ITEM,
@@ -84,8 +84,8 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
             // row in the database
             Integer newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
             // set the new id value on the item object and return it
-            superPower.setSuperPowerId(newId.toString());
-            newSuperPower = getSuperPower(newId.toString());
+            superPower.setSuperPowerId(newId);
+            newSuperPower = getSuperPower(newId);
         }
 
         return newSuperPower;
@@ -93,7 +93,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     }
 
     @Override
-    public SuperPower deleteSuperPower(String superPowerId) {
+    public SuperPower deleteSuperPower(Integer superPowerId) {
 
         SuperPower removedItem = getSuperPower(superPowerId);
         jdbcTemplate.update(SQL_DELETE_ITEM, superPowerId);
@@ -102,7 +102,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
     }
 
     @Override
-    public SuperPower updateSuperPower(String superPowerId, SuperPower superPower) {
+    public SuperPower updateSuperPower(Integer superPowerId, SuperPower superPower) {
 
         SuperPower sp = getSuperPower(superPowerId);
         if (sp != null) {
@@ -123,7 +123,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
         public SuperPower mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             SuperPower superPower = new SuperPower();
-            superPower.setSuperPowerId(rs.getString("SuperPowerId"));
+            superPower.setSuperPowerId(rs.getInt("SuperPowerId"));
             superPower.setDescription(rs.getString("Description"));
             superPower.setSelected("");
 
@@ -137,7 +137,7 @@ public class SuperPowerDaoDbImpl implements SuperPowerDao {
         public SuperPower mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             SuperPower superPower = new SuperPower();
-            superPower.setSuperPowerId(rs.getString("SuperPowerId"));
+            superPower.setSuperPowerId(rs.getInt("SuperPowerId"));
             superPower.setDescription(rs.getString("Description"));
             superPower.setSelected("selected");
             return superPower;

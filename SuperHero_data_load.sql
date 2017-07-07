@@ -31,10 +31,10 @@ values  ("Flight"), ("Invisibility"), ("X-Ray Vision"), ("Spider-Web"), ("Super 
 INSERT INTO HeroSuperPower(HeroId,SuperPowerId)
 values (1,3),(4,3),(4,4),(4,2);
 
-INSERT INTO Organization(`Name`,Description)
-values ("Org1","Org1 Description"),
-("Org2","Org2 Description"),
-("Org3","Org3 Description")
+INSERT INTO Organization(`Name`,Description,StreetAddress,City,State,PostCode)
+values ("Org1","Org1 Description","111 Elm Street", "New York", "New York", "12345"),
+("Org2","Org2 Description","222 Elm Street", "New York", "New York", "12345"),
+("Org3","Org3 Description","333 Elm Street", "New York", "New York", "12345")
 ;
 
 INSERT INTO OrgMembers(OrganizationId,HeroId)

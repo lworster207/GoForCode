@@ -5,7 +5,6 @@
  */
 package com.sg.superhero.service;
 
-import com.sg.superhero.model.Address;
 import com.sg.superhero.model.Hero;
 import com.sg.superhero.model.Organization;
 import java.util.List;
@@ -16,20 +15,20 @@ import java.util.List;
  */
 public interface OrganizationServiceLayer {
 
-    public Organization addOrganization(String organizationId, Organization organization);
+    public Organization addOrganization(Integer organizationId, Organization organization);
 
-    public Organization deleteOrganization(String organizationId, String addressId);
+    public Organization deleteOrganization(Integer organizationId);
 
-    public Organization updateOrganization(String organizationId, Organization organization, Address address);
+    public Organization updateOrganization(Integer organizationId, Organization organization);
 
-    public Organization getOrganization(String organizationId);
+    public Organization getOrganization(Integer organizationId);
 
-    public List<Hero> getHerosByOrganization(String organizationId);
+    public List<Hero> getHerosByOrganization(Integer organizationId);
 
-    public List<Organization> getOrganizationsByHero(String heroId);
+    public List<Organization> getOrganizationsByHero(Integer heroId);
 
     public List<Organization> getAllOrganizations();
 
-    public List<Organization> updateOrganizationsForHeroByOrganizationIds(String heroId, List<String> organizationIds);
+    public List<Organization> updateOrganizationsForHeroByOrganizationIds(Integer heroId, List<Integer> organizationIds);
 
 }

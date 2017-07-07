@@ -24,25 +24,25 @@ public class SuperPowerServiceLayerImpl implements SuperPowerServiceLayer {
     HeroSuperpowerDao heroSuperPowerDao;
 
     @Override
-    public SuperPower getSuperPower(String superPowerId
+    public SuperPower getSuperPower(Integer superPowerId
     ) {
         return superpowerDao.getSuperPower(superPowerId);
     }
 
     @Override
-    public SuperPower addSuperPower(String superPowerId, SuperPower superPower
+    public SuperPower addSuperPower(Integer superPowerId, SuperPower superPower
     ) {
         return superpowerDao.addSuperPower(superPowerId, superPower);
     }
 
     @Override
-    public SuperPower deleteSuperPower(String superPowerId
+    public SuperPower deleteSuperPower(Integer superPowerId
     ) {
         return superpowerDao.deleteSuperPower(superPowerId);
     }
 
     @Override
-    public SuperPower updateSuperPower(String superPowerId, SuperPower superPower
+    public SuperPower updateSuperPower(Integer superPowerId, SuperPower superPower
     ) {
         return superpowerDao.updateSuperPower(superPowerId, superPower);
     }
@@ -53,19 +53,19 @@ public class SuperPowerServiceLayerImpl implements SuperPowerServiceLayer {
     }
 
     @Override
-    public List<SuperPower> getSuperPowersByHero(String heroId
+    public List<SuperPower> getSuperPowersByHero(Integer heroId
     ) {
         return superpowerDao.getSuperPowersByHero(heroId);
     }
 
     @Override
-    public List<SuperPower> updateSuperpowersForHero(String heroId, List<SuperPower> superPowers
+    public List<SuperPower> updateSuperpowersForHero(Integer heroId, List<SuperPower> superPowers
     ) {
         return heroSuperPowerDao.updateSuperpowersForHero(heroId, superPowers);
     }
 
     @Override
-    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(String heroId, List<String> superPowerIds
+    public List<SuperPower> updateSuperpowersForHeroBySuperpowerIds(Integer heroId, List<Integer> superPowerIds
     ) {
         return heroSuperPowerDao.updateSuperpowersForHeroBySuperpowerIds(heroId, superPowerIds);
     }

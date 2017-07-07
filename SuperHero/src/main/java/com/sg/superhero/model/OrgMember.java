@@ -13,23 +13,23 @@ import java.util.Objects;
  */
 public class OrgMember {
 
-    String heroId;
-    String organizationId;
+    Integer heroId;
+    Integer organizationId;
     String selected;
 
-    public String getHeroId() {
+    public Integer getHeroId() {
         return heroId;
     }
 
-    public void setHeroId(String heroId) {
+    public void setHeroId(Integer heroId) {
         this.heroId = heroId;
     }
 
-    public String getOrganizationId() {
+    public Integer getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(String organizationId) {
+    public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
     }
 
